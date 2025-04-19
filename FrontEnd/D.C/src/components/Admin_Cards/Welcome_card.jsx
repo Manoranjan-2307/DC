@@ -6,7 +6,7 @@ const Welcome_Card = () => {
   const textStyle = {
     fontFamily: "sans-serif",
     fontSize: "1.3rem",
-    color: "#555555",
+    color: "red",
     fontWeight: 400,
   };
 

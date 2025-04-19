@@ -22,7 +22,7 @@ const AdminCard1 = () => {
     <>
       <Card
         sx={{
-          maxWidth: 800,
+          maxWidth: 1200,
           width: "100%",
           margin: "0 auto",
           padding: 2,
@@ -31,6 +31,7 @@ const AdminCard1 = () => {
           border: "1px solid #D9D4D4",
           boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
           fontFamily: "Tahoma",
+          
         }}
       >
         <Grid container justifyContent="flex-end" alignItems="center">
@@ -63,7 +64,7 @@ const AdminCard1 = () => {
             <span style={labelStyle}>Issued By:</span> Indhu Bhashini V
           </Typography>
           <Typography variant="body1" component="p" sx={textStyle} style={{color: 'red'}}>
-            <span style={labelStyle}>Status:</span> pending
+            <span style={labelStyle}>Enquiry:</span> pending
           </Typography>
         </CardContent>
       </Card>

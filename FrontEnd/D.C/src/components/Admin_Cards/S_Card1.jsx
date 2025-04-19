@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Box, Button } from "@mui/material";
 import MeetingIcon from "../../assets/Meeting_icon.png"; 
 
-const M1_Card = () => {
+const S_Card1 = () => {
   const textStyle = {
     fontFamily: "sans-serif",
     fontSize: "1.2rem",
@@ -75,9 +75,28 @@ const M1_Card = () => {
           </Grid>
         </Grid>
       </CardContent>
-      
-    </Card>
+      <Grid container justifyContent="flex-end" spacing={1}>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+            >
+              Present
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+            >
+              Absent
+            </Button>
+          </Grid>
+        </Grid>
+      </Card>
   );
 };
 
-export default M1_Card;
+export default S_Card1;

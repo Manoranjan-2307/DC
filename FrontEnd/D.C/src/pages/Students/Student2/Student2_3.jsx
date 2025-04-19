@@ -33,7 +33,7 @@ export default function Student2_3() {
       className="scroll-content"
       style={{
         marginLeft: '220px', 
-        marginTop: '20px',
+        marginTop: '10px',
         display: 'flex',
         flexDirection: 'column',
         gap: '60px',

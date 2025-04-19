@@ -42,7 +42,6 @@ import Faculty1 from "./pages/Faculty1";
 import Faculty2 from "./pages/Faculty2";
 import Faculty3 from "./pages/Faculty3";
 import Supportdesk from "./pages/Supportdesk";
-
 const AppContent = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
@@ -104,7 +103,7 @@ const AppContent = () => {
           <Route path="/student1_1" element={<Student1_1 />} />
           <Route path="/student1_2" element={<Student1_2 />} />
           <Route path="/student1_3" element={<Student1_3 />} />
-          <Route path="/student1_4" element={<Student1_4 />} />
+          <Route path="/student1_4" element={<Student1_4/>} />
           <Route path="/student2_1" element={<Student2_1 />} />
           <Route path="/student2_2" element={<Student2_2 />} />
           <Route path="/student2_3" element={<Student2_3 />} />

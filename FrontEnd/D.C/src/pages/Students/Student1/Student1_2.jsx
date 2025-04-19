@@ -7,15 +7,11 @@ import HCard4 from '../../../components/H_Cards/H4_Card';
 
 export default function Student1_2() {
   return (
-    <div>
-    <div style={{ padding: '5px', marginTop: '125px', marginBottom: '5px', marginLeft: '125px' }}>
-       <p style={{fontFamily: 'sans-serif', fontSize: '28px', color: '#875D7B'}}>History of Complaints:</p>
-    </div>
     <div
       className="scroll-content"
       style={{
         marginLeft: '220px',
-        marginTop: '20px',
+        marginTop: '150px',
         display: 'flex', 
         flexDirection: 'column', 
         gap: '45px', 
@@ -30,7 +26,6 @@ export default function Student1_2() {
       <HCard1 />
       <HCard4 />
       
-    </div>
     </div>
   );
 }

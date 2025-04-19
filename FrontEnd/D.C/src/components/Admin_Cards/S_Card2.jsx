@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Box, Button } from "@mui/material";
 import MeetingIcon from "../../assets/Meeting_icon.png"; 
 
-const M1_Card = () => {
+const S_Card2 = () => {
   const textStyle = {
     fontFamily: "sans-serif",
     fontSize: "1.2rem",
@@ -58,16 +58,16 @@ const M1_Card = () => {
           </Grid>
           <Grid item xs>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Venue:</span> Faculty Hall - 1 (New Mechanical Block)
+              <span style={labelStyle}>Venue:</span> Faculty Hall - 3 (New Mechanical Block)
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Date:</span> 4.04.2025
+              <span style={labelStyle}>Date:</span> 10.04.2025
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Time:</span> 3:00 PM
+              <span style={labelStyle}>Time:</span> 2:00 PM
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Reason:</span> Enquiry for the complaint filed on 30.03.2025 at 11:00 AM
+              <span style={labelStyle}>Reason:</span> Enquiry for the complaint filed on 02.04.2025 at 02:00 PM
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
               <span style={labelStyle}>Status:</span> -
@@ -75,9 +75,28 @@ const M1_Card = () => {
           </Grid>
         </Grid>
       </CardContent>
-      
+      <Grid container justifyContent="flex-end" spacing={1}>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+            >
+              Present
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+            >
+              Absent
+            </Button>
+          </Grid>
+        </Grid>
     </Card>
   );
 };
 
-export default M1_Card;
+export default S_Card2;

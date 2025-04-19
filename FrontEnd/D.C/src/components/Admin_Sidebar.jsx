@@ -31,13 +31,13 @@ const Admin_Sidebar = () => {
             <NavItem to="/admin1" icon="bi-house-lock" label="Home" collapsed={collapsed} location={location} />
           </div>
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
-            <NavItem to="/admin2" icon="bi-hourglass" label="History" collapsed={collapsed} location={location} />
+            <NavItem to="/admin2" icon="bi-clock-history" label="History" collapsed={collapsed} location={location} />
           </div>
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
-            <NavItem to="/admin3" icon="bi-calendar2-check" label="Activities" collapsed={collapsed} location={location} />
+            <NavItem to="/admin3" icon="bi-calendar2" label="Activities" collapsed={collapsed} location={location} />
           </div>
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
-            <NavItem to="/admin4" icon="bi-file-earmark-arrow-up" label="Documents" collapsed={collapsed} location={location} />
+            <NavItem to="/admin4" icon="bi-file-arrow-up" label="Documents" collapsed={collapsed} location={location} />
           </div>
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
             <NavItem to="/" icon="bi-box-arrow-right" label="Log-out" collapsed={collapsed} location={location} />

@@ -64,7 +64,7 @@ const AdminCard2 = () => {
             <span style={labelStyle}>Issued By:</span> Sathiya S
           </Typography>
           <Typography variant="body1" component="p" sx={textStyle} style={{color: 'red'}}>
-            <span style={labelStyle}>Status:</span> pending
+            <span style={labelStyle}>Enquiry:</span> pending
           </Typography>
         </CardContent>
       </Card>

@@ -133,7 +133,10 @@ export default function Student2_4() {
                     fontWeight: "500",
                   }}
                 >
-                  {pdf.name}
+                  {pdf.name} <br />
+                  <span style={{ fontSize: "1.2rem", color: "#555" }}>
+                              {new Date().toLocaleDateString()}
+                  </span>
                 </p>
               </div>
             </a>

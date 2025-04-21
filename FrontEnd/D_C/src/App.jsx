@@ -38,9 +38,11 @@ import Admin3 from "./pages/Admin/Admin3";
 import Admin3_1 from "./pages/Admin/Admin3_1"; 
 import Admin3_2 from "./pages/Admin/Admin3_2";
 import Admin4 from "./pages/Admin/Admin4";
-import Faculty1 from "./pages/Faculty1";
-import Faculty2 from "./pages/Faculty2";
-import Faculty3 from "./pages/Faculty3";
+//Faculty pages
+import Logger1 from './pages/Faculty/Faculty1/Logger1';
+import Mentor1 from './pages/Faculty/Faculty1/Mentor1';
+import Revoke1 from './pages/Faculty/Faculty1/Revoke1';
+//Support desk
 import Supportdesk from "./pages/Supportdesk";
 const AppContent = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -120,9 +122,11 @@ const AppContent = () => {
           <Route path="/student5_2" element={<Student5_2 />} />
           <Route path="/student5_3" element={<Student5_3 />} />
           <Route path="/student5_4" element={<Student5_4 />} />
-          <Route path="/faculty1" element={<Faculty1 />} />
-          <Route path="/faculty2" element={<Faculty2 />} />
-          <Route path="/faculty3" element={<Faculty3 />} />
+
+          <Route path="/logger1" element={<Logger1 />} />
+          <Route path="/mentor1" element={<Mentor1 />} />
+          <Route path="/revoke1" element={<Revoke1 />} />
+
           <Route path="/supportdesk" element={<Supportdesk />} />
         </Routes>
       </div>

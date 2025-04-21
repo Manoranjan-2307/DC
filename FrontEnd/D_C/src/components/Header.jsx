@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 
 const Header = () => {
-  const collapsed = true; // Set collapsed to true permanently
+  const collapsed = true; 
 
   return (
     <AppBar

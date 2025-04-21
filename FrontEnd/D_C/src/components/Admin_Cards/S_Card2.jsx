@@ -58,6 +58,9 @@ const S_Card2 = () => {
           </Grid>
           <Grid item xs>
             <Typography variant="body1" component="p" sx={textStyle}>
+                <span style={labelStyle}>Roll no:</span> 7376242AD267
+            </Typography>
+            <Typography variant="body1" component="p" sx={textStyle}>
               <span style={labelStyle}>Venue:</span> Faculty Hall - 3 (New Mechanical Block)
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>

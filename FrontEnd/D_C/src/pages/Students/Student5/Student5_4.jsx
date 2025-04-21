@@ -16,6 +16,7 @@ export default function Student5_4() {
   const headingLength = fullHeading.length;
   const studentId = "7376242AL165";
 
+
   // Fetch PDFs from the backend
   useEffect(() => {
     fetch(`http://localhost:5000/api/student-pdfs/${studentId}`)
@@ -25,6 +26,7 @@ export default function Student5_4() {
       })
       .catch((error) => console.error("Error fetching PDFs:", error));
   }, [studentId]);
+
 
   // Merging static and dynamic PDFs
   const mergedPdfs = [
@@ -50,6 +52,7 @@ export default function Student5_4() {
 
     return () => clearInterval(interval);
   }, []);
+  
 
   return (
     <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>
@@ -133,7 +136,10 @@ export default function Student5_4() {
                     fontWeight: "500",
                   }}
                 >
-                  {pdf.name}
+                  {pdf.name}  <br />
+                  <span style={{ fontSize: "1.2rem", color: "#555" }}>
+                              {new Date().toLocaleDateString()}
+                  </span>
                 </p>
               </div>
             </a>

@@ -16,8 +16,8 @@ export const handleLogin = (username, password, navigate) => {
     navigate("/student5_1");
   } else if (username === "admin" && password === "adminpass") {
     navigate("/admin1");
-  } else if (username === "faculty" && password === "facultypass") {
-    navigate("/faculty1");
+  } else if (username === "faculty1" && password === "pass-1") {
+    navigate("/logger1");
   } else {
     alert("Invalid Username or Password");
   }

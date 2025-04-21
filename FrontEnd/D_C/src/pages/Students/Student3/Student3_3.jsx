@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import M1_Card from '../../../components/M_Cards/M1_Card'; 
 import M2_Card from '../../../components/M_Cards/M2_Card';
+import S_Card1 from '../../../components/Admin_Cards/S_Card1'; 
 
 
 export default function Student3_3() {
   const [heading, setHeading] = useState('');
   const fullHeading = '  Scheduled Meetings:';
   const headingLength = fullHeading.length;
+  const [meetings, setMeetings] = useState([]); 
+  const studentId = "7376242IT201"; 
   
   useEffect(() => {
     let index = 0;
@@ -24,6 +27,26 @@ export default function Student3_3() {
     
     return () => clearInterval(interval);
     }, []);
+
+    useEffect(() => {
+      const fetchMeetings = async () => {
+        try {
+          const response = await fetch("http://localhost:5000/api/meeting-details");
+          const data = await response.json();
+          console.log("Fetched Meetings:", data); // Log the entire response
+          const filteredMeetings = data.filter((meeting) => {
+            console.log("Meeting S_ID:", meeting.S_ID, "Student ID:", studentId); 
+            return meeting.S_ID === studentId; 
+          });
+          console.log("Filtered Meetings for Student:", filteredMeetings); // Log filtered meetings
+          setMeetings(filteredMeetings);
+        } catch (error) {
+          console.error("Error fetching meetings:", error);
+        }
+      };
+    
+      fetchMeetings();
+    }, [studentId]);
 
 
   return (
@@ -47,6 +70,9 @@ export default function Student3_3() {
   >
     <M1_Card />
     <M2_Card />
+    {meetings.map((meeting) => (
+          <S_Card1 key={meeting.id} complaint={meeting} /> // Render filtered meetings
+        ))}
   </div>
   </div>
   )

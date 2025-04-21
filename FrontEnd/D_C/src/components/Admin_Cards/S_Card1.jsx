@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid, Box, Button } from "@mui/material";
-import MeetingIcon from "../../assets/Meeting_icon.png"; 
+import MeetingIcon from "../../assets/Meeting_icon.png";
 
-const S_Card1 = () => {
+const S_Card1 = ({ complaint }) => {
   const textStyle = {
     fontFamily: "sans-serif",
     fontSize: "1.2rem",
@@ -58,44 +58,45 @@ const S_Card1 = () => {
           </Grid>
           <Grid item xs>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Venue:</span> Faculty Hall - 1 (New Mechanical Block)
+              <span style={labelStyle}>Venue:</span> {complaint.venue}
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Date:</span> 4.04.2025
+              <span style={labelStyle}>Date:</span> {complaint.date}
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Time:</span> 3:00 PM
+              <span style={labelStyle}>Time:</span> {complaint.time}
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Reason:</span> Enquiry for the complaint filed on 30.03.2025 at 11:00 AM
+              <span style={labelStyle}>Reason:</span> {complaint.info}
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Status:</span> -
+              <span style={labelStyle}>Status:</span> 
+              <span style={{color: 'red'}}>{complaint.status}</span>
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
       <Grid container justifyContent="flex-end" spacing={1}>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
-            >
-              Present
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
-            >
-              Absent
-            </Button>
-          </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+          >
+            Present
+          </Button>
         </Grid>
-      </Card>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+          >
+            Absent
+          </Button>
+        </Grid>
+      </Grid>
+    </Card>
   );
 };
 

@@ -21,6 +21,7 @@ export default function Admin4() {
   const [studentId, setStudentId] = useState("");
   const [studentPdf, setStudentPdf] = useState({});
 
+
   // Fetch all PDFs from the backend
   useEffect(() => {
     fetch("http://localhost:5000/api/student-pdfs")
@@ -36,7 +37,7 @@ export default function Admin4() {
       .catch((error) => console.error("Error fetching PDFs:", error));
   }, []);
 
-  // Animate the heading
+  
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -50,6 +51,7 @@ export default function Admin4() {
 
     return () => clearInterval(interval);
   }, []);
+
 
   const uploadPDF = () => {
     let inp = document.getElementById("inp");
@@ -67,7 +69,7 @@ export default function Admin4() {
         pdf_src: matchedPdf.src,
       };
 
-      // Add the PDF to the backend
+      // Adding the PDF to the backend
       fetch("http://localhost:5000/api/student-pdfs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,7 +79,7 @@ export default function Admin4() {
         .then((data) => {
           console.log(data.message);
 
-          // Update the local state
+          
           setStudentPdf((prev) => ({
             ...prev,
             [normalizedStudentId]: [...(prev[normalizedStudentId] || []), matchedPdf],
@@ -89,7 +91,7 @@ export default function Admin4() {
       alert("No PDF found for the entered Student ID.");
     }
 
-    setStudentId(""); // Clear the input field
+    setStudentId(""); 
   };
 
   const combinedPdfs = useMemo(() => {
@@ -99,6 +101,8 @@ export default function Admin4() {
     );
     return [...pdfs, ...uniqueDynamicPdfs];
   }, [studentPdf]);
+
+  
 
   return (
     <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>

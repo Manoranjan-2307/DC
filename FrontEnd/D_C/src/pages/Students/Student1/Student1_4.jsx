@@ -36,7 +36,7 @@ export default function Student1_4() {
     })),
   ];
 
-  // Animate the heading
+  
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -68,7 +68,7 @@ export default function Student1_4() {
             fontFamily: "tahoma",
             fontWeight: "500",
             color: "#875D7B",
-            marginTop: "50px",
+            marginTop: "70px",
             fontSize: "1.7rem",
           }}
         >
@@ -133,7 +133,10 @@ export default function Student1_4() {
                     fontWeight: "500",
                   }}
                 >
-                  {pdf.name}
+                  {pdf.name} <br />
+                  <span style={{ fontSize: "1.2rem", color: "#555" }}>
+                              {new Date().toLocaleDateString()}
+                  </span>
                 </p>
               </div>
             </a>

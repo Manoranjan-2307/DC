@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import S_Card1 from '../../components/Admin_Cards/S_Card1'; 
 import S_Card2 from '../../components/Admin_Cards/S_Card2';
+import S_Card3 from '../../components/Admin_Cards/S_Card3';
 
 
 export default function Admin3_2() {
   const [heading, setHeading] = useState('');
   const fullHeading = '  Your Schedules:';
   const headingLength = fullHeading.length;
+  const [complaints, setComplaints] = useState([]); // Initialize complaints state
 
   useEffect(() => {
       let index = 0;
@@ -24,6 +26,25 @@ export default function Admin3_2() {
   
       return () => clearInterval(interval);
     }, []);
+
+     // Fetch all complaints from the backend
+  useEffect(() => {
+    const fetchComplaints = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/meeting-details");
+        const data = await response.json();
+        //sorting
+        const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
+        setComplaints(sortedData);
+        setComplaints(data); // Store the fetched complaints in state
+      } catch (error) {
+        console.error("Error fetching complaints:", error);
+      }
+    };
+
+    fetchComplaints();
+  }, []);
+
 
 
   return (
@@ -45,8 +66,12 @@ export default function Admin3_2() {
         marginBottom: '35px'
     }}
   >
-    <S_Card1 />
+    
     <S_Card2 />
+    <S_Card3 />
+     {complaints.map((complaint) => (
+          <S_Card1 key={complaint.id} complaint={complaint} /> 
+        ))}
   </div>
   </div>
   )

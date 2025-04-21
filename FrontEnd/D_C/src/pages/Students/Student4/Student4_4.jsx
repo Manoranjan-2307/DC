@@ -1,26 +1,47 @@
 import React, { useState, useEffect } from "react";
-import Apology_Letter_KishoreK from "../../../assets/Apology_Letter_KishoreK.pdf";
+import Apology_Letter_KarthikeyanJV from "/assets/Apology_Letter_KarthikeyanJV.pdf";
+import { useLocation } from "react-router-dom";
 
-const pdfs = Array(9).fill({
-  id: "7376242CS111",
-  name: "Apology Letter 7376242CS111",
-  src: Apology_Letter_KishoreK,
+const initialPdfs = Array(9).fill({
+  id: "7376242AD199",
+  name: "Apology Letter 7376242AD199",
+  src: Apology_Letter_KarthikeyanJV,
 });
 
-
-export default function Student2_4() {
+export default function Student4_4() {
+  const location = useLocation();
+  const [studentPdf, setStudentPdf] = useState([]);
   const [heading, setHeading] = useState("");
   const fullHeading = "  Your apologies:";
   const headingLength = fullHeading.length;
+  const studentId = "7376242AD199";
 
+  // Fetch PDFs from the backend
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/student-pdfs/${studentId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setStudentPdf(data);
+      })
+      .catch((error) => console.error("Error fetching PDFs:", error));
+  }, [studentId]);
+
+  // Merging static and dynamic PDFs
+  const mergedPdfs = [
+    ...initialPdfs,
+    ...studentPdf.map((pdf) => ({
+      id: pdf.student_id,
+      name: pdf.pdf_name,
+      src: pdf.pdf_src,
+    })),
+  ];
+
+  // Animate the heading
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
       if (index < headingLength - 1) {
-        setHeading((prev) => {
-          console.log(index, fullHeading[index]);
-          return prev + fullHeading[index];
-        });
+        setHeading((prev) => prev + fullHeading[index]);
         index++;
       } else {
         clearInterval(interval);
@@ -29,11 +50,10 @@ export default function Student2_4() {
 
     return () => clearInterval(interval);
   }, []);
-  
 
   return (
     <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>
-      {/* Heading and Button */}
+      {/* Heading */}
       <div
         style={{
           display: "flex",
@@ -67,7 +87,7 @@ export default function Student2_4() {
           flexWrap: "wrap",
         }}
       >
-        {pdfs.map((pdf, index) => (
+        {mergedPdfs.map((pdf, index) => (
           <div
             key={index}
             style={{

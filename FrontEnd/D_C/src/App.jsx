@@ -130,6 +130,7 @@ const AppContent = () => {
   );
 };
 
+
 const App = () => (
   <Router>
     <AppContent />

@@ -47,6 +47,54 @@ const db = mysql.createConnection({
     });
     
   });
-  
+
+
+
+ // Fetch all PDFs
+app.get("/api/student-pdfs", (req, res) => {
+  console.log("Fetching all PDFs");
+  const sql = "SELECT * FROM student_pdfs";
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error("Error fetching PDFs:", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+    res.json(results);
+  });
+});
+
+// Fetch PDFs for a specific student
+app.get("/api/student-pdfs/:studentId", (req, res) => {
+  const studentId = req.params.studentId;
+  const sql = "SELECT * FROM student_pdfs WHERE student_id = ?";
+  db.query(sql, [studentId], (err, results) => {
+    if (err) {
+      console.error("Error fetching PDFs:", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+    res.json(results);
+  });
+});
+
+// Add a new PDF
+app.post("/api/student-pdfs", (req, res) => {
+  const { student_id, pdf_name, pdf_src } = req.body;
+
+  if (!student_id || !pdf_name || !pdf_src) {
+    return res.status(400).json({ message: "Student ID, PDF name, and PDF source are required" });
+  }
+
+  const sql = "INSERT INTO student_pdfs (student_id, pdf_name, pdf_src) VALUES (?, ?, ?)";
+  db.query(sql, [student_id, pdf_name, pdf_src], (err, result) => {
+    if (err) {
+      console.error("Error inserting PDF:", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+    res.json({ message: "PDF added successfully", id: result.insertId });
+  });
+});
+
+// Serve static files
+app.use("/assets", express.static(path.join(__dirname, "../FrontEnd/D.C/public/assets")));
 
   

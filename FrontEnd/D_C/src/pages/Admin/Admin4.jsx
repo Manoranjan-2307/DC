@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Apology_Letter_KarthikeyanJV from "../../assets/Apology_Letter_KarthikeyanJV.pdf";
-import Apology_Letter_KishoreK from "../../assets/Apology_Letter_KishoreK.pdf";
-import Apology_Letter_RahulK from "../../assets/Apology_Letter_RahulK.pdf";
-import Apology_Letter_SangeethM from "../../assets/Apology_Letter_SangeethM.pdf";
-import Apology_Letter_HenryM from "../../assets/Apology_Letter_HenryM.pdf";
+import React, { useState, useEffect, useMemo } from "react";
+import Apology_Letter_KarthikeyanJV from "/assets/Apology_Letter_KarthikeyanJV.pdf";
+import Apology_Letter_KishoreK from "/assets/Apology_Letter_KishoreK.pdf";
+import Apology_Letter_RahulK from "/assets/Apology_Letter_RahulK.pdf";
+import Apology_Letter_SangeethM from "/assets/Apology_Letter_SangeethM.pdf";
+import Apology_Letter_HenryM from "/assets/Apology_Letter_HenryM.pdf";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
 
 export const pdfs = [
   { id: "7376242AD199", name: "Apology Letter 7376242AD199", src: Apology_Letter_KarthikeyanJV },
@@ -14,27 +12,31 @@ export const pdfs = [
   { id: "7376242AD267", name: "Apology Letter 7376242AD267", src: Apology_Letter_RahulK },
   { id: "7376242IT201", name: "Apology Letter 7376242IT201", src: Apology_Letter_SangeethM },
   { id: "7376242AL165", name: "Apology Letter 7376242AL165", src: Apology_Letter_HenryM },
-  { id: "7376242AD199", name: "Apology Letter 7376242AD199", src: Apology_Letter_KarthikeyanJV },
-  { id: "7376242CS111", name: "Apology Letter 7376242CS111", src: Apology_Letter_KishoreK },
-  { id: "7376242AD267", name: "Apology Letter 7376242AD267", src: Apology_Letter_RahulK },
-  { id: "7376242IT201", name: "Apology Letter 7376242IT201", src: Apology_Letter_SangeethM },
 ];
-
 
 export default function Admin4() {
   const [heading, setHeading] = useState("");
   const fullHeading = "  Your uploads:";
   const headingLength = fullHeading.length;
   const [studentId, setStudentId] = useState("");
-  const [studentPdf, setStudentPdf] = useState(() => {
-    // Load from localStorage or initialize with an empty object
-    const savedData = localStorage.getItem("studentPdf");
-    return savedData ? JSON.parse(savedData) : {};
-  });
-  const navigate = useNavigate();
+  const [studentPdf, setStudentPdf] = useState({});
 
+  // Fetch all PDFs from the backend
+  useEffect(() => {
+    fetch("http://localhost:5000/api/student-pdfs")
+      .then((response) => response.json())
+      .then((data) => {
+        const pdfData = data.reduce((acc, pdf) => {
+          if (!acc[pdf.student_id]) acc[pdf.student_id] = [];
+          acc[pdf.student_id].push({ id: pdf.student_id, name: pdf.pdf_name, src: pdf.pdf_src });
+          return acc;
+        }, {});
+        setStudentPdf(pdfData);
+      })
+      .catch((error) => console.error("Error fetching PDFs:", error));
+  }, []);
 
-
+  // Animate the heading
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -49,36 +51,54 @@ export default function Admin4() {
     return () => clearInterval(interval);
   }, []);
 
-
-  // Save studentPdf to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("studentPdf", JSON.stringify(studentPdf));
-  }, [studentPdf]);
-
-
-  const uploadPDF = () =>{
+  const uploadPDF = () => {
     let inp = document.getElementById("inp");
     inp.style.visibility = "visible";
-  }
+  };
 
   const processStudentId = () => {
-    const matchedPdf = pdfs.find((pdf) => pdf.id === studentId); // Find the PDF by ID
+    const normalizedStudentId = studentId.trim().toUpperCase();
+    const matchedPdf = pdfs.find((pdf) => pdf.id === normalizedStudentId);
+
     if (matchedPdf) {
-      const updatedStudentPdf = {
-        ...studentPdf,
-        [studentId]: [...(studentPdf[studentId] || []), matchedPdf], // Append the matched PDF
+      const newPdf = {
+        student_id: normalizedStudentId,
+        pdf_name: matchedPdf.name,
+        pdf_src: matchedPdf.src,
       };
-      setStudentPdf(updatedStudentPdf); // Update local state
-      alert(`PDF for Student ID ${studentId} has been added.`);
-      navigate("/student1_4", { state: { studentPdf: updatedStudentPdf } }); // Navigate to Student1_4 with state
+
+      // Add the PDF to the backend
+      fetch("http://localhost:5000/api/student-pdfs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPdf),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.message);
+
+          // Update the local state
+          setStudentPdf((prev) => ({
+            ...prev,
+            [normalizedStudentId]: [...(prev[normalizedStudentId] || []), matchedPdf],
+          }));
+          alert(`PDF for Student ID ${normalizedStudentId} has been added.`);
+        })
+        .catch((error) => console.error("Error adding PDF:", error));
     } else {
       alert("No PDF found for the entered Student ID.");
     }
+
     setStudentId(""); // Clear the input field
   };
 
-  // Combine initial PDFs and dynamically added PDFs for display
-  const combinedPdfs = [...pdfs, ...Object.values(studentPdf).flat()];
+  const combinedPdfs = useMemo(() => {
+    const dynamicPdfs = Object.values(studentPdf).flat();
+    const uniqueDynamicPdfs = dynamicPdfs.filter(
+      (dynamicPdf) => !pdfs.some((staticPdf) => staticPdf.id === dynamicPdf.id)
+    );
+    return [...pdfs, ...uniqueDynamicPdfs];
+  }, [studentPdf]);
 
   return (
     <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>
@@ -109,7 +129,7 @@ export default function Admin4() {
           id="inp"
           placeholder="Enter Student ID"
           value={studentId}
-          onChange={(e) => setStudentId(e.target.value)} // Update state on input change
+          onChange={(e) => setStudentId(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               processStudentId();

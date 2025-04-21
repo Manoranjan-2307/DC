@@ -1,42 +1,47 @@
 import React, { useState, useEffect } from "react";
-import Apology_Letter_RahulK from "../../../assets/Apology_Letter_RahulK.pdf";
+import Apology_Letter_KishoreK from "/assets/Apology_Letter_KishoreK.pdf";
 import { useLocation } from "react-router-dom";
 
 const initialPdfs = Array(9).fill({
-  id: "7376242AD267",
-  name: "Apology Letter 7376242AD267",
-  src: Apology_Letter_RahulK,
+  id: "7376242CS111",
+  name: "Apology Letter 7376242CS111",
+  src: Apology_Letter_KishoreK,
 });
 
-
-export default function Student1_4() {
+export default function Student2_4() {
   const location = useLocation();
-  const [studentPdf, setStudentPdf] = useState(() => {
-    // Load from localStorage or use the state passed via navigation
-    const savedData = localStorage.getItem("studentPdf");
-    return savedData ? JSON.parse(savedData) : location.state?.studentPdf || {};
-  });
+  const [studentPdf, setStudentPdf] = useState([]);
   const [heading, setHeading] = useState("");
   const fullHeading = "  Your apologies:";
   const headingLength = fullHeading.length;
-  const studentId = '7376242AD267';
+  const studentId = "7376242CS111";
 
-  //Merging static and dynamic PDFs
+  // Fetch PDFs from the backend
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/student-pdfs/${studentId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setStudentPdf(data);
+      })
+      .catch((error) => console.error("Error fetching PDFs:", error));
+  }, [studentId]);
+
+  // Merging static and dynamic PDFs
   const mergedPdfs = [
     ...initialPdfs,
-    ...(studentPdf[studentId] || []),
-  ]
+    ...studentPdf.map((pdf) => ({
+      id: pdf.student_id,
+      name: pdf.pdf_name,
+      src: pdf.pdf_src,
+    })),
+  ];
 
-
-
+  // Animate the heading
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
       if (index < headingLength - 1) {
-        setHeading((prev) => {
-          console.log(index, fullHeading[index]);
-          return prev + fullHeading[index];
-        });
+        setHeading((prev) => prev + fullHeading[index]);
         index++;
       } else {
         clearInterval(interval);
@@ -45,11 +50,10 @@ export default function Student1_4() {
 
     return () => clearInterval(interval);
   }, []);
-  
 
   return (
     <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>
-      {/* Heading and Button */}
+      {/* Heading */}
       <div
         style={{
           display: "flex",

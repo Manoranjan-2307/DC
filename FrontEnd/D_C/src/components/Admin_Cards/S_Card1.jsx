@@ -57,6 +57,9 @@ const S_Card1 = ({ complaint }) => {
             />
           </Grid>
           <Grid item xs>
+          <Typography variant="body1" component="p" sx={textStyle}>
+              <span style={labelStyle}>Roll No:</span> {complaint.sId}
+            </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
               <span style={labelStyle}>Venue:</span> {complaint.venue}
             </Typography>
@@ -70,7 +73,7 @@ const S_Card1 = ({ complaint }) => {
               <span style={labelStyle}>Reason:</span> {complaint.info}
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Status:</span> 
+              <span style={labelStyle}>Attendance:</span> 
               <span style={{color: 'red'}}>{complaint.status}</span>
             </Typography>
           </Grid>

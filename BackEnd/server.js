@@ -226,7 +226,7 @@ app.post("/api/meeting-details", (req, res) => {
 // FOR FETCHING meeting details in card
 app.get("/api/meeting-details", (req, res) => {
   const sql = `
-    SELECT No_ AS id, VENUE AS venue, DATE_FORMAT(DATE_, '%d-%m-%Y') AS date, 
+    SELECT No_ AS id, S_ID AS sId, VENUE AS venue, DATE_FORMAT(DATE_, '%d-%m-%Y') AS date, 
            TIME_FORMAT(TIME_, '%h:%i %p') AS time, INFO AS info, STATUS_ AS status
     FROM meeting_details
     ORDER BY No_ DESC
@@ -240,4 +240,3 @@ app.get("/api/meeting-details", (req, res) => {
     res.json(results);
   });
 });
-  

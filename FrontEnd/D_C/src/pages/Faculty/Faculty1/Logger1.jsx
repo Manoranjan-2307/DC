@@ -69,6 +69,7 @@ const Logger1 = () => {
   };
 
   return (
+    <div style={{marginTop: "100px"}}>
     <Box sx={{ p: 3, 
       maxWidth: 600, 
       mx: "auto",
@@ -197,6 +198,7 @@ const Logger1 = () => {
         </Box>
       )}
     </Box>
+    </div>
   );
 };
 

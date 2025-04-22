@@ -61,7 +61,7 @@ const M2_Card = () => {
               <span style={labelStyle}>Venue:</span> Faculty Hall - 3 (New Mechanical Block)
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Date:</span> 10.04.2025
+              <span style={labelStyle}>Date:</span> 10-04-2025
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
               <span style={labelStyle}>Time:</span> 2:00 PM
@@ -70,7 +70,8 @@ const M2_Card = () => {
               <span style={labelStyle}>Reason:</span> Enquiry for the complaint filed on 02.04.2025 at 02:00 PM
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Status:</span> -
+              <span style={labelStyle}>Status:</span> 
+              <span style={{color: 'red'}}>pending</span>
             </Typography>
           </Grid>
         </Grid>

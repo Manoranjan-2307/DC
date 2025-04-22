@@ -11,7 +11,7 @@ const AdminCard2 = () => {
   };
 
   const labelStyle = {
-    fontFamily: "Tahoma",
+    fontFamily: "sans-serif",
     fontSize: "1.2rem",
     color: "#000000",
     fontWeight: 500,
@@ -52,7 +52,7 @@ const AdminCard2 = () => {
             <span style={labelStyle}>Name:</span> Rahul K
           </Typography>
           <Typography variant="body1" component="p" sx={textStyle}>
-            <span style={labelStyle}>Student ID:</span> 7376242AD267
+            <span style={labelStyle}>Register No:</span> 7376242AD267
           </Typography>
           <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Venue:</span> CT lab

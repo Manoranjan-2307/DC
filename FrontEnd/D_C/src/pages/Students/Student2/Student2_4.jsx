@@ -36,7 +36,7 @@ export default function Student2_4() {
     })),
   ];
 
-  // Animate the heading
+  
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {

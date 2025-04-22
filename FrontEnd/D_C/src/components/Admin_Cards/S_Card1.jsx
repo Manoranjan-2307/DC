@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { Card, CardContent, Typography, Grid, Box, Button } from "@mui/material";
 import MeetingIcon from "../../assets/Meeting_icon.png";
 
 const S_Card1 = ({ complaint }) => {
+  const [ attendance, setAttendance] = useState('pending');
   const textStyle = {
     fontFamily: "sans-serif",
     fontSize: "1.2rem",
@@ -11,7 +12,7 @@ const S_Card1 = ({ complaint }) => {
   };
 
   const labelStyle = {
-    fontFamily: "Tahoma",
+    fontFamily: "sans-serif",
     fontSize: "1.2rem",
     color: "#000000",
     fontWeight: 500,
@@ -19,6 +20,16 @@ const S_Card1 = ({ complaint }) => {
     marginRight: "6px",
     marginLeft: "15px",
   };
+
+  const getAttendancecolor = () =>{
+    if (attendance == 'present'){
+      return 'green';
+    }
+    else if (attendance == 'absent'){
+      return 'red';
+    }
+    return 'red';
+  }
 
   return (
     <Card
@@ -58,7 +69,7 @@ const S_Card1 = ({ complaint }) => {
           </Grid>
           <Grid item xs>
           <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Roll No:</span> {complaint.sId}
+              <span style={labelStyle}>Register No:</span> {complaint.sId}
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
               <span style={labelStyle}>Venue:</span> {complaint.venue}
@@ -74,7 +85,7 @@ const S_Card1 = ({ complaint }) => {
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
               <span style={labelStyle}>Attendance:</span> 
-              <span style={{color: 'red'}}>{complaint.status}</span>
+              <span style={{color: getAttendancecolor()}}>{complaint.status}</span>
             </Typography>
           </Grid>
         </Grid>
@@ -85,6 +96,7 @@ const S_Card1 = ({ complaint }) => {
             variant="contained"
             color="success"
             sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+            onClick={ ()=> setAttendance('present')}
           >
             Present
           </Button>
@@ -94,6 +106,7 @@ const S_Card1 = ({ complaint }) => {
             variant="contained"
             color="error"
             sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
+            onClick={ ()=> setAttendance('absent')}
           >
             Absent
           </Button>

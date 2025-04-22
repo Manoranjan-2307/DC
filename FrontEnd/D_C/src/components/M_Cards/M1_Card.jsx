@@ -11,7 +11,7 @@ const M1_Card = () => {
   };
 
   const labelStyle = {
-    fontFamily: "Tahoma",
+    fontFamily: "sans-serif",
     fontSize: "1.2rem",
     color: "#000000",
     fontWeight: 500,

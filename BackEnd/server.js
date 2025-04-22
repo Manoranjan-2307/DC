@@ -200,6 +200,7 @@ app.put("/api/revoked/:roll_no", (req, res) => {
 
 
 
+
 // INSERTING meeting details
 app.post("/api/meeting-details", (req, res) => {
   console.log("Request Body:", req.body); 
@@ -222,6 +223,7 @@ app.post("/api/meeting-details", (req, res) => {
     res.status(201).json({ message: "Meeting details added successfully" });
   });
 });
+
 
 // FOR FETCHING meeting details in card
 app.get("/api/meeting-details", (req, res) => {

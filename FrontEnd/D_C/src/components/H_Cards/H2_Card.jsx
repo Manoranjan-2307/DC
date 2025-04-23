@@ -21,8 +21,8 @@ const HCard2 = () => {
   return (
     <Card
       sx={{
-        maxWidth: 800,
-        width: '100%',
+        
+        width: '30vw',
         margin: '0 auto',
         padding: 2,
         borderRadius: '14px',
@@ -53,7 +53,7 @@ const HCard2 = () => {
           <span style={labelStyle}>Venue:</span> CT lab
         </Typography>
         <Typography variant="body1" component="p" sx={textStyle}>
-          <span style={labelStyle}>Status:</span>
+          {/* <span style={labelStyle}>Status:</span> */}
           <span style={{ color: 'green' }}>Accepted</span>
         </Typography>
       </CardContent>

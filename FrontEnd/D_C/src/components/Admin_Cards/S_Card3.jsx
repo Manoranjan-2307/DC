@@ -35,8 +35,8 @@ const S_Card3 = () => {
   return (
     <Card
       sx={{
-        maxWidth: 800,
-        width: "100%",
+       
+        width: "60vw",
         margin: "0 auto",
         padding: 2,
         borderRadius: "14px",
@@ -55,9 +55,10 @@ const S_Card3 = () => {
             color: "red",
             fontWeight: 600,
             marginBottom: "10px",
+           
           }}
         >
-          ENQUIRY MEETING
+          ENQUIRY  MEETING
         </Typography>
         <Grid container spacing={2} alignItems="center">
           <Grid item>

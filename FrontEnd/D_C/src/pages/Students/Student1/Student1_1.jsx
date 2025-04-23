@@ -41,7 +41,7 @@ export default function Student1_1() {
         flexDirection: 'column',
         gap: '45px',
         maxWidth: '800px', 
-        width: '100%', 
+        width: "100%", 
         boxSizing: 'border-box', 
         marginBottom: '30px'
       }}

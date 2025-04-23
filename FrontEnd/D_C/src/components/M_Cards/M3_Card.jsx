@@ -22,14 +22,20 @@ const M3_Card = ({ meetings }) => {
     marginLeft: "15px",
   };
 
+  const getStatusColor = (status) => {
+    if (status?.toLowerCase() === "present") return "green";
+    if (status?.toLowerCase() === "absent") return "red";
+    return "red";
+  };
+
   return (
     <>
       {meetings.map((meeting) => (
         <Card
           key={meeting.id}
           sx={{
-            maxWidth: 800,
-            width: "100%",
+           
+            width: "60vw",
             margin: "0 auto",
             padding: 2,
             borderRadius: "14px",
@@ -77,8 +83,9 @@ const M3_Card = ({ meetings }) => {
                 </Typography>
                 <Typography variant="body1" sx={textStyle}>
                   <span style={labelStyle}>Status:</span>
-                  <span style={{color: "red"}}>{" "} {meeting.status || "-"}</span>
-                  
+                  <span style={{ color: getStatusColor(meeting.status) }}>
+                    {meeting.status || "-"}
+                  </span>
                 </Typography>
               </Grid>
             </Grid>

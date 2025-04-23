@@ -8,6 +8,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: #f5f5fd;
     
   }
   
@@ -33,7 +34,6 @@
     padding: 10px 0;
     border: none;
     border-radius: 4px;
-    background-color: #fff;
     color: #333;
     font-size: 16px;
     cursor: pointer;
@@ -49,6 +49,6 @@
 }
 
 .google-sign-in:hover {
-     background-color:#F0F0F0 ;
+     background-color: #f0f0f0 ;
 }
   

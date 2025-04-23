@@ -24,10 +24,10 @@ const db = mysql.createConnection({
     console.log("Connected to MySQL database");
   });
 
-  const PORT = 5000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+//   const PORT = 5000;
+//   app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+// });
 
 
 
@@ -241,4 +241,42 @@ app.get("/api/meeting-details", (req, res) => {
     }
     res.json(results);
   });
+});
+
+//FOR UPDATING ATTENDANCE IN MEETING
+app.post("/api/update-attendance", (req, res) => {
+  const { sId, venue, date, status } = req.body;
+
+  if (!sId || !venue || !date || !status) {
+    console.error("Missing required fields:", req.body); // Debug log
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  console.log("Received data:", req.body); // Debug log
+
+  const sql = `
+    UPDATE meeting_details 
+    SET STATUS_ = ? 
+    WHERE S_ID = ? AND VENUE = ? AND DATE_ = STR_TO_DATE(?, '%d-%m-%Y')
+  `;
+
+  db.query(sql, [status, sId, venue, date], (err, result) => {
+    if (err) {
+      console.error("Error updating attendance:", err); // Debug log
+      return res.status(500).json({ message: "Database error", error: err.message });
+    }
+
+    console.log("SQL Result:", result); // Debug log
+
+    if (result.affectedRows > 0) {
+      res.json({ message: "Attendance updated successfully" });
+    } else {
+      res.status(404).json({ message: "Meeting not found" });
+    }
+  });
+});
+
+const PORT = 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -22,8 +22,8 @@ const AdminCard1 = () => {
     <>
       <Card
         sx={{
-          maxWidth: 1200,
-          width: "100%",
+          
+          width: "60vw",
           margin: "0 auto",
           padding: 2,
           borderRadius: "14px",
@@ -62,9 +62,6 @@ const AdminCard1 = () => {
           </Typography>
           <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Issued By:</span> Indhu Bhashini V
-          </Typography>
-          <Typography variant="body1" component="p" sx={textStyle} style={{color: 'red'}}>
-            <span style={labelStyle}>Enquiry:</span> pending
           </Typography>
         </CardContent>
       </Card>

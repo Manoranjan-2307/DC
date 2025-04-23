@@ -6,9 +6,9 @@ import S_Card3 from '../../components/Admin_Cards/S_Card3';
 
 export default function Admin3_2() {
   const [heading, setHeading] = useState('');
-  const fullHeading = '  Your Schedules:';
+  const fullHeading = '  Meeting Schedules:';
   const headingLength = fullHeading.length;
-  const [complaints, setComplaints] = useState([]); // Initialize complaints state
+  const [complaints, setComplaints] = useState([]);
 
   useEffect(() => {
       let index = 0;

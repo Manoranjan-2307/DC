@@ -4,7 +4,7 @@ import AdminCard2 from '../../components/Admin_Cards/A2_Card';
 
 export default function Admin2() {
   const [heading, setHeading] = useState('');
-  const fullHeading = '  Complaint History:';
+  const fullHeading = '  Recieved Complaints:';
   const headingLength = fullHeading.length;
   
   useEffect(() => {
@@ -44,8 +44,9 @@ export default function Admin2() {
         marginBottom: '30px'
       }}
     >
-      <AdminCard1 />
+      
       <AdminCard2 />
+      <AdminCard1 />
       
       
     </div>

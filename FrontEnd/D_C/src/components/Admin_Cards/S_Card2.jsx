@@ -34,8 +34,8 @@ const S_Card2 = () => {
   return (
     <Card
       sx={{
-        maxWidth: 800,
-        width: "100%",
+       
+        width: "60vw",
         margin: "0 auto",
         padding: 2,
         borderRadius: "14px",

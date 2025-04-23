@@ -21,8 +21,8 @@ const HCard4 = () => {
   return (
     <Card
       sx={{
-        maxWidth: 800,
-        width: '100%',
+        
+        width: '30vw',
         margin: '0 auto',
         padding: 2,
         borderRadius: '14px',
@@ -53,7 +53,7 @@ const HCard4 = () => {
           <span style={labelStyle}>Venue:</span> AI&DS lab-3
         </Typography>
         <Typography variant="body1" component="p" sx={textStyle}>
-          <span style={labelStyle}>Status:</span>
+          {/* <span style={labelStyle}>Status:</span> */}
           <span style={{ color: 'red' }}>Revoked</span>
         </Typography>
       </CardContent>

@@ -19,7 +19,7 @@ export const handleLogin = (username, password, navigate) => {
   } else if (username === "faculty1" && password === "pass-1") {
     navigate("/logger1");
   } else {
-    alert("Invalid Username or Password");
+    alert("Invalid Credantials!");
   }
 };
 

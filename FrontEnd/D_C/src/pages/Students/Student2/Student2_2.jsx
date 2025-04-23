@@ -36,21 +36,23 @@ export default function Student2_2() {
     <div
       className="scroll-content"
       style={{
-        marginLeft: '235px',
+        marginLeft: '140px',
         marginTop: '25px',
-        display: 'flex', 
-        flexDirection: 'column', 
-        gap: '45px', 
-        marginBottom: '20px',
-        width: '100%',
-        maxWidth: '800px',
-
-      }}
-    >
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        gap: '45px',
+        marginBottom: '30px',
+        width: '80%',
+  }}
+>
       <HCard4 />
       <HCard3 />
       <HCard2 />
       <HCard1 />
+      <HCard2 />
+      <HCard3 />
+      
       
     </div>
     </div>

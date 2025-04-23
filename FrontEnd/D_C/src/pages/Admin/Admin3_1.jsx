@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { TextField, Button, Box, Typography } from "@mui/material";
+import { TextField, Button, Box, Typography, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Admin3_1() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     studentId: "",
     venue: "",
@@ -21,12 +25,10 @@ export default function Admin3_1() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Add your logic to handle form submission here (e.g., API call)
     try {
       const response = await axios.post("http://localhost:5000/api/meeting-details", formData);
-      alert(response.data.message); // Show success message
-      setFormData({ studentId: "", venue: "", date: "", time: "", reason: "" }); // Reset form
+      alert(response.data.message);
+      setFormData({ studentId: "", venue: "", date: "", time: "", reason: "" });
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Failed to submit meeting details. Please try again.");
@@ -34,24 +36,32 @@ export default function Admin3_1() {
   };
 
   return (
-    <div style={{ marginLeft: "500px", marginTop: "120px", marginBottom: "30px" }}>
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        width: "450px",
-        margin: "auto",
-        mt: 5,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        backgroundColor: "#f9f9f9",
-      }}
-    >
-  
+    <div style={{ marginLeft: "450px", marginTop: "120px", marginBottom: "30px" }}>
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          width: "500px",
+          margin: "auto",
+          mt: 5,
+          p: 3,
+          boxShadow: 3,
+          borderRadius: 2,
+          backgroundColor: "#f9f9f9",
+        }}
+        component="form"
+        onSubmit={handleSubmit}
+      >
+        
+        <IconButton
+          sx={{ position: "absolute", top: 9, right: 8 }}
+          onClick={() => navigate("/admin3")}
+        >
+          <CloseIcon />
+        </IconButton>
+
         <Typography variant="h5" textAlign="center" gutterBottom>
           Create Meeting
         </Typography>
@@ -82,9 +92,7 @@ export default function Admin3_1() {
           onChange={handleChange}
           required
           fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
+          InputLabelProps={{ shrink: true }}
         />
 
         <TextField
@@ -95,9 +103,7 @@ export default function Admin3_1() {
           onChange={handleChange}
           required
           fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
+          InputLabelProps={{ shrink: true }}
         />
 
         <TextField

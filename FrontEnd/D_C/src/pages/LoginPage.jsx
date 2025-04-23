@@ -23,6 +23,8 @@ const LoginPage = () => {
           className="login-input"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          style={{marginTop: "20px"}}
+
         />
         <TextField
           label="Password"
@@ -47,7 +49,7 @@ const LoginPage = () => {
         <button
           className="google-sign-in"
           type="button"
-          style={{ borderRadius: "20px", fontFamily: "tahoma", padding: "10px" }}
+          style={{ borderRadius: "20px", fontFamily: "tahoma", padding: "10px", backgroundColor: 'white' }}
           onClick={() => handleGoogleLogin(navigate)}
         >
           <img

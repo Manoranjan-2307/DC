@@ -23,8 +23,8 @@ const ComplaintCard2 = () => {
     <>
       <Card
         sx={{
-          maxWidth: 800,
-          width: "100%",
+          
+          width: "60vw",
           margin: "0 auto",
           padding: 2,
           borderRadius: "14px",

@@ -25,7 +25,7 @@ const Sidebar = ({ onSelect }) => {
       <List>
         {menuItems.map((item) => (
           <Tooltip key={item.text} title={item.text} placement="right">
-            <ListItem button onClick={() => onSelect(item.page)}>
+            <ListItem component="button" onClick={() => onSelect(item.page)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
             </ListItem>
           </Tooltip>

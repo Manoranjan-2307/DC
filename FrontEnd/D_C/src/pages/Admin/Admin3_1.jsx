@@ -3,6 +3,8 @@ import { TextField, Button, Box, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 export default function Admin3_1() {
   const navigate = useNavigate();
@@ -22,6 +24,17 @@ export default function Admin3_1() {
       [name]: value,
     }));
   };
+
+  const handleCancel = () =>{
+      setFormData({
+        studentId: "",
+        venue: "",
+        date: "",
+        time: "",
+        reason: "",
+      })
+      alert("Form Cleared!");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,15 +129,29 @@ export default function Admin3_1() {
           multiline
           rows={4}
         />
+        <div style={{display: "inline-block"}}>
+        
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          sx={{mt: 2, borderRadius: "6px"}}
+          style={{width: "150px",  backgroundColor: "red"}}
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
 
         <Button
           type="submit"
           variant="contained"
           color="primary"
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, borderRadius: "6px"}}
+          style={{width: "150px", marginLeft: "150px"}}
         >
-          Create
+          Create <i class="bi bi-plus-lg" style={{marginLeft: "10px", marginTop: "2px"}}></i>
         </Button>
+        </div>
       </Box>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Grid, Box, Button } from "@mui/material";
-import MeetingIcon from "../../assets/Meeting_icon.png";
+import MeetingIcon from "../../assets/Meeting icon.png";
 
 const S_Card1 = ({ complaint }) => {
   const [attendance, setAttendance] = useState(complaint.status || "pending");

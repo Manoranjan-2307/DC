@@ -43,7 +43,7 @@ export function ReasonModal({studentId,status_}) {
       <Box
         sx={{
           backgroundColor: "#fff7ec",
-          width: 300,
+          width: 500,
           p: 3,
           borderRadius: 2,
           mx: "auto",
@@ -51,8 +51,8 @@ export function ReasonModal({studentId,status_}) {
           boxShadow: 5,
         }}
       >
-        <Typography variant="h6" fontWeight="bold">
-          Reason :
+        <Typography variant="h6"  style={{fontFamily: "sans-serif", fontWeight: 500, color: "#555555"}}>
+          Reason:
         </Typography>
         <TextField
           fullWidth
@@ -65,7 +65,7 @@ export function ReasonModal({studentId,status_}) {
         <Button
           variant="contained"
           onClick={handleSubmit}
-          sx={{ mt: 2, backgroundColor: "green", ml: 10 }}
+          sx={{ mt: 2, backgroundColor: "green", ml: 22 }}
         >
           Submit
         </Button>

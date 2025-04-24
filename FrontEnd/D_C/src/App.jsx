@@ -55,25 +55,38 @@ import Sidebar from "./components/Faculty_Sidebar/F1_Sidebar";
 
 const AppContent = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedPage, setSelectedPage] = useState("logger");
   const location = useLocation();
-  const [role, setRole] = useState("faculty");
-  const [selectedPage, setSelectedPage] = useState("");
+
+  // // Toggle manually for now, can be from login session later
+  // const isFaculty = location.pathname.startsWith("/logger") ||
+  //                   location.pathname.startsWith("/mentor") ||
+  //                   location.pathname.startsWith("/revoke");
+  // const isSupport = location.pathname.startsWith("/supportdesk");
+  // Use either this for faculty routes...
+  const isFaculty = location.pathname.startsWith("/logger") ||
+                  location.pathname.startsWith("/mentor") ||
+                  location.pathname.startsWith("/revoke");
+
+  const isSupport = location.pathname.startsWith("/supportdesk");
+
+
 
   const isLoginPage = location.pathname === "/";
 
   const facultyPages = {
     logger: <Logger1 />,
     mentor: <Mentor1 />,
-    revoke: <Revoke1 />,
+    revoke: <Revoke1 />
   };
 
   const supportPages = {
-    supportDesk: <Supportdesk />,
+    supportDesk: <Supportdesk />
   };
 
   const renderPage = () => {
-    if (role === "faculty") return facultyPages[selectedPage] || <h2>Select a faculty option</h2>;
-    if (role === "support") return supportPages[selectedPage] || <h2>Select a support option</h2>;
+    if (isFaculty) return facultyPages[selectedPage] || <h2>Select a faculty option</h2>;
+    if (isSupport) return supportPages[selectedPage] || <h2>Select a support option</h2>;
     return null;
   };
 
@@ -106,74 +119,71 @@ const AppContent = () => {
     "/admin4": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
   };
 
+  // Route-based Sidebar
   const showSidebar = sidebarMap[location.pathname];
 
-  const isFacultyOrSupport =
-    location.pathname.startsWith("/logger") ||
-    location.pathname.startsWith("/mentor") ||
-    location.pathname.startsWith("/revoke") ||
-    location.pathname.startsWith("/support");
+  // Conditional Layouts
+  if (isFaculty || isSupport) {
+    return (
+      <div style={{ display: "flex" }}>
+        {isFaculty ? (
+          <Sidebar onSelect={setSelectedPage} />
+        ) : (
+          <SupportSidebar onSelect={setSelectedPage} />
+        )}
+        <div style={{ flex: 1, padding: "20px" }}>
+          {renderPage()}
+        </div>
+      </div>
+    );
+  }
 
+  // Default App Layout (Students/Admin)
   return (
-    <>
-      {isFacultyOrSupport ? (
-        <div>
-          <div style={{ padding: "10px", display: "flex", gap: "10px", background: "#eee" }}>
-            <button onClick={() => setRole("faculty")}>Faculty</button>
-            <button onClick={() => setRole("support")}>Support Desk</button>
-          </div>
+    <div className="d-flex">
+      {showSidebar}
+      <div style={{ flex: 1 }}>
+        {!isLoginPage && <Header collapsed={collapsed} />}
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          {/* Admin */}
+          <Route path="/admin1" element={<Admin1 />} />
+          <Route path="/admin2" element={<Admin2 />} />
+          <Route path="/admin3" element={<Admin3 />} />
+          <Route path="/admin3_1" element={<Admin3_1 />} />
+          <Route path="/admin3_2" element={<Admin3_2 />} />
+          <Route path="/admin4" element={<Admin4 />} />
 
-          <div style={{ display: "flex" }}>
-            {role === "faculty" ? (
-              <Sidebar onSelect={setSelectedPage} />
-            ) : (
-              <SupportSidebar onSelect={setSelectedPage} />
-            )}
-            <div style={{ flex: 1, padding: "20px" }}>{renderPage()}</div>
-          </div>
-        </div>
-      ) : (
-        <div className="d-flex">
-          {showSidebar}
-          <div style={{ flex: 1 }}>
-            {!isLoginPage && <Header collapsed={collapsed} />}
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/admin1" element={<Admin1 />} />
-              <Route path="/admin2" element={<Admin2 />} />
-              <Route path="/admin3" element={<Admin3 />} />
-              <Route path="/admin3_1" element={<Admin3_1 />} />
-              <Route path="/admin3_2" element={<Admin3_2 />} />
-              <Route path="/admin4" element={<Admin4 />} />
-              <Route path="/student1_1" element={<Student1_1 />} />
-              <Route path="/student1_2" element={<Student1_2 />} />
-              <Route path="/student1_3" element={<Student1_3 />} />
-              <Route path="/student1_4" element={<Student1_4 />} />
-              <Route path="/student2_1" element={<Student2_1 />} />
-              <Route path="/student2_2" element={<Student2_2 />} />
-              <Route path="/student2_3" element={<Student2_3 />} />
-              <Route path="/student2_4" element={<Student2_4 />} />
-              <Route path="/student3_1" element={<Student3_1 />} />
-              <Route path="/student3_2" element={<Student3_2 />} />
-              <Route path="/student3_3" element={<Student3_3 />} />
-              <Route path="/student3_4" element={<Student3_4 />} />
-              <Route path="/student4_1" element={<Student4_1 />} />
-              <Route path="/student4_2" element={<Student4_2 />} />
-              <Route path="/student4_3" element={<Student4_3 />} />
-              <Route path="/student4_4" element={<Student4_4 />} />
-              <Route path="/student5_1" element={<Student5_1 />} />
-              <Route path="/student5_2" element={<Student5_2 />} />
-              <Route path="/student5_3" element={<Student5_3 />} />
-              <Route path="/student5_4" element={<Student5_4 />} />
-              <Route path="/logger1" element={<Logger1 />} />
-              <Route path="/mentor1" element={<Mentor1 />} />
-              <Route path="/revoke1" element={<Revoke1 />} />
-              <Route path="/supportdesk" element={<Supportdesk />} />
-            </Routes>
-          </div>
-        </div>
-      )}
-    </>
+          {/* Student */}
+          <Route path="/student1_1" element={<Student1_1 />} />
+          <Route path="/student1_2" element={<Student1_2 />} />
+          <Route path="/student1_3" element={<Student1_3 />} />
+          <Route path="/student1_4" element={<Student1_4 />} />
+          <Route path="/student2_1" element={<Student2_1 />} />
+          <Route path="/student2_2" element={<Student2_2 />} />
+          <Route path="/student2_3" element={<Student2_3 />} />
+          <Route path="/student2_4" element={<Student2_4 />} />
+          <Route path="/student3_1" element={<Student3_1 />} />
+          <Route path="/student3_2" element={<Student3_2 />} />
+          <Route path="/student3_3" element={<Student3_3 />} />
+          <Route path="/student3_4" element={<Student3_4 />} />
+          <Route path="/student4_1" element={<Student4_1 />} />
+          <Route path="/student4_2" element={<Student4_2 />} />
+          <Route path="/student4_3" element={<Student4_3 />} />
+          <Route path="/student4_4" element={<Student4_4 />} />
+          <Route path="/student5_1" element={<Student5_1 />} />
+          <Route path="/student5_2" element={<Student5_2 />} />
+          <Route path="/student5_3" element={<Student5_3 />} />
+          <Route path="/student5_4" element={<Student5_4 />} />
+
+          {/* Faculty & Support (Fallback only) */}
+          <Route path="/logger1" element={<Logger1 />} />
+          <Route path="/mentor1" element={<Mentor1 />} />
+          <Route path="/revoke1" element={<Revoke1 />} />
+          <Route path="/supportdesk" element={<Supportdesk />} />
+        </Routes>
+      </div>
+    </div>
   );
 };
 

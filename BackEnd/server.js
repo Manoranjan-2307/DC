@@ -123,10 +123,9 @@ app.use("/assets", express.static(path.join(__dirname, "../FrontEnd/D.C/public/a
 app.post("/api/log-entry", (req, res) => {
   const { S_ID, student_name, faculty_name, time_date, comment, venue } = req.body;
 
-  console.log(" Received log data:", req.body);
+  console.log("Received log data:", req.body);
 
-
-  if (!S_ID || !student_name || !faculty_name || !time_date || !comment || !venue) {
+  if (!faculty_name || !time_date || !comment || !venue) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -135,14 +134,26 @@ app.post("/api/log-entry", (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [S_ID, student_name, faculty_name, time_date, comment, venue], (err, result) => {
-    if (err) {
-      console.error("Error inserting log:", err);
-      return res.status(500).json({ error: "Failed to create log", details: err.message });
-    }
-    res.status(201).json({ message: "Log entry created" });
-  });
+  db.query(
+    sql,
+    [
+      S_ID && S_ID.trim() !== "" ? S_ID : null,
+      student_name && student_name.trim() !== "" ? student_name : null,
+      faculty_name,
+      time_date,
+      comment,
+      venue
+    ],
+    (err, result) => {
+      if (err) {
+        console.error("Error inserting log:", err);
+        return res.status(500).json({ error: "Failed to create log", details: err.message });
+      }
+      res.status(201).json({ message: "Log entry created" });
+}
+);
 });
+
 
 // ✅ POST a revoked complaint
 app.post("/api/revoked", (req, res) => {

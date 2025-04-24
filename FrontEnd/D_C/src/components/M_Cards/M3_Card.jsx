@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
-import MeetingIcon from "../../assets/Meeting_icon.png";
+import MeetingIcon from "../../assets/Meeting icon.png";
 
 const M3_Card = ({ meetings }) => {
   if (!meetings || meetings.length === 0) return null;

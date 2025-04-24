@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
-import MeetingIcon from "../../assets/Meeting_icon.png"; 
+import MeetingIcon from "../../assets/Meeting icon.png"; 
 
 const M1_Card = () => {
   const textStyle = {
@@ -71,7 +71,7 @@ const M1_Card = () => {
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
               <span style={labelStyle}>Status:</span>
-              <span style={{color: "red"}}>pending</span>
+              <span style={{color: "red", marginLeft: "10px"}}>pending</span>
             </Typography>
           </Grid>
         </Grid>

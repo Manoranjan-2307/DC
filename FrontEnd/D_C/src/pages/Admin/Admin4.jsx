@@ -5,6 +5,7 @@ import Apology_Letter_RahulK from "/assets/Apology_Letter_RahulK.pdf";
 import Apology_Letter_SangeethM from "/assets/Apology_Letter_SangeethM.pdf";
 import Apology_Letter_HenryM from "/assets/Apology_Letter_HenryM.pdf";
 import { Button } from "@mui/material";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const pdfs = [
   { id: "7376242AD199", name: "Apology Letter 7376242AD199", src: Apology_Letter_KarthikeyanJV },
@@ -22,7 +23,7 @@ export default function Admin4() {
   const [studentPdf, setStudentPdf] = useState({});
 
 
-  // Fetch all PDFs from the backend
+  // Fetching all PDFs from the backend
   useEffect(() => {
     fetch("http://localhost:5000/api/student-pdfs")
       .then((response) => response.json())
@@ -156,10 +157,11 @@ export default function Admin4() {
             backgroundColor: "#1f80e0",
             color: "white",
             marginTop: "50px",
+            marginRight: "5px"
           }}
           onClick={uploadPDF}
         >
-          Upload PDF
+          Upload PDF <i class="bi bi-folder-plus" style={{marginLeft: "10px", marginTop: "2px"}}></i>
         </Button>
       </div>
 
@@ -203,6 +205,14 @@ export default function Admin4() {
                   cursor: "pointer",
                   boxShadow: "0 6px 8px rgba(0, 0, 0, 0.1)",
                   transition: "transform 0.2s, box-shadow 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.1)";
+                  e.currentTarget.style.boxShadow = "0 8px 12px rgba(0, 0, 0, 0.2)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow = "0 6px 8px rgba(0, 0, 0, 0.1)";
                 }}
               >
                 <p

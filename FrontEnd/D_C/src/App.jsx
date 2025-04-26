@@ -47,6 +47,7 @@ import Admin4 from "./pages/Admin/Admin4";
 import Logger1 from './pages/Faculty/Faculty1/Logger1';
 import Mentor1 from './pages/Faculty/Faculty1/Mentor1';
 import Revoke1 from './pages/Faculty/Faculty1/Revoke1';
+import Forward1 from './pages/Faculty/Faculty1/Forward1';
 
 // Support Desk
 import Supportdesk from "./pages/Supportdesk";
@@ -77,7 +78,8 @@ const AppContent = () => {
   const facultyPages = {
     logger: <Logger1 />,
     mentor: <Mentor1 />,
-    revoke: <Revoke1 />
+    revoke: <Revoke1 />,
+    forward: <Forward1 />
   };
 
   const supportPages = {
@@ -180,6 +182,7 @@ const AppContent = () => {
           <Route path="/logger1" element={<Logger1 />} />
           <Route path="/mentor1" element={<Mentor1 />} />
           <Route path="/revoke1" element={<Revoke1 />} />
+          <Route path="/forward1" element={<Forward1 />} />
           <Route path="/supportdesk" element={<Supportdesk />} />
         </Routes>
       </div>

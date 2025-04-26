@@ -287,6 +287,109 @@ app.post("/api/update-attendance", (req, res) => {
   });
 });
 
+
+
+// Fetch complaints for a specific student ID
+app.get("/api/complaints/:S_ID", (req, res) => {
+  const { S_ID } = req.params;
+
+  const sql = `
+    SELECT complaint_id, S_ID, student_name, faculty_name, time_date, comment, venue,
+    TIMESTAMPDIFF(SECOND, NOW(), ADDTIME(time_date, '06:00:00')) AS time_remaining
+    FROM faculty_logger
+    WHERE S_ID = ?
+    ORDER BY time_date DESC
+  `;
+
+  db.query(sql, [S_ID], (err, result) => {
+    if (err) {
+      console.error("Error fetching complaints:", err);
+      return res.status(500).json({ error: "Failed to fetch complaints" });
+    }
+
+    res.status(200).json(result); // Send all matching complaints
+  });
+});
+
+
+// For updating history
+app.put('/complaints/update-status/:sid/:complaint_id', (req, res) => {
+  const { sid, complaint_id } = req.params; // Extract S_ID and complaint_id from URL
+  const { status } = req.body; // Extract status from request body
+
+  const sql = 'UPDATE faculty_logger SET status = ? WHERE S_ID = ? AND complaint_id = ?';
+  db.query(sql, [status, sid, complaint_id], (err, result) => {
+    if (err) {
+      console.error('Error updating complaint status:', err);
+      return res.status(500).json({ error: 'Failed to update status' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'No matching complaint found to update' });
+    }
+
+    res.status(200).json({ message: 'Status updated successfully' });
+  });
+});
+
+
+// Endpoint to fetch complaint details
+app.get('/complaints/detail/:complaint_id', (req, res) => {
+  const { complaint_id } = req.params;
+
+  const sql = 'SELECT * FROM faculty_logger WHERE complaint_id = ?';
+  db.query(sql, [complaint_id], (err, result) => {
+    if (err) {
+      console.error('Error fetching complaint details:', err);
+      return res.status(500).json({ error: 'Failed to fetch complaint details' });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: 'Complaint not found' });
+    }
+
+    res.status(200).json(result[0]); // Return the complaint details
+  });
+});
+
+
+// Insert into admin_ table
+app.post("/send-to-admin", (req, res) => {
+  const { student_name, S_ID, Date_, Time_, Venue, Comment, faculty } = req.body;
+
+  const query = `
+    INSERT INTO admin_ (student_name, S_ID, Date_, Time_, Venue, Comment, faculty)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+  db.query(
+    query,
+    [student_name, S_ID, Date_, Time_, Venue, Comment, faculty],
+    (err, result) => {
+      if (err) {
+        console.error("Error inserting into admin_:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+      res.json({ message: "Complaint forwarded successfully", id: result.insertId });
+    }
+  );
+});
+
+// fetching complaints from admin table
+app.get("/api/admin-all", (req, res) => {
+  const query = `SELECT Name_, Roll_no, Date_, Time_, Venue, Complaint, faculty FROM admin_ ORDER BY No_ DESC`; 
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error fetching admin complaints:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json(results);
+  });
+});
+
+
+
+
+
 const PORT = 5000;
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

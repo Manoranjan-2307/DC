@@ -6,25 +6,29 @@ let openbox = () => {};
 export function ReasonModal({studentId,status_}) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
+  const [localStudentId, setLocalStudentId] = useState(studentId);
+  const [localStatus, setLocalStatus] = useState(status_);
 
-  openbox = () => setOpen(true);
+  openbox = () => {
+    setOpen(true);
+    setLocalStudentId(studentId);
+    setLocalStatus(status_);
+  };
 
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async () => {
-    console.log("Submitting reason:", text, studentId, status_);
+    console.log("Submitting reason:", text, localStudentId, localStatus);
     try {
       const response = await fetch("http://localhost:5000/api/reason", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text,studentId,status_ })
+      // body: JSON.stringify({ text, studentId, status_ })
+      body: JSON.stringify({ text, studentId: localStudentId, status_: localStatus })
       });
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+
   
       const result = await response.json();
       console.log("Reason submitted:", result);

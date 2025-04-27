@@ -4,24 +4,24 @@ import M2_Card from '../../../components/M_Cards/M2_Card';
 import M3_Card from '../../../components/M_Cards/M3_Card';
 
 export default function Student4_3() {
-  const [heading, setHeading] = useState('');
-  const fullHeading = '  Scheduled Meetings:';
-  const headingLength = fullHeading.length;
+  // const [heading, setHeading] = useState('');
+  // const fullHeading = '  Scheduled Meetings:';
+  // const headingLength = fullHeading.length;
   const [meetings, setMeetings] = useState([]); 
   const studentId = "7376242AD199"; 
   
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < headingLength - 1) {
-        setHeading((prev) => prev + fullHeading[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 100);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   let index = 0;
+  //   const interval = setInterval(() => {
+  //     if (index < headingLength - 1) {
+  //       setHeading((prev) => prev + fullHeading[index]);
+  //       index++;
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   }, 100);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useEffect(() => {
     const fetchMeetings = async () => {
@@ -43,21 +43,23 @@ export default function Student4_3() {
     fetchMeetings();
   }, [studentId]);
 
+
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '125px' }}>
-        <p style={{fontFamily: 'sans-serif', fontSize: '28px', color: '#875D7B'}}>{heading}</p>
+      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '170px' }}>
+        <p style={{fontFamily: 'sans-serif', fontSize: '28px', color: '#875D7B'}}>Scheduled Meetings:</p>
       </div>
       <div
         className="scroll-content"
         style={{
-          marginLeft: '220px', 
+          marginLeft: '180px', 
           marginTop: '10px',
           display: 'flex',
-          flexDirection: 'column',
-          gap: '60px',
-          maxWidth: '800px', 
-          width: '100%', 
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          gap: '35px',
+         
+          width: '80%', 
           boxSizing: 'border-box', 
           marginBottom: '35px'
         }}

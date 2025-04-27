@@ -36,7 +36,7 @@ export default function Admin3_2() {
         //sorting
         const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
         setComplaints(sortedData);
-        setComplaints(data); // Store the fetched complaints in state
+        setComplaints(data); 
       } catch (error) {
         console.error("Error fetching complaints:", error);
       }
@@ -49,19 +49,20 @@ export default function Admin3_2() {
 
   return (
     <div>
-    <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '125px' }}>
+    <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '180px' }}>
        <p style={{fontFamily: 'tahoma', fontSize: '30px', color: '#875D7B'}}>{heading}</p>
     </div>
     <div
       className="scroll-content"
       style={{
-        marginLeft: '220px', 
-        marginTop: '10px',
+        marginLeft: '170px', 
+        marginTop: '15px',
         display: 'flex',
-        flexDirection: 'column',
-        gap: '60px',
-        maxWidth: '800px', 
-        width: '100%', 
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        gap: '40px',
+       
+        width: '80%', 
         boxSizing: 'border-box', 
         marginBottom: '35px'
     }}
@@ -69,6 +70,7 @@ export default function Admin3_2() {
     
     <S_Card2 />
     <S_Card3 />
+
      {complaints.map((complaint) => (
           <S_Card1 key={complaint.id} complaint={complaint} /> 
         ))}

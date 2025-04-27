@@ -24,27 +24,28 @@ export default function Admin2() {
 
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '125px' }}>
+      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '170px' }}>
         <p style={{ fontFamily: 'sans-serif', fontSize: '30px', color: '#875D7B' }}>{heading}</p>
       </div>
 
       <div
         className="scroll-content"
         style={{
-          marginLeft: '230px',
-          marginTop: '20px',
+          marginLeft: '90px', 
+          marginTop: '10px',
           display: 'flex',
-          flexDirection: 'column',
-          gap: '50px',
-          maxWidth: '800px',
-          width: '100%',
-          boxSizing: 'border-box',
-          marginBottom: '30px',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          gap: '20px',
+         
+          width: '80%', 
+          boxSizing: 'border-box', 
+          marginBottom: '35px'
         }}
       >
         <AdminCard1 />
         <AdminCard2 />
-        {/* This now handles all complaints */}
+        
         <AdminCard3 />
       </div>
     </div>

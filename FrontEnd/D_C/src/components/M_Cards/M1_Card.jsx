@@ -24,7 +24,7 @@ const M1_Card = () => {
     <Card
       sx={{
         
-        width: "60vw",
+        width: "38vw",
         margin: "0 auto",
         padding: 2,
         borderRadius: "14px",
@@ -70,7 +70,7 @@ const M1_Card = () => {
               <span style={labelStyle}>Reason:</span> Enquiry for the complaint filed on 30.03.2025 at 11:00 AM
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Status:</span>
+              <span style={labelStyle}>Attendance:</span>
               <span style={{color: "red", marginLeft: "10px"}}>pending</span>
             </Typography>
           </Grid>

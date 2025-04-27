@@ -42,7 +42,7 @@ const Forward1 = () => {
       Time_: log.time_date.split("T")[1].slice(0, 8),
       Venue: log.venue,
       Comment: log.comment,
-      faculty: log.faculty,
+      faculty: log.faculty_name,
     };
 
     axios
@@ -77,6 +77,7 @@ const Forward1 = () => {
             <Typography><b>Date & Time:</b> {log.time_date}</Typography>
             <Typography><b>Venue:</b> {log.venue}</Typography>
             <Typography><b>Comment:</b> {log.comment}</Typography>
+            <Typography><b>Faculty:</b> {log.faculty_name}</Typography>
             <Button
               variant="contained"
               sx={{ mt: 2 }}

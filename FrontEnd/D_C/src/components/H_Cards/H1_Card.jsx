@@ -21,7 +21,7 @@ const HCard1 = () => {
   return (
     <Card
       sx={{
-        width: '30vw',
+        width: '25vw',
         margin: '0 auto',
         padding: 2,
         borderRadius: '14px',

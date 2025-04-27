@@ -38,12 +38,32 @@ const HCard5 = ({ complaint }) => {
     return `${day} ${month} ${year} - ${time}`;
   };
 
-  if (!complaintData) return <Typography>Loading...</Typography>;
+
+  
+
+  const textStyle = {
+    fontFamily: 'sans-serif',
+    fontSize: '1.2rem',
+    color: '#555555',
+    fontWeight: 400,
+  };
+
+  const labelStyle = {
+    fontFamily: 'sans-serif',
+    fontSize: '1.2rem',
+    color: '#000000',
+    fontWeight: 500,
+    display: 'inline',
+    marginRight: '6px',
+  };
+
+  if (!complaintData) return <Typography variant="body1" component="p" sx={textStyle}>Loading...</Typography>;
+
 
   return (
     <Card
       sx={{
-        width: '30vw',
+        width: '25vw',
         margin: '0 auto',
         padding: 2,
         borderRadius: '14px',
@@ -54,26 +74,27 @@ const HCard5 = ({ complaint }) => {
       }}
     >
       <Grid container justifyContent="flex-end" alignItems="center">
-        <Typography
-          variant="body2"
-          sx={{
-            fontFamily: 'sans-serif',
-            fontSize: '1.1rem',
-            color: 'textSecondary',
-          }}
-        >
+         <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={{
+                fontFamily: 'sans-serif',
+                fontSize: '1.1rem',
+                color: 'textSecondary',
+              }}
+          >
           {formatDateTime(complaintData.time_date)}
         </Typography>
       </Grid>
       <CardContent>
-        <Typography variant="body1" sx={{ fontSize: '1.2rem', color: '#555555' }}>
-          <strong style={{ color: '#000' }}>Issue:</strong> {complaintData.comment}
+        <Typography variant="body1" component="p" sx={textStyle}>
+        <span style={labelStyle}>Issue:</span> {complaintData.comment}
         </Typography>
-        <Typography variant="body1" sx={{ fontSize: '1.2rem', color: '#555555' }}>
-          <strong style={{ color: '#000' }}>Venue:</strong> {complaintData.venue}
+        <Typography variant="body1" component="p" sx={textStyle}>
+        <span style={labelStyle}>Venue:</span> {complaintData.venue}
         </Typography>
-        <Typography variant="body1" sx={{ fontSize: '1.2rem', color: '#555555' }}>
-          <strong style={{ color: '#000' }}>Status:</strong>{" "}
+        <Typography variant="body1" component="p" sx={textStyle}>
+          {/* <strong style={{ color: '#000' }}>Status:</strong>{" "} */}
           <span style={{ color: complaintData.status === "Accepted" ? "green" : "red" }}>
             {complaintData.status || "Pending"}
           </span>

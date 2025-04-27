@@ -35,7 +35,7 @@ const M3_Card = ({ meetings }) => {
           key={meeting.id}
           sx={{
            
-            width: "60vw",
+            width: "38vw",
             margin: "0 auto",
             padding: 2,
             borderRadius: "14px",
@@ -82,7 +82,7 @@ const M3_Card = ({ meetings }) => {
                   <span style={labelStyle}>Reason:</span> {meeting.info}
                 </Typography>
                 <Typography variant="body1" sx={textStyle}>
-                  <span style={labelStyle}>Status:</span>
+                  <span style={labelStyle}>Attendance:</span>
                   <span style={{ color: getStatusColor(meeting.status) }}>
                     {meeting.status || "-"}
                   </span>

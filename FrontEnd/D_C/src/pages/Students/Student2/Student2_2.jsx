@@ -7,34 +7,34 @@ import HCard5 from '../../../components/H_Cards/H5_Card';
 import axios from 'axios';
 
 export default function Student2_2() {
-  const [heading, setHeading] = useState('');
+  // const [heading, setHeading] = useState('');
   const [complaints, setComplaints] = useState([]);
-  const fullHeading = '  Your History:';
-  const headingLength = fullHeading.length;
+  // const fullHeading = 'Your History:';
+  // const headingLength = fullHeading.length;
 
-  const studentId = '7376242CS111'; // The studentId to filter complaints
+  const studentId = '7376242CS111'; 
+
+  // useEffect(() => {
+  //   let index = 0;
+  //   const interval = setInterval(() => {
+  //     if (index < headingLength - 1) {
+  //       setHeading((prev) => prev + fullHeading[index]);
+  //       index++;
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   }, 100);
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < headingLength - 1) {
-        setHeading((prev) => prev + fullHeading[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    // Fetch complaints only for the specific student
+    
     if (studentId === '7376242CS111') {
       axios
         .get(`http://localhost:5000/api/complaints/${studentId}`)
         .then((res) => {
-          setComplaints(res.data); // Set the complaints for the student
+          setComplaints(res.data); 
         })
         .catch((err) => {
           console.error('Error fetching complaint history:', err);
@@ -49,7 +49,7 @@ export default function Student2_2() {
           padding: '5px',
           marginTop: '125px',
           marginBottom: '15px',
-          marginLeft: '130px',
+          marginLeft: '170px',
         }}
       >
         <p
@@ -59,19 +59,19 @@ export default function Student2_2() {
             color: '#875D7B',
           }}
         >
-          {heading}
+         Your History: 
         </p>
       </div>
 
       <div
         className="scroll-content"
         style={{
-          marginLeft: '140px',
+          marginLeft: '180px',
           marginTop: '25px',
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-between',
-          gap: '45px',
+          gap: '30px',
           marginBottom: '30px',
           width: '80%',
         }}
@@ -81,12 +81,12 @@ export default function Student2_2() {
   .filter((complaint) => complaint.S_ID === studentId)
   .map((complaint) => (
     <HCard5
-      key={complaint.complaint_id} // Use only complaint_id as the unique key
+      key={complaint.complaint_id} 
       complaint={complaint}
     />
   ))}
 
-        {/* Fallback to showing other cards if no complaints are found for the student */}
+       
         {complaints.length === 0 && (
           <>
             <HCard2 />

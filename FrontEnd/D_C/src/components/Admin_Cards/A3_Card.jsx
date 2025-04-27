@@ -6,12 +6,9 @@ const AdminCard3 = () => {
   const [adminComplaints, setAdminComplaints] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect triggered");
-
     const fetchAllComplaints = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/admin-all");
-        console.log("Backend response:", res.data);
         setAdminComplaints(res.data);
       } catch (error) {
         console.error("Error fetching admin complaints:", error);
@@ -37,7 +34,7 @@ const AdminCard3 = () => {
         month: "short",
         year: "numeric",
       })
-      .replace(",", ""); // Remove comma between month and year
+      .replace(",", "");
 
     const formattedTime = dateObj.toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -65,13 +62,13 @@ const AdminCard3 = () => {
   };
 
   return (
-    <div style={{ marginTop: "50px", display: "flex", flexDirection: "column", gap: "25px" }}>
+    <>
       {adminComplaints.map((complaint, index) => (
         <Card
-          key={complaint.No_ || index}
+          key={complaint.ID || index}
           sx={{
-            width: "60vw",
-            margin: "0 auto",
+            width: "28vw",
+            margin: "20px auto",
             padding: 2,
             borderRadius: "14px",
             backgroundColor: "#FFFFFF",
@@ -83,27 +80,28 @@ const AdminCard3 = () => {
           <Grid container justifyContent="flex-end" alignItems="center">
             <Typography
               variant="body2"
+              color="textSecondary"
               sx={{
                 fontFamily: "sans-serif",
                 fontSize: "1.1rem",
                 color: "textSecondary",
-              }}
-            >
+            }}
+          >
               {formatDateTime(complaint.Date_)}
             </Typography>
           </Grid>
           <CardContent>
             <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Name:</span> {complaint.Name_ || "N/A"}
+              <span style={labelStyle}>Name:</span> {complaint.student_name || "N/A"}
             </Typography>
             <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Register No:</span> {complaint.Roll_no || "N/A"}
+              <span style={labelStyle}>Register No:</span> {complaint.S_ID || "N/A"}
             </Typography>
             <Typography variant="body1" sx={textStyle}>
               <span style={labelStyle}>Venue:</span> {complaint.Venue || "N/A"}
             </Typography>
             <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Issue:</span> {complaint.Complaint || "N/A"}
+              <span style={labelStyle}>Issue:</span> {complaint.Comment || "N/A"}
             </Typography>
             <Typography variant="body1" sx={textStyle}>
               <span style={labelStyle}>Issued By:</span> {complaint.faculty || "N/A"}
@@ -111,7 +109,7 @@ const AdminCard3 = () => {
           </CardContent>
         </Card>
       ))}
-    </div>
+    </>
   );
 };
 

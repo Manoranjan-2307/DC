@@ -3,44 +3,56 @@ import { Typography, Box, Button, Modal, TextField } from "@mui/material";
 
 let openbox = () => {};
 
-export function ReasonModal({studentId,status_}) {
+export function ReasonModal() {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
-  const [localStudentId, setLocalStudentId] = useState(studentId);
-  const [localStatus, setLocalStatus] = useState(status_);
+  const [complaintCode, setComplaintCode] = useState("");
 
-  openbox = () => {
-    setOpen(true);
-    setLocalStudentId(studentId);
-    setLocalStatus(status_);
+  // Open modal
+    openbox = () => {
+      setOpen(true);
   };
 
+  // Close modal
   const handleClose = () => setOpen(false);
 
+  // Submit form
   const handleSubmit = async () => {
-    console.log("Submitting reason:", text, localStudentId, localStatus);
+    console.log("Submitting reason:", {
+      complaintCode,
+      reason: text,
+    });
+
+    if (!complaintCode || !text) {
+      alert("Complaint Code and Reason are required.");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:5000/api/reason", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-      // body: JSON.stringify({ text, studentId, status_ })
-      body: JSON.stringify({ text, studentId: localStudentId, status_: localStatus })
+        body: JSON.stringify({
+          complaintCode: complaintCode,
+          reason: text,
+        }),
       });
 
-  
       const result = await response.json();
       console.log("Reason submitted:", result);
+
+      alert(result.message || "Reason submitted successfully.");
     } catch (error) {
       console.error("Error submitting reason:", error);
+      alert("Failed to submit the reason. Please try again.");
     } finally {
-      setText(""); 
-      handleClose(); 
-      console.log("Reason submitted successfully:",text);
+      setText("");
+      setComplaintCode("");
+      handleClose();
     }
   };
-  
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -55,7 +67,33 @@ export function ReasonModal({studentId,status_}) {
           boxShadow: 5,
         }}
       >
-        <Typography variant="h6"  style={{fontFamily: "sans-serif", fontWeight: 500, color: "#555555"}}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "sans-serif",
+            fontWeight: 500,
+            color: "#555555",
+            mb: 1,
+          }}
+        >
+          Complaint Code:
+        </Typography>
+        <TextField
+          fullWidth
+          value={complaintCode}
+          onChange={(e) => setComplaintCode(e.target.value)}
+          sx={{ mb: 2 }}
+          placeholder="Enter Complaint Code"
+        />
+
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "sans-serif",
+            fontWeight: 500,
+            color: "#555555",
+          }}
+        >
           Reason:
         </Typography>
         <TextField
@@ -65,7 +103,9 @@ export function ReasonModal({studentId,status_}) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           sx={{ mt: 1 }}
+          placeholder="Enter Reason"
         />
+
         <Button
           variant="contained"
           onClick={handleSubmit}

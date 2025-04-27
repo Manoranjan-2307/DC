@@ -11,11 +11,12 @@ import axios from "axios";
 
 const ComplaintCard5 = ({ complaint }) => {
   const localStorageKey = `complaint-timer-${complaint.complaint_id}`;
-  const [timer, setTimer] = useState(6 * 60 * 60); // 6 hours
+  const [timer, setTimer] = useState(6 * 60 * 60); 
   const [isFrozen, setIsFrozen] = useState(false);
-  const [k, setK] = useState(1); 
+  const [k, setK] = useState(1);
+  const [buttonsDisabled, setButtonsDisabled] = useState(false); 
 
-  
+
   useEffect(() => {
     const storedStatus = localStorage.getItem(`${localStorageKey}-status`);
     const storedTime = localStorage.getItem(`${localStorageKey}-time`);
@@ -23,11 +24,12 @@ const ComplaintCard5 = ({ complaint }) => {
     if (storedStatus === "frozen" && storedTime) {
       setIsFrozen(true);
       setTimer(parseInt(storedTime, 10));
-      setK(0); 
+      setK(0);
+      setButtonsDisabled(true); 
     }
   }, [localStorageKey]);
 
- 
+
   useEffect(() => {
     if (isFrozen || timer <= 0) return;
 
@@ -45,6 +47,7 @@ const ComplaintCard5 = ({ complaint }) => {
     return () => clearInterval(interval);
   }, [isFrozen, timer]);
 
+
   const formatTimer = (timeInSeconds) => {
     const hours = Math.floor(timeInSeconds / 3600)
       .toString()
@@ -57,12 +60,11 @@ const ComplaintCard5 = ({ complaint }) => {
     return `${hours}:${minutes}:${seconds}`;
   };
 
+
   const formatDateTime = (datetime) => {
     const date = new Date(datetime);
     const day = date.toLocaleString("en-US", { day: "2-digit" });
-    const month = date.toLocaleString("en-US", {
-      month: "short",
-    }).toUpperCase();
+    const month = date.toLocaleString("en-US", { month: "short" }).toUpperCase();
     const year = date.getFullYear();
     const time = date
       .toLocaleString("en-US", {
@@ -83,6 +85,7 @@ const ComplaintCard5 = ({ complaint }) => {
     try {
       setIsFrozen(true);
       setK(0);
+      setButtonsDisabled(true); // <- Disable after one click
       localStorage.setItem(`${localStorageKey}-status`, "frozen");
       localStorage.setItem(`${localStorageKey}-time`, timer.toString());
 
@@ -101,9 +104,10 @@ const ComplaintCard5 = ({ complaint }) => {
     handleStatusUpdate("Accepted");
   };
 
-  // const handleRevoke = () => {
-  //   handleStatusUpdate("Pending");
-  // };
+  const handleRevoke = () => {
+    handleStatusUpdate("Pending");
+    openbox();
+  };
 
   const textStyle = {
     fontFamily: "sans-serif",
@@ -138,6 +142,7 @@ const ComplaintCard5 = ({ complaint }) => {
         <Grid container justifyContent="flex-end" alignItems="center">
           <Typography
             variant="body2"
+            color="textSecondary"
             sx={{
               fontFamily: "sans-serif",
               fontSize: "1.1rem",
@@ -149,11 +154,13 @@ const ComplaintCard5 = ({ complaint }) => {
         </Grid>
         <CardContent>
           <Typography variant="body1" sx={textStyle}>
+            <span style={labelStyle}>Complaint code:</span> {complaint.complaint_id}
+          </Typography>
+          <Typography variant="body1" sx={textStyle}>
             <span style={labelStyle}>Venue:</span> {complaint.venue}
           </Typography>
           <Typography variant="body1" sx={textStyle}>
-            <span style={labelStyle}>Complaint Details:</span>{" "}
-            {complaint.comment}
+            <span style={labelStyle}>Complaint Details:</span> {complaint.comment}
           </Typography>
           <Typography variant="body1" sx={textStyle}>
             <span style={labelStyle}>Faculty:</span> {complaint.faculty_name}
@@ -171,6 +178,7 @@ const ComplaintCard5 = ({ complaint }) => {
               color="success"
               sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
               onClick={handleAccept}
+              disabled={buttonsDisabled} 
             >
               Accept
             </Button>
@@ -180,7 +188,8 @@ const ComplaintCard5 = ({ complaint }) => {
               variant="contained"
               color="error"
               sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
-              onClick={() => openbox()} 
+              onClick={handleRevoke}
+              disabled={buttonsDisabled} 
             >
               Revoke
             </Button>

@@ -69,7 +69,7 @@ const S_Card1 = ({ complaint }) => {
     <Card
       sx={{
        
-        width: "60vw",
+        width: "35vw",
         margin: "0 auto",
         padding: 2,
         borderRadius: "14px",

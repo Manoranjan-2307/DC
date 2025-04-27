@@ -46,9 +46,11 @@ const Revoke1 = () => {
     }
   };
 
-  const updateStatus = async (roll_no, status) => {
+  const updateStatus = async (complaint_id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/revoked/${roll_no}`, { status });
+      await axios.put(`http://localhost:5000/api/revoked/${complaint_id}`, { status });
+  
+      // Update modal content after status update
       setModalContent({
         icon:
           status === "Accepted" ? (
@@ -59,11 +61,21 @@ const Revoke1 = () => {
         message: `Complaint ${status}!`,
       });
       setModalOpen(true);
-      fetchComplaints();
+  
+      // Fetch complaints and immediately apply the filter
+      await fetchComplaints();  // Ensure complaints are fetched first
+  
+      // Apply filter after the complaints state is updated
+      applyFilter();
     } catch (err) {
       console.error("Error updating status:", err);
     }
   };
+  
+  useEffect(() => {
+    applyFilter();  // Reapply filter after complaints are updated or filter is changed
+  }, [complaints, filter]);
+  
 
   return (
     <div className="revoke-container">
@@ -71,32 +83,51 @@ const Revoke1 = () => {
 
       {/* Filter Buttons */}
       <div className="filter-buttons">
-        <button className={filter === "All" ? "active" : ""} onClick={() => setFilter("All")}>All</button>
-        <button className={filter === "Accepted" ? "active" : ""} onClick={() => setFilter("Accepted")}>Accepted</button>
-        <button className={filter === "Declined" ? "active" : ""} onClick={() => setFilter("Declined")}>Declined</button>
-        <button className={filter === "Pending" ? "active" : ""} onClick={() => setFilter("Pending")}>Pending</button>
+        <button className={filter === "All" ? "active" : ""} onClick={() => setFilter("All")}>
+          All
+        </button>
+        <button className={filter === "Accepted" ? "active" : ""} onClick={() => setFilter("Accepted")}>
+          Accepted
+        </button>
+        <button className={filter === "Declined" ? "active" : ""} onClick={() => setFilter("Declined")}>
+          Declined
+        </button>
+        <button className={filter === "Pending" ? "active" : ""} onClick={() => setFilter("Pending")}>
+          Pending
+        </button>
       </div>
 
+      {/* Complaint Cards */}
       <div className="revoke-grid">
         {filteredComplaints.map((complaint) => (
           <div
-            key={complaint.Roll_no}
+            key={complaint.complaint_id}
             className={`revoke-card ${complaint.STATUS_?.toLowerCase() || "pending"}`}
           >
             <div className="revoke-card-header">
-              <p><strong>Name:</strong> {complaint.S_name}</p>
+              <p><strong>Name:</strong> {complaint.student_name}</p>
               <p><strong>Register Number:</strong> {complaint.Roll_no}</p>
               <p><strong>Reason:</strong> {complaint.REASON}</p>
             </div>
 
             {complaint.STATUS_ ? (
-              <p className={`status-text ${complaint.STATUS_ === "Accepted" ? "accepted" : "declined"}`}>
+              <p className={`status-text ${complaint.STATUS_ === "Accepted" ? "Accepted" : "Declined"}`}>
                 Status: {complaint.STATUS_}
               </p>
             ) : (
               <div className="button-group">
-                <button className="accept-btn" onClick={() => updateStatus(complaint.Roll_no, "Accepted")}>ACCEPT</button>
-                <button className="decline-btn" onClick={() => updateStatus(complaint.Roll_no, "Declined")}>DECLINE</button>
+                <button
+                  className="accept-btn"
+                  onClick={() => updateStatus(complaint.complaint_id, "Accepted")}
+                >
+                  ACCEPT
+                </button>
+                <button
+                  className="decline-btn"
+                  onClick={() => updateStatus(complaint.complaint_id, "Declined")}
+                >
+                  DECLINE
+                </button>
               </div>
             )}
           </div>
@@ -108,10 +139,14 @@ const Revoke1 = () => {
         <DialogTitle>Status Update</DialogTitle>
         <DialogContent style={{ textAlign: "center" }}>
           {modalContent.icon}
-          <Typography variant="h6" sx={{ mt: 2 }}>{modalContent.message}</Typography>
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            {modalContent.message}
+          </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setModalOpen(false)} variant="contained">OK</Button>
+          <Button onClick={() => setModalOpen(false)} variant="contained">
+            OK
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

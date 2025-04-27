@@ -45,19 +45,20 @@ export default function Student3_3() {
 
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '125px' }}>
+      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '170px' }}>
         <p style={{fontFamily: 'sans-serif', fontSize: '28px', color: '#875D7B'}}>{heading}</p>
       </div>
       <div
         className="scroll-content"
         style={{
-          marginLeft: '220px', 
+          marginLeft: '180px', 
           marginTop: '10px',
           display: 'flex',
-          flexDirection: 'column',
-          gap: '60px',
-          maxWidth: '800px', 
-          width: '100%', 
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          gap: '35px',
+         
+          width: '80%', 
           boxSizing: 'border-box', 
           marginBottom: '35px'
         }}

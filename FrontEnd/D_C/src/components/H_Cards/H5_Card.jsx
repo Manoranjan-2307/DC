@@ -94,9 +94,8 @@ const HCard5 = ({ complaint }) => {
         <span style={labelStyle}>Venue:</span> {complaintData.venue}
         </Typography>
         <Typography variant="body1" component="p" sx={textStyle}>
-          {/* <strong style={{ color: '#000' }}>Status:</strong>{" "} */}
-          <span style={{ color: complaintData.status === "Accepted" ? "green" : "red" }}>
-            {complaintData.status || "Pending"}
+          <span style={{ color: complaintData.status === "Accepted" ? "red" : complaintData.status === "Pending" ? "red" : "green"}}>
+            {complaintData.status === "Accepted" ? "Revoked" : complaintData.status === "Declined" ? "Accepted" : complaintData.status || "Pending"}
           </span>
         </Typography>
       </CardContent>

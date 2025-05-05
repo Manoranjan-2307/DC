@@ -4,21 +4,24 @@ import { auth, provider } from "../pages/firebase";
 
 
 export const handleLogin = (username, password, navigate) => {
-  if (username === "Rahul K" && password === "pass1") {
+  if (username === "Rahul K" && password === "#1") {
     navigate("/student1_1");
-  } else if (username === "Kishore K" && password === "pass2") {
+  } else if (username === "Kishore K" && password === "#2") {
     navigate("/student2_1");
-  } else if (username === "Sangeeth M" && password === "pass3") {
+  } else if (username === "Sangeeth M" && password === "#3") {
     navigate("/student3_1");
-  } else if (username === "Karthikeyan JV" && password === "pass4") {
+  } else if (username === "Karthikeyan JV" && password === "#4") {
     navigate("/student4_1");
-  } else if (username === "Henry M" && password === "pass5") {
+  } else if (username === "Henry M" && password === "#5") {
     navigate("/student5_1");
-  } else if (username === "admin" && password === "adminpass") {
+  } else if (username === "admin" && password === "@min") {
     navigate("/admin1");
-  } else if (username === "faculty1" && password === "pass-1") {
+  } else if (username === "faculty" && password === "pass") {
     navigate("/logger1");
-  } else {
+  } else if (username === "supportdesk" && password === "@sd"){
+    navigate("/supportdesk");
+  }
+  else {
     alert("Invalid Credantials!");
   }
 };

@@ -56,7 +56,7 @@ import Sidebar from "./components/Faculty_Sidebar/F1_Sidebar";
 
 const AppContent = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedPage, setSelectedPage] = useState("logger");
+  // const [selectedPage, setSelectedPage] = useState("logger");
   const location = useLocation();
 
   // // Toggle manually for now, can be from login session later
@@ -65,32 +65,32 @@ const AppContent = () => {
   //                   location.pathname.startsWith("/revoke");
   // const isSupport = location.pathname.startsWith("/supportdesk");
   // Use either this for faculty routes...
-  const isFaculty = location.pathname.startsWith("/logger") ||
-                  location.pathname.startsWith("/mentor") ||
-                  location.pathname.startsWith("/revoke");
+  // const isFaculty = location.pathname.startsWith("/logger1") ||
+  //                 location.pathname.startsWith("/mentor1") ||
+  //                 location.pathname.startsWith("/revoke1");
 
-  const isSupport = location.pathname.startsWith("/supportdesk");
+  // const isSupport = location.pathname.startsWith("/supportdesk");
 
 
 
   const isLoginPage = location.pathname === "/";
 
-  const facultyPages = {
-    logger: <Logger1 />,
-    mentor: <Mentor1 />,
-    revoke: <Revoke1 />,
-    forward: <Forward1 />
-  };
+  // const facultyPages = {
+  //   logger: <Logger1 />,
+  //   mentor: <Mentor1 />,
+  //   revoke: <Revoke1 />,
+  //   forward: <Forward1 />
+  // };
 
-  const supportPages = {
-    supportDesk: <Supportdesk />
-  };
+  // const supportPages = {
+  //   supportDesk: <Supportdesk />
+  // };
 
-  const renderPage = () => {
-    if (isFaculty) return facultyPages[selectedPage] || <h2>Select a faculty option</h2>;
-    if (isSupport) return supportPages[selectedPage] || <h2>Select a support option</h2>;
-    return null;
-  };
+  // const renderPage = () => {
+  //   if (isFaculty) return facultyPages[selectedPage] || <h2>Select a faculty option</h2>;
+  //   if (isSupport) return supportPages[selectedPage] || <h2>Select a support option</h2>;
+  //   return null;
+  // };
 
   const sidebarMap = {
     "/student1_1": <S_Sidebar1 collapsed={collapsed} setCollapsed={setCollapsed} />,
@@ -113,34 +113,43 @@ const AppContent = () => {
     "/student5_2": <S_Sidebar5 collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/student5_3": <S_Sidebar5 collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/student5_4": <S_Sidebar5 collapsed={collapsed} setCollapsed={setCollapsed} />,
+
     "/admin1": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin2": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin3": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin3_1": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin3_2": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin4": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
+
+    "/logger1": <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
+    "/mentor1": <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
+    "/revoke1": <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
+    "/forward1": <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
+
+    "/supportdesk": <SupportSidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
   };
 
   // Route-based Sidebar
   const showSidebar = sidebarMap[location.pathname];
 
   // Conditional Layouts
-  if (isFaculty || isSupport) {
-    return (
-      <div style={{ display: "flex" }}>
-        {isFaculty ? (
-          <Sidebar onSelect={setSelectedPage} />
-        ) : (
-          <SupportSidebar onSelect={setSelectedPage} />
-        )}
-        <div style={{ flex: 1, padding: "20px" }}>
-          {renderPage()}
-        </div>
-      </div>
-    );
-  }
+  // if (isFaculty || isSupport) {
+  //   return (
+  //     <div style={{ display: "flex" }}>
+  //       {isFaculty ? (
+  //         <Sidebar onSelect={setSelectedPage} />
+  //       ) : (
+  //         <SupportSidebar onSelect={setSelectedPage} />
+  //       )}
+  //       <div style={{ flex: 1, padding: "20px" }}>
+  //         {renderPage()}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   // Default App Layout (Students/Admin)
+
   return (
     <div className="d-flex">
       {showSidebar}
@@ -178,7 +187,7 @@ const AppContent = () => {
           <Route path="/student5_3" element={<Student5_3 />} />
           <Route path="/student5_4" element={<Student5_4 />} />
 
-          {/* Faculty & Support (Fallback only) */}
+         
           <Route path="/logger1" element={<Logger1 />} />
           <Route path="/mentor1" element={<Mentor1 />} />
           <Route path="/revoke1" element={<Revoke1 />} />

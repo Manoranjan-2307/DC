@@ -24,7 +24,7 @@ const ComplaintCard1 = () => {
       <Card
         sx={{
           
-          width: "60vw",
+          width: "28vw",
           margin: "0 auto",
           padding: 2,
           borderRadius: "14px",
@@ -48,6 +48,10 @@ const ComplaintCard1 = () => {
           </Typography>
         </Grid>
         <CardContent>
+        <Typography variant="body1" component="p" sx={textStyle}>
+            <span style={labelStyle}>Complaint Code:</span> 
+            <span style={{ color: "red" }}>N/A</span>
+          </Typography>
           <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Venue:</span> Cyber security lab
           </Typography>

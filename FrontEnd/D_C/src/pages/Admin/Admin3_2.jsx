@@ -6,7 +6,7 @@ import S_Card3 from '../../components/Admin_Cards/S_Card3';
 
 export default function Admin3_2() {
   const [heading, setHeading] = useState('');
-  const fullHeading = '  Meeting Schedules:';
+  const fullHeading = '  Scheduled Meetings:';
   const headingLength = fullHeading.length;
   const [complaints, setComplaints] = useState([]);
 
@@ -27,7 +27,7 @@ export default function Admin3_2() {
       return () => clearInterval(interval);
     }, []);
 
-     // Fetch all complaints from the backend
+     // Fetching all complaints from the backend
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
@@ -49,7 +49,7 @@ export default function Admin3_2() {
 
   return (
     <div>
-    <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '180px' }}>
+    <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '192px' }}>
        <p style={{fontFamily: 'tahoma', fontSize: '30px', color: '#875D7B'}}>{heading}</p>
     </div>
     <div

@@ -49,7 +49,7 @@ export default function Student2_2() {
           padding: '5px',
           marginTop: '125px',
           marginBottom: '15px',
-          marginLeft: '170px',
+          marginLeft: '172px',
         }}
       >
         <p

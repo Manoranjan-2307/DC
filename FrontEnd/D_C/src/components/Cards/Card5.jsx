@@ -154,7 +154,8 @@ const ComplaintCard5 = ({ complaint }) => {
         </Grid>
         <CardContent>
           <Typography variant="body1" sx={textStyle}>
-            <span style={labelStyle}>Complaint code:</span> {complaint.complaint_id}
+            <span style={labelStyle}>Complaint code:</span>
+            <span style={{ color: "red" }}> {complaint.complaint_id}</span>
           </Typography>
           <Typography variant="body1" sx={textStyle}>
             <span style={labelStyle}>Venue:</span> {complaint.venue}

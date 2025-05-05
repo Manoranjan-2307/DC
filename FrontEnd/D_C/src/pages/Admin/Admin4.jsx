@@ -114,7 +114,7 @@ export default function Admin4() {
           justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "20px",
-          marginTop: "50px",
+          marginTop: "70px",
         }}
       >
         <h2
@@ -161,7 +161,7 @@ export default function Admin4() {
           }}
           onClick={uploadPDF}
         >
-          Upload PDF <i class="bi bi-folder-plus" style={{marginLeft: "10px", marginTop: "2px"}}></i>
+          Upload PDF <i className="bi bi-folder-plus" style={{marginLeft: "10px", marginTop: "2px"}}></i>
         </Button>
       </div>
 

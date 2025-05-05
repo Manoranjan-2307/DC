@@ -46,7 +46,7 @@ export default function Student4_3() {
 
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '170px' }}>
+      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '177px' }}>
         <p style={{fontFamily: 'sans-serif', fontSize: '28px', color: '#875D7B'}}>Scheduled Meetings:</p>
       </div>
       <div

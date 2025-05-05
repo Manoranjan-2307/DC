@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const path = require("path");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const fs = require("fs");
 const multer = require("multer");
 
@@ -12,56 +12,54 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "manobeast2307",
-    database: "dc_portal",
-  });
-  
-  db.connect((err) => {
-    if (err) {
-      console.error("Database connection failed:", err);
-      return;
-    }
-    console.log("Connected to MySQL database");
-  });
+  host: "localhost",
+  user: "root",
+  password: "manobeast2307",
+  database: "dc_portal",
+});
 
+db.connect((err) => {
+  if (err) {
+    console.error("Database connection failed:", err);
+    return;
+  }
+  console.log("Connected to MySQL database");
+});
 
 app.get("/students", (req, res) => {
   const query = "SELECT S_ID, name FROM student_details";
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching students:", err);
-      return res.status(500).json({ error: "Failed to fetch students", details: err.message });
+      return res
+        .status(500)
+        .json({ error: "Failed to fetch students", details: err.message });
     }
     res.json(results);
   });
 });
 
+// For inserting reason
+// app.post("/api/reason", (req, res) => {
+//   console.log("Request Body:", req.body);
+//   const { studentId,text, status_ } = req.body;
 
-  // For inserting reason 
-  // app.post("/api/reason", (req, res) => {
-  //   console.log("Request Body:", req.body);
-  //   const { studentId,text, status_ } = req.body;
-  
-  //   if (!text || !studentId || !status_) {
-  //     return res.status(400).json({ message: "Reason, studentId and status are required" });
-  //   }
-  
-  //   const sql = "INSERT INTO `REASON_` (`S_ID`,Reason,`Status_`) VALUES (?, ?, ?);";
-  //   db.query(sql, [studentId,text,status_], (err, result) => {
-  //     if (err) {
-  //       console.error("Insert Error:", err);
-  //       return res.status(500).json({ message: "Database error" });
-  //     }
-  //     res.json({ message: "Reason inserted successfully" });
-  //   });
-    
-  // });
+//   if (!text || !studentId || !status_) {
+//     return res.status(400).json({ message: "Reason, studentId and status are required" });
+//   }
 
+//   const sql = "INSERT INTO `REASON_` (`S_ID`,Reason,`Status_`) VALUES (?, ?, ?);";
+//   db.query(sql, [studentId,text,status_], (err, result) => {
+//     if (err) {
+//       console.error("Insert Error:", err);
+//       return res.status(500).json({ message: "Database error" });
+//     }
+//     res.json({ message: "Reason inserted successfully" });
+//   });
 
+// });
 
- // Fetching all PDFs
+// Fetching all PDFs
 app.get("/api/student-pdfs", (req, res) => {
   console.log("Fetching all PDFs");
   const sql = "SELECT * FROM student_pdfs";
@@ -73,7 +71,6 @@ app.get("/api/student-pdfs", (req, res) => {
     res.json(results);
   });
 });
-
 
 // Fetching PDFs for a specific student
 app.get("/api/student-pdfs/:studentId", (req, res) => {
@@ -88,16 +85,18 @@ app.get("/api/student-pdfs/:studentId", (req, res) => {
   });
 });
 
-
 // Adding a new PDF
 app.post("/api/student-pdfs", (req, res) => {
-  const { student_id, pdf_name, pdf_src } = req.body;
+  const { student_id, pdf_name, pdf_src, upload_date } = req.body;
 
   if (!student_id || !pdf_name || !pdf_src) {
-    return res.status(400).json({ message: "Student ID, PDF name, and PDF source are required" });
+    return res
+      .status(400)
+      .json({ message: "Student ID, PDF name, and PDF source are required" });
   }
 
-  const sql = "INSERT INTO student_pdfs (student_id, pdf_name, pdf_src) VALUES (?, ?, ?)";
+  const sql =
+    "INSERT INTO student_pdfs (student_id, pdf_name, pdf_src, upload_date) VALUES (?, ?, ?, DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d'))";
   db.query(sql, [student_id, pdf_name, pdf_src], (err, result) => {
     if (err) {
       console.error("Error inserting PDF:", err);
@@ -107,18 +106,16 @@ app.post("/api/student-pdfs", (req, res) => {
   });
 });
 
-
-
-
 //  static files
-app.use("/assets", express.static(path.join(__dirname, "../FrontEnd/D.C/public/assets")));
-
-
-
+app.use(
+  "/assets",
+  express.static(path.join(__dirname, "../FrontEnd/D.C/public/assets"))
+);
 
 // ✅ Create log entry (used by Logger.jsx)
 app.post("/api/log-entry", (req, res) => {
-  const { S_ID, student_name, faculty_name, time_date, comment, venue } = req.body;
+  const { S_ID, student_name, faculty_name, time_date, comment, venue } =
+    req.body;
 
   console.log("Received log data:", req.body);
 
@@ -139,19 +136,19 @@ app.post("/api/log-entry", (req, res) => {
       faculty_name,
       time_date,
       comment,
-      venue
+      venue,
     ],
     (err, result) => {
       if (err) {
         console.error("Error inserting log:", err);
-        return res.status(500).json({ error: "Failed to create log", details: err.message });
+        return res
+          .status(500)
+          .json({ error: "Failed to create log", details: err.message });
       }
       res.status(201).json({ message: "Log entry created" });
-}
-);
+    }
+  );
 });
-
-
 
 // ✅ POST a revoked complaint
 // app.post("/api/revoked", (req, res) => {
@@ -161,7 +158,7 @@ app.post("/api/log-entry", (req, res) => {
 //     return res.status(400).json({ error: "All fields are required" });
 //   }
 
-//   const sql = `INSERT INTO REASON_ (Roll_no, S_name, REASON, STATUS_, complaint_id) 
+//   const sql = `INSERT INTO REASON_ (Roll_no, S_name, REASON, STATUS_, complaint_id)
 //                VALUES (?, ?, ?, NULL, ?)`;
 
 //   db.query(sql, [roll_no, s_name, reason, complaint_id], (err, result) => {
@@ -173,29 +170,69 @@ app.post("/api/log-entry", (req, res) => {
 //   });
 // });
 
+// INSERTING INTO REASON TABLE
+app.post("/api/reason", (req, res) => {
+  const { complaintCode, reason } = req.body;
+
+  if (!complaintCode || !reason) {
+    return res
+      .status(400)
+      .json({ error: "Complaint Code and Reason are required." });
+  }
+
+  const fetchQuery = `
+    SELECT student_name, S_ID, comment 
+    FROM faculty_logger 
+    WHERE complaint_id = ?
+  `;
+
+  db.query(fetchQuery, [complaintCode], (fetchErr, fetchResult) => {
+    if (fetchErr) {
+      console.error("Error fetching from faculty_logger:", fetchErr);
+      return res.status(500).json({ error: "Database fetch error" });
+    }
+
+    if (fetchResult.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "Complaint ID not found in faculty_logger." });
+    }
+
+    const { student_name, S_ID, comment } = fetchResult[0];
+
+    
+    const insertQuery = `
+      INSERT INTO reason_ (complaint_id, REASON, student_name, Roll_no, issue)
+      VALUES (?, ?, ?, ?, ?)
+    `;
+    const insertValues = [complaintCode, reason, student_name, S_ID, comment];
+
+    db.query(insertQuery, insertValues, (insertErr, insertResult) => {
+      if (insertErr) {
+        console.error("Error inserting into reason_:", insertErr);
+        return res.status(500).json({ error: "Database insert error" });
+      }
+      res
+        .status(200)
+        .json({ message: "Reason and related info submitted successfully." });
+    });
+  });
+});
 
 // ✅ GET all revoked complaints with joined info
 app.get("/api/revoked", (req, res) => {
-  const sql = `
-    SELECT 
-      complaint_id,
-      student_name,
-      Roll_no,
-      REASON 
-    FROM reason_
-  `;
+  const sql = ` SELECT * FROM reason_ `;
 
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching revoked complaints:", err);
-      return res.status(500).json({ error: "Database error", details: err.message });
+      return res
+        .status(500)
+        .json({ error: "Database error", details: err.message });
     }
     res.json(results);
   });
 });
-
-
-
 
 // ✅ Accept / Decline complaint
 // app.put("/api/revoked/:roll_no", (req, res) => {
@@ -227,24 +264,27 @@ app.put("/api/revoked/:id", (req, res) => {
   db.query(updateFacultyLogger, [status, id], (err, result1) => {
     if (err) {
       console.error("Error updating faculty_logger:", err);
-      return res.status(500).json({ error: "Error updating faculty_logger", details: err.message });
+      return res
+        .status(500)
+        .json({ error: "Error updating faculty_logger", details: err.message });
     }
 
     // Update reason table
     db.query(updateReason, [status, id], (err, result2) => {
       if (err) {
         console.error("Error updating reason:", err);
-        return res.status(500).json({ error: "Error updating reason table", details: err.message });
+        return res
+          .status(500)
+          .json({ error: "Error updating reason table", details: err.message });
       }
 
       // If both updates succeed
-      res.status(200).json({ message: "Status updated successfully in both tables!" });
+      res
+        .status(200)
+        .json({ message: "Status updated successfully in both tables!" });
     });
   });
 });
-
-
-
 
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
@@ -259,7 +299,6 @@ const storage = multer.diskStorage({
   },
 });
 
-
 // ✅ GET logs with missing S_ID and student_name (for Support Desk)
 app.get("/api/support-logs", (req, res) => {
   const sql = `
@@ -270,7 +309,9 @@ app.get("/api/support-logs", (req, res) => {
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching support logs:", err);
-      return res.status(500).json({ error: "Database error", details: err.message });
+      return res
+        .status(500)
+        .json({ error: "Database error", details: err.message });
     }
     res.json(results);
   });
@@ -298,7 +339,6 @@ app.post("/api/support/send", upload.single("video"), (req, res) => {
   });
 });
 
-
 // ✅ GET mentor queue (videos forwarded from support desk)
 app.get("/api/mentor-queue", (req, res) => {
   const sql = "SELECT * FROM mentor_queue";
@@ -311,7 +351,6 @@ app.get("/api/mentor-queue", (req, res) => {
     res.json(results);
   });
 });
-
 
 // ✅ Mentor submits complaint to faculty_logger
 app.post("/api/mentor/submit", (req, res) => {
@@ -330,7 +369,9 @@ app.post("/api/mentor/submit", (req, res) => {
   db.query(sql, [S_ID, student_name, complaint_id], (err, result) => {
     if (err) {
       console.error(" UPDATE ERROR:", err);
-      return res.status(500).json({ error: "Update failed", details: err.message });
+      return res
+        .status(500)
+        .json({ error: "Update failed", details: err.message });
     }
 
     res.status(200).json({ message: "Log updated with student details" });
@@ -349,10 +390,9 @@ app.get("/faculty-logger", (req, res) => {
   });
 });
 
-
 // INSERTING meeting details
 app.post("/api/meeting-details", (req, res) => {
-  console.log("Request Body:", req.body); 
+  console.log("Request Body:", req.body);
   const { studentId, venue, date, time, reason } = req.body;
 
   if (!studentId || !venue || !date || !time || !reason) {
@@ -373,7 +413,6 @@ app.post("/api/meeting-details", (req, res) => {
   });
 });
 
-
 // FOR FETCHING meeting details in card
 app.get("/api/meeting-details", (req, res) => {
   const sql = `
@@ -391,7 +430,6 @@ app.get("/api/meeting-details", (req, res) => {
     res.json(results);
   });
 });
-
 
 //FOR UPDATING ATTENDANCE IN MEETING
 app.post("/api/update-attendance", (req, res) => {
@@ -413,7 +451,9 @@ app.post("/api/update-attendance", (req, res) => {
   db.query(sql, [status, sId, venue, date], (err, result) => {
     if (err) {
       console.error("Error updating attendance:", err); // Debug log
-      return res.status(500).json({ message: "Database error", error: err.message });
+      return res
+        .status(500)
+        .json({ message: "Database error", error: err.message });
     }
 
     console.log("SQL Result:", result); // Debug log
@@ -425,8 +465,6 @@ app.post("/api/update-attendance", (req, res) => {
     }
   });
 });
-
-
 
 // Fetch complaints for a specific student ID
 app.get("/api/complaints/:S_ID", (req, res) => {
@@ -446,58 +484,60 @@ app.get("/api/complaints/:S_ID", (req, res) => {
       return res.status(500).json({ error: "Failed to fetch complaints" });
     }
 
-    res.status(200).json(result); // Send all matching complaints
+    res.status(200).json(result);
   });
 });
 
-
-
 // For updating history
-app.put('/complaints/update-status/:sid/:complaint_id', (req, res) => {
+app.put("/complaints/update-status/:sid/:complaint_id", (req, res) => {
   const { sid, complaint_id } = req.params; // Extract S_ID and complaint_id from URL
   const { status } = req.body; // Extract status from request body
 
-  const sql = 'UPDATE faculty_logger SET status = ? WHERE S_ID = ? AND complaint_id = ?';
+  const sql =
+    "UPDATE faculty_logger SET status = ? WHERE S_ID = ? AND complaint_id = ?";
   db.query(sql, [status, sid, complaint_id], (err, result) => {
     if (err) {
-      console.error('Error updating complaint status:', err);
-      return res.status(500).json({ error: 'Failed to update status' });
+      console.error("Error updating complaint status:", err);
+      return res.status(500).json({ error: "Failed to update status" });
     }
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'No matching complaint found to update' });
+      return res
+        .status(404)
+        .json({ error: "No matching complaint found to update" });
     }
 
-    res.status(200).json({ message: 'Status updated successfully' });
+    res.status(200).json({ message: "Status updated successfully" });
   });
 });
 
-
-
 // Endpoint to fetch complaint details
-app.get('/complaints/detail/:complaint_id', (req, res) => {
+app.get("/complaints/detail/:complaint_id", (req, res) => {
   const { complaint_id } = req.params;
 
-  const sql = 'SELECT * FROM faculty_logger WHERE complaint_id = ?';
+  const sql = "SELECT * FROM faculty_logger WHERE complaint_id = ?";
   db.query(sql, [complaint_id], (err, result) => {
     if (err) {
-      console.error('Error fetching complaint details:', err);
-      return res.status(500).json({ error: 'Failed to fetch complaint details' });
+      console.error("Error fetching complaint details:", err);
+      return res
+        .status(500)
+        .json({ error: "Failed to fetch complaint details" });
     }
 
     if (result.length === 0) {
-      return res.status(404).json({ error: 'Complaint not found' });
+      return res.status(404).json({ error: "Complaint not found" });
     }
 
     res.status(200).json(result[0]); // Return the complaint details
   });
 });
 
-
-
 // Insert into admin_ table
 app.post("/send-to-admin", (req, res) => {
-  const { student_name, S_ID, Date_, Time_, Venue, Comment, faculty } = req.body;
+  const { student_name, S_ID, Date_, Time_, Venue, Comment, faculty } =
+    req.body;
+
+  console.log("Received payload:", req.body);
 
   const query = `
     INSERT INTO admin_ (student_name, S_ID, Date_, Time_, Venue, Comment, faculty)
@@ -511,16 +551,17 @@ app.post("/send-to-admin", (req, res) => {
         console.error("Error inserting into admin_:", err);
         return res.status(500).json({ error: "Database error" });
       }
-      res.json({ message: "Complaint forwarded successfully", id: result.insertId });
+      res.json({
+        message: "Complaint forwarded successfully",
+        id: result.insertId,
+      });
     }
   );
 });
 
-
-
 // fetching complaints from admin table
 app.get("/api/admin-all", (req, res) => {
-  const query = `SELECT student_name, S_ID, Date_, Time_, Venue, Comment, faculty FROM admin_ ORDER BY ID DESC`; 
+  const query = `SELECT student_name, S_ID, Date_, Time_, Venue, Comment, faculty FROM admin_ ORDER BY ID DESC`;
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching admin complaints:", err);
@@ -530,54 +571,7 @@ app.get("/api/admin-all", (req, res) => {
   });
 });
 
-
-
-// INSERTING INTO REASON TABLE
-app.post("/api/reason", (req, res) => {
-  const { complaintCode, reason } = req.body;
-
-  if (!complaintCode || !reason) {
-    return res.status(400).json({ error: "Complaint Code and Reason are required." });
-  }
-
-  // Step 1: Fetch student_name, S_ID, and comment from faculty_logger table
-  const fetchQuery = `
-    SELECT student_name, S_ID, comment 
-    FROM faculty_logger 
-    WHERE complaint_id = ?
-  `;
-
-  db.query(fetchQuery, [complaintCode], (fetchErr, fetchResult) => {
-    if (fetchErr) {
-      console.error("Error fetching from faculty_logger:", fetchErr);
-      return res.status(500).json({ error: "Database fetch error" });
-    }
-
-    if (fetchResult.length === 0) {
-      return res.status(404).json({ error: "Complaint ID not found in faculty_logger." });
-    }
-
-    const { student_name, S_ID, comment } = fetchResult[0];
-
-    // Step 2: Now insert into reason_ table
-    const insertQuery = `
-      INSERT INTO reason_ (complaint_id, REASON, student_name, Roll_no, issue)
-      VALUES (?, ?, ?, ?, ?)
-    `;
-    const insertValues = [complaintCode, reason, student_name, S_ID, comment];
-
-    db.query(insertQuery, insertValues, (insertErr, insertResult) => {
-      if (insertErr) {
-        console.error("Error inserting into reason_:", insertErr);
-        return res.status(500).json({ error: "Database insert error" });
-      }
-      res.status(200).json({ message: "Reason and related info submitted successfully." });
-    });
-  });
-});
-
-
 const PORT = 5000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

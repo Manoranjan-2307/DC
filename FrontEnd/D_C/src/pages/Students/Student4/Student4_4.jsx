@@ -6,6 +6,7 @@ const initialPdfs = Array(9).fill({
   id: "7376242AD199",
   name: "Apology Letter 7376242AD199",
   src: Apology_Letter_KarthikeyanJV,
+  upload_date: "2025-04-20",
 });
 
 export default function Student4_4() {
@@ -33,6 +34,7 @@ export default function Student4_4() {
       id: pdf.student_id,
       name: pdf.pdf_name,
       src: pdf.pdf_src,
+      upload_date: pdf.upload_date,
     })),
   ];
 
@@ -52,7 +54,7 @@ export default function Student4_4() {
   }, []);
 
   return (
-    <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>
+    <div className="container mt-5" style={{ marginLeft: "170px", marginBottom: "50px" }}>
       {/* Heading */}
       <div
         style={{
@@ -68,7 +70,7 @@ export default function Student4_4() {
             fontFamily: "tahoma",
             fontWeight: "500",
             color: "#875D7B",
-            marginTop: "50px",
+            marginTop: "70px",
             fontSize: "1.7rem",
           }}
         >
@@ -135,7 +137,9 @@ export default function Student4_4() {
                 >
                   {pdf.name}  <br />
                   <span style={{ fontSize: "1.2rem", color: "#555" }}>
-                              {new Date().toLocaleDateString()}
+                    {pdf.upload_date
+                      ? new Date(pdf.upload_date).toLocaleDateString("en-CA")
+                         : "—"}
                   </span>
                 </p>
               </div>

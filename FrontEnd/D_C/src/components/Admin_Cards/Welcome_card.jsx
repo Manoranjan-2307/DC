@@ -1,62 +1,77 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Welcome_Card = () => {
+  const navigate = useNavigate();
+
   const boxCommonStyle = {
-    padding: "8px 12px",
+    padding: "10px 14px",
     borderRadius: "10px",
     fontFamily: "Helvetica",
-    fontSize: "1.3rem",
+    fontSize: "1.2rem",
     fontWeight: 500,
     display: "inline-block",
-    marginBottom: "10px",
     color: "#000",
+    cursor: "pointer",
+    transition: "all 0.2s ease-in-out",
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)',
+    },
   };
 
   return (
-    <>
-      <Card
-        sx={{
-          width: "30vw",
-          margin: "0 auto",
-          padding: 2,
-          borderRadius: "14px",
-          backgroundColor: "#FFFFFF",
-          border: "1px solid #D9D4D4",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-          fontFamily: "Tahoma",
-        }}
-      >
-        <Grid container justifyContent="center" alignItems="center">
-          <Typography
-            variant="body2"
-            sx={{
-              fontFamily: "sans-serif",
-              fontSize: "1.5rem",
-              fontWeight: 600,
-              color: "#555555",
-              textAlign: "center",
-              marginBottom: "10px",
-            }}
-          >
-            OVERVIEW
-          </Typography>
-        </Grid>
-        <CardContent style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <Box sx={{ ...boxCommonStyle, backgroundColor: "#FFE5B4" }}>
-            Total Complaints: 8
-          </Box>
+    <Card
+      sx={{
+        width: "30vw",
+        margin: "0 auto",
+        padding: 2,
+        borderRadius: "14px",
+        backgroundColor: "#FAF3F0",
+        border: "1px solid #D9D4D4",
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        fontFamily: "Tahoma",
+      }}
+    >
+      <Grid container justifyContent="center" alignItems="center">
+        <Typography
+          variant="body2"
+          sx={{
+            fontFamily: "sans-serif",
+            fontSize: "1.5rem",
+            fontWeight: 600,
+            color: "#555555",
+            textAlign: "center",
+            marginBottom: "10px",
+          }}
+        >
+          OVERVIEW
+        </Typography>
+      </Grid>
+      <CardContent style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <Box
+          sx={{ ...boxCommonStyle, backgroundColor: "#FFE5B4" }}
+          onClick={() => navigate("/admin2")}
+        >
+          Total Complaints: 8
+        </Box>
 
-          <Box sx={{ ...boxCommonStyle, backgroundColor: "#FFD6D6" }}>
-            Pending: 3
-          </Box>
+        <Box
+          sx={{ ...boxCommonStyle, backgroundColor: "#FFD6D6" }}
+          onClick={() => navigate("/admin3_2")}
+        >
+          Pending: 3
+        </Box>
 
-          <Box sx={{ ...boxCommonStyle, backgroundColor: "#D6FFD6" }}>
-            Resolved: 5
-          </Box>
-        </CardContent>
-      </Card>
-    </>
+        <Box
+          sx={{ ...boxCommonStyle, backgroundColor: "#D6FFD6" }}
+          onClick={() => navigate("/admin3_2")}
+        >
+          Resolved: 5
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

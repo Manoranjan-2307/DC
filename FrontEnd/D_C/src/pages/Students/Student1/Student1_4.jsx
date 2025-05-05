@@ -6,6 +6,8 @@ const initialPdfs = Array(9).fill({
   id: "7376242AD267",
   name: "Apology Letter 7376242AD267",
   src: Apology_Letter_RahulK,
+  upload_date: "2025-04-20",
+  // isStatic: true, // mark static PDFs
 });
 
 export default function Student1_4() {
@@ -26,17 +28,18 @@ export default function Student1_4() {
       .catch((error) => console.error("Error fetching PDFs:", error));
   }, [studentId]);
 
-  // Merging static and dynamic PDFs
+  // Merge static and dynamic PDFs
   const mergedPdfs = [
     ...initialPdfs,
     ...studentPdf.map((pdf) => ({
       id: pdf.student_id,
       name: pdf.pdf_name,
       src: pdf.pdf_src,
+      upload_date: pdf.upload_date,
+      // isStatic: false,
     })),
   ];
 
-  
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -47,12 +50,12 @@ export default function Student1_4() {
         clearInterval(interval);
       }
     }, 100);
-
     return () => clearInterval(interval);
   }, []);
 
+
   return (
-    <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>
+    <div className="container mt-5" style={{ marginLeft: "170px", marginBottom: "50px" }}>
       {/* Heading */}
       <div
         style={{
@@ -133,9 +136,13 @@ export default function Student1_4() {
                     fontWeight: "500",
                   }}
                 >
-                  {pdf.name} <br />
+                  {pdf.name}
+                  <br />
                   <span style={{ fontSize: "1.2rem", color: "#555" }}>
-                              {new Date().toLocaleDateString()}
+                  {pdf.upload_date
+                      ? new Date(pdf.upload_date).toLocaleDateString("en-CA")
+                         : "—"}
+
                   </span>
                 </p>
               </div>

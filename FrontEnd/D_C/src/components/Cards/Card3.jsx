@@ -49,6 +49,10 @@ const ComplaintCard3 = () => {
         </Grid>
         <CardContent>
           <Typography variant="body1" component="p" sx={textStyle}>
+            <span style={labelStyle}>Complaint Code:</span> 
+            <span style={{ color: "red" }}>N/A</span>
+          </Typography>
+          <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Venue:</span> IT lab-1
           </Typography>
           <Typography variant="body1" component="p" sx={textStyle}>

@@ -47,7 +47,7 @@ export default function Student3_2() {
 
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '170px' }}>
+      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '172px' }}>
        <p style={{fontFamily: 'sans-serif', fontSize: '30px', color: '#875D7B'}}>Your History:</p>
     </div>
     <div

@@ -23,7 +23,7 @@ const AdminCard1 = () => {
       <Card
         sx={{
           
-          width: "28vw",
+          width: "24vw",
           margin: "0 auto",
           padding: 2,
           borderRadius: "14px",

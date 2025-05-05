@@ -31,7 +31,7 @@ export default function Admin2() {
       <div
         className="scroll-content"
         style={{
-          marginLeft: '90px', 
+          marginLeft: '170px', 
           marginTop: '10px',
           display: 'flex',
           flexWrap: 'wrap',
@@ -43,8 +43,8 @@ export default function Admin2() {
           marginBottom: '35px'
         }}
       >
-        <AdminCard1 />
-        <AdminCard2 />
+        {/* <AdminCard1 />
+        <AdminCard2 /> */}
         
         <AdminCard3 />
       </div>

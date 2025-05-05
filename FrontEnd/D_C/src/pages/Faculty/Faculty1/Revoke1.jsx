@@ -16,6 +16,7 @@ const Revoke1 = () => {
   const [complaints, setComplaints] = useState([]);
   const [filteredComplaints, setFilteredComplaints] = useState([]);
   const [filter, setFilter] = useState("All");
+  const [expandedCard, setExpandedCard] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ icon: null, message: "" });
 
@@ -23,34 +24,40 @@ const Revoke1 = () => {
     fetchComplaints();
   }, []);
 
-  useEffect(() => {
-    applyFilter();
-  }, [complaints, filter]);
-
   const fetchComplaints = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/revoked");
-      setComplaints(response.data);
+      console.log("Fetched Complaints:", response.data); // Debugging: Log fetched complaints
+      const validComplaints = response.data.filter((c) => c.Roll_no); // Filter out complaints with null Roll_no
+      setComplaints(validComplaints);
+      applyFilter(validComplaints); // Trigger applyFilter after fetching complaints
     } catch (err) {
       console.error("Error fetching complaints:", err);
     }
   };
 
-  const applyFilter = () => {
+  const applyFilter = (complaintsToFilter = complaints) => {
+    console.log("Applying Filter:", filter); // Debugging: Log the selected filter
+    console.log("Complaints Before Filtering:", complaintsToFilter); // Debugging: Log complaints before filtering
+
+    let filtered = [];
     if (filter === "All") {
-      setFilteredComplaints(complaints);
+      filtered = complaintsToFilter;
     } else if (filter === "Pending") {
-      setFilteredComplaints(complaints.filter((c) => !c.STATUS_));
+      filtered = complaintsToFilter.filter((c) => !c.STATUS_);
     } else {
-      setFilteredComplaints(complaints.filter((c) => c.STATUS_ === filter));
+      filtered = complaintsToFilter.filter((c) => c.STATUS_ === filter);
     }
+
+    console.log("Filtered Complaints:", filtered); // Debugging: Log filtered complaints
+    setFilteredComplaints(filtered);
   };
 
   const updateStatus = async (complaint_id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/revoked/${complaint_id}`, { status });
-  
-      // Update modal content after status update
+      await axios.put(`http://localhost:5000/api/revoked/${complaint_id}`, {
+        status,
+      });
       setModalContent({
         icon:
           status === "Accepted" ? (
@@ -61,75 +68,92 @@ const Revoke1 = () => {
         message: `Complaint ${status}!`,
       });
       setModalOpen(true);
-  
-      // Fetch complaints and immediately apply the filter
-      await fetchComplaints();  // Ensure complaints are fetched first
-  
-      // Apply filter after the complaints state is updated
-      applyFilter();
+      fetchComplaints();
     } catch (err) {
       console.error("Error updating status:", err);
     }
   };
-  
-  useEffect(() => {
-    applyFilter();  // Reapply filter after complaints are updated or filter is changed
-  }, [complaints, filter]);
-  
+
+  const handleCardClick = (complaint_id) => {
+    setExpandedCard((prev) => (prev === complaint_id ? null : complaint_id));
+  };
 
   return (
-    <div className="revoke-container">
+    <div className="revoke-container" style={{ marginTop: "110px" }}>
       <h2>Revoked Complaints</h2>
 
       {/* Filter Buttons */}
       <div className="filter-buttons">
-        <button className={filter === "All" ? "active" : ""} onClick={() => setFilter("All")}>
-          All
-        </button>
-        <button className={filter === "Accepted" ? "active" : ""} onClick={() => setFilter("Accepted")}>
-          Accepted
-        </button>
-        <button className={filter === "Declined" ? "active" : ""} onClick={() => setFilter("Declined")}>
-          Declined
-        </button>
-        <button className={filter === "Pending" ? "active" : ""} onClick={() => setFilter("Pending")}>
-          Pending
-        </button>
+        {["All", "Accepted", "Declined", "pending"].map((type) => (
+          <button
+            key={type}
+            className={filter === type ? "filter-btn active" : "filter-btn"}
+            onClick={() => {
+              setFilter(type);
+              applyFilter(); // Trigger applyFilter when filter changes
+            }}
+          >
+            {type}
+          </button>
+        ))}
       </div>
 
-      {/* Complaint Cards */}
-      <div className="revoke-grid">
+      <div className="revoke-grid" style={{ marginLeft: "50px" }}>
         {filteredComplaints.map((complaint) => (
           <div
-            key={complaint.complaint_id}
-            className={`revoke-card ${complaint.STATUS_?.toLowerCase() || "pending"}`}
+            key={complaint.complaint_id || complaint.Roll_no} // Use complaint_id as fallback key
+            className={`revoke-card ${
+              complaint.STATUS_?.toLowerCase() || "pending"
+            } ${expandedCard === complaint.complaint_id ? "expanded" : ""}`}
+            onClick={() => handleCardClick(complaint.complaint_id)}
           >
             <div className="revoke-card-header">
-              <p><strong>Name:</strong> {complaint.student_name}</p>
-              <p><strong>Register Number:</strong> {complaint.Roll_no}</p>
-              <p><strong>Reason:</strong> {complaint.REASON}</p>
+              <p>
+                <strong>Name:</strong> {complaint.student_name}
+              </p>
+              <p>
+                <strong>Register Number:</strong> {complaint.Roll_no}
+              </p>
+              {expandedCard === complaint.complaint_id && (
+                <p>
+                  <strong>Reason:</strong> {complaint.REASON}
+                </p>
+              )}
             </div>
 
-            {complaint.STATUS_ ? (
-              <p className={`status-text ${complaint.STATUS_ === "Accepted" ? "Accepted" : "Declined"}`}>
-                Status: {complaint.STATUS_}
+            {complaint.STATUS_ && expandedCard !== complaint.complaint_id ? (
+              <p
+                className={`status-text ${
+                  complaint.STATUS_ === "Accepted" ? "accepted" : "declined"
+                }`}
+              >
+                {complaint.STATUS_}
               </p>
-            ) : (
-              <div className="button-group">
-                <button
-                  className="accept-btn"
-                  onClick={() => updateStatus(complaint.complaint_id, "Accepted")}
-                >
-                  ACCEPT
-                </button>
-                <button
-                  className="decline-btn"
-                  onClick={() => updateStatus(complaint.complaint_id, "Declined")}
-                >
-                  DECLINE
-                </button>
-              </div>
-            )}
+            ) : null}
+
+            {complaint.STATUS_ === "pending" &&
+              expandedCard === complaint.complaint_id && (
+                <div className="button-group">
+                  <button
+                    className="accept-btn action-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      updateStatus(complaint.complaint_id, "Accepted");
+                    }}
+                  >
+                    ACCEPT
+                  </button>
+                  <button
+                    className="decline-btn action-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      updateStatus(complaint.complaint_id, "Declined");
+                    }}
+                  >
+                    DECLINE
+                  </button>
+                </div>
+              )}
           </div>
         ))}
       </div>

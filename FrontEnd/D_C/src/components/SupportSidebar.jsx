@@ -1,36 +1,58 @@
-import React from "react";
-import { List, ListItem, ListItemIcon, ListItemText, Box } from "@mui/material";
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-const SupportSidebar = ({ onSelect }) => {
+const SupportSidebar = () => {
+  const location = useLocation();
+  const [collapsed] = useState(true); 
+
   return (
-    <Box
-      sx={{
-        width: "200px",
+    <div
+      className="d-flex flex-column text-white vh-100 p-3"
+      style={{
+        backgroundColor: "black", 
+        width: collapsed ? "100px" : "290px",
         height: "100vh",
-        backgroundColor: "#f5f5f5",
-        borderRight: "1px solid #ddd",
-        paddingTop: "20px",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        transition: "width 0.3s ease",
       }}
     >
-      <List>
-        <ListItem button onClick={() => onSelect("supportDesk")}>
-          <ListItemIcon>
-            <VideoLibraryIcon />
-          </ListItemIcon>
-          <ListItemText primary="Upload Video" />
-        </ListItem>
+      <button
+        className="btn btn-outline-light mb-3" style={{marginTop: "8px"}}
+      >
+        <i className="bi bi-list-ul fs-4" ></i>
 
-        <ListItem button onClick={() => window.location.reload()}>
-          <ListItemIcon>
-            <LogoutIcon />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </ListItem>
-      </List>
-    </Box>
+      </button>
+
+      <div style={{ marginTop: "120px" }}>
+        <ul className="nav flex-column fs-5 mt-5">
+          <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
+            <NavItem to="/supportdesk" icon="bi bi-collection-play" label="Forward" collapsed={collapsed} location={location} />
+          </div>
+          <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
+            <NavItem to="/" icon="bi-box-arrow-right" label="Log-out" collapsed={collapsed} location={location} />
+          </div>
+        </ul>
+      </div>
+    </div>
   );
 };
 
-export default SupportSidebar;
+const NavItem = ({ to, icon, label, collapsed, location }) => {
+  const isActive = location.pathname === to;
+
+  return (
+    <li className="nav-item">
+      <Link to={to} className="nav-link d-flex align-items-center text-light">
+        <i
+          className={`bi ${icon} fs-5`}
+          style={{ color: isActive ? "red" : "inherit" }}
+        ></i>
+        {!collapsed && <span className="ms-3">{label}</span>}
+      </Link>
+    </li>
+  );
+};
+
+export default SupportSidebar;

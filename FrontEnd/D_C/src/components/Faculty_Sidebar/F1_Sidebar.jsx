@@ -9,7 +9,7 @@ const Sidebar = () => {
     <div
       className="d-flex flex-column text-white vh-100 p-3"
       style={{
-        backgroundColor: "black", 
+        backgroundColor: "#2F2F2F", 
         width: collapsed ? "100px" : "290px",
         height: "100vh",
         position: "fixed",

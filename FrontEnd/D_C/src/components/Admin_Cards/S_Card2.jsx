@@ -1,9 +1,16 @@
 import React, { useState, useEffect} from "react";
 import { Card, CardContent, Typography, Grid, Box, Button } from "@mui/material";
-import MeetingIcon from "../../assets/Meeting icon.png"; 
+import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
+import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import PersonIcon from '@mui/icons-material/Person';
+
 
 const S_Card2 = () => {
   const [attendance, setAttendance] = useState('pending');
+  const [buttonsDisabled, setButtonsDisabled] = useState(false); 
   const textStyle = {
     fontFamily: "sans-serif",
     fontSize: "1.2rem",
@@ -17,8 +24,8 @@ const S_Card2 = () => {
     color: "#000000",
     fontWeight: 500,
     display: "inline",
-    marginRight: "6px",
-    marginLeft: "15px",
+    marginRight: "5px",
+    
   };
 
   const getAttendancecolor = () =>{
@@ -35,62 +42,69 @@ const S_Card2 = () => {
     <Card
       sx={{
        
-        width: "35vw",
-        margin: "0 auto",
-        padding: 2,
-        borderRadius: "14px",
-        backgroundColor: "#FFFFFF",
-        border: "1px solid #D9D4D4",
-        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-        fontFamily: "Tahoma",
+          width: "25vw",
+          minHeight: "230px", 
+          margin: "0 auto",
+          padding: 2,
+          borderRadius: "14px",
+          backgroundColor: "#FFFFFF",
+          border: "1px solid #D9D4D4",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          fontFamily: "Tahoma",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
       }}
     >
       <CardContent>
         <Typography
-          variant="h6"
-          sx={{
-            fontFamily: "sans-serif",
-            fontSize: "1.1rem",
-            color: "red",
-            fontWeight: 600,
-            marginBottom: "10px",
-          }}
-        >
-          ENQUIRY MEETING
-        </Typography>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <Box
-              component="img"
-              src={MeetingIcon}
-              alt="Meeting Icon"
-              sx={{ width: 60, height: 60 }}
-            />
-          </Grid>
-          <Grid item xs>
+            variant="h6"
+            sx={{
+                fontFamily: "sans-serif",
+                fontSize: "1.1rem",
+                color: "#E65100",
+                fontWeight: 600,
+                marginBottom: "10px",
+            }}
+                >
+                ENQUIRY MEETING
+          </Typography>
+        
             <Typography variant="body1" component="p" sx={textStyle}>
-                <span style={labelStyle}>Register no:</span> 7376242AD267
+                <PersonIcon sx={{mr: 1, color: 'black'}} />: 7376242AD267
             </Typography>
-            <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Venue:</span> Faculty Hall - 3 (New Mechanical Block)
+            <Typography variant="body1" component="p" sx={{...textStyle,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+              }}>
+              <MyLocationOutlinedIcon  sx={{mr: 1, color: 'black'}}/>: Faculty Hall - 3 (New Mechanical Block)
              
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Date:</span> 10.04.2025
+              <EventNoteOutlinedIcon sx={{mr: 1, color: 'black'}} />: 10.04.2025
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Time:</span> 2:00 PM
+              <UpdateOutlinedIcon sx={{mr: 1, color: 'black'}} />: 2:00 PM
+            </Typography>
+            <Typography variant="body1" component="p" sx={{...textStyle,
+                       display: "-webkit-box",
+                       WebkitLineClamp: 2,
+                       WebkitBoxOrient: "vertical",
+                       overflow: "hidden",
+                       textOverflow: "ellipsis",}}>
+              <BorderColorIcon sx={{mr: 1, color: 'black'}}/>: Enquiry for the complaint filed on 02.04.2025 at 02:00 PM
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Reason:</span> Enquiry for the complaint filed on 02.04.2025 at 02:00 PM
+              <HowToRegIcon sx={{mr: 1, color: 'black'}} />:
+              <span style={{color: getAttendancecolor(), marginLeft: "5px"}}>{attendance}</span>
             </Typography>
-            <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Attendance:</span> 
-              <span style={{color: getAttendancecolor()}}>{attendance}</span>
-            </Typography>
-          </Grid>
-        </Grid>
+          
+
       </CardContent>
+
       <Grid container justifyContent="flex-end" spacing={1}>
           <Grid item>
             <Button
@@ -107,7 +121,7 @@ const S_Card2 = () => {
               variant="contained"
               color="error"
               sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
-              onClick={ ()=> setAttendance('absent')}
+              onClick={ () => setAttendance('absent')}
             >
               Absent
             </Button>

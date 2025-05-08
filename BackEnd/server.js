@@ -532,6 +532,40 @@ app.get("/complaints/detail/:complaint_id", (req, res) => {
   });
 });
 
+// updating Timer logic
+app.put("/complaints/update-timer/:complaint_id", (req, res) => {
+  const { complaint_id } = req.params;
+  const { remaining_time } = req.body;
+
+  const sql = "UPDATE faculty_logger SET remaining_time = ? WHERE complaint_id = ?";
+  db.query(sql, [remaining_time, complaint_id], (err, result) => {
+    if (err) {
+      console.error("Error updating timer:", err);
+      return res.status(500).json({ error: "Failed to update timer" });
+    }
+
+    res.status(200).json({ message: "Timer updated successfully" });
+  });
+});
+
+//updating expired time
+app.put("/complaints/set-expired/:complaint_id", (req, res) => {
+  const { complaint_id } = req.params;
+  const { expired_time } = req.body;
+
+  const sql = "UPDATE faculty_logger SET expired_time = ?, remaining_time = '00:00:00' WHERE complaint_id = ?";
+  db.query(sql, [expired_time, complaint_id], (err, result) => {
+    if (err) {
+      console.error("Error setting expired time:", err);
+      return res.status(500).json({ error: "Failed to set expired time" });
+    }
+
+    res.status(200).json({ message: "Expired time set successfully" });
+  });
+});
+
+
+
 // Insert into admin_ table
 app.post("/send-to-admin", (req, res) => {
   const { student_name, S_ID, Date_, Time_, Venue, Comment, faculty } =
@@ -570,6 +604,78 @@ app.get("/api/admin-all", (req, res) => {
     res.json(results);
   });
 });
+
+
+// status tracker
+
+// app.post("/status-tracker/init/:complaintId", async (req, res) => {
+//   const { complaintId } = req.params;
+
+//   try {
+//     await db.query(
+//       `INSERT IGNORE INTO complaint_status_tracker (complaint_id) VALUES (?)`,
+//       [complaintId]
+//     );
+//     res.sendStatus(200);
+//   } catch (err) {
+//     console.error("Insert error:", err);
+//     res.status(500).send("Server error");
+//   }
+// });
+
+// app.get("/status-tracker/:complaintId", async (req, res) => {
+//   const { complaintId } = req.params;
+
+//   try {
+//     const [result] = await db.query(
+//       `SELECT freeze, initial_time, start_time, stopped_time FROM complaint_status_tracker WHERE complaint_id = ?`,
+//       [complaintId]
+//     );
+
+//     if (!result.length) return res.status(404).send("Not found");
+
+//     const row = result[0];
+//     let remaining;
+
+//     if (row.freeze && row.stopped_time) {
+//       remaining = row.stopped_time;
+//     } else {
+//       const now = new Date();
+//       const startTime = new Date(row.start_time);
+//       const elapsedSeconds = Math.floor((now - startTime) / 1000);
+//       const [h, m, s] = row.initial_time.split(":").map(Number);
+//       const totalInitial = h * 3600 + m * 60 + s;
+//       const remainingSeconds = Math.max(totalInitial - elapsedSeconds, 0);
+//       remaining = new Date(remainingSeconds * 1000).toISOString().substr(11, 8);
+//     }
+
+//     res.json({
+//       freeze: row.freeze,
+//       remaining_time: remaining
+//     });
+//   } catch (err) {
+//     console.error("Fetch error:", err);
+//     res.status(500).send("Server error");
+//   }
+// });
+
+
+// app.put("/status-tracker/freeze/:complaintId", async (req, res) => {
+//   const { complaintId } = req.params;
+//   const { remaining_time } = req.body; // format: "HH:MM:SS"
+
+//   try {
+//     await db.query(
+//       `UPDATE complaint_status_tracker SET freeze = TRUE, stopped_time = ? WHERE complaint_id = ?`,
+//       [remaining_time, complaintId]
+//     );
+//     res.sendStatus(200);
+//   } catch (err) {
+//     console.error("Update error:", err);
+//     res.status(500).send("Server error");
+//   }
+// });
+
 
 const PORT = 5000;
 app.listen(PORT, () => {

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Grid, Box, Button } from "@mui/material";
-import MeetingIcon from "../../assets/Meeting icon.png";
+import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
+import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import PersonIcon from '@mui/icons-material/Person';
 
 const S_Card1 = ({ complaint }) => {
   const [attendance, setAttendance] = useState(complaint.status || "pending");
-
+  const [buttonsDisabled, setButtonsDisabled] = useState(false); 
   // Internal state to force re-render if needed
   const [reload, setReload] = useState(false);
 
@@ -55,8 +60,8 @@ const S_Card1 = ({ complaint }) => {
     color: "#000000",
     fontWeight: 500,
     display: "inline",
-    marginRight: "6px",
-    marginLeft: "15px",
+    marginRight: "5px",
+    
   };
 
   const getAttendanceColor = () => {
@@ -69,7 +74,8 @@ const S_Card1 = ({ complaint }) => {
     <Card
       sx={{
        
-        width: "35vw",
+        width: "25vw",
+        minHeight: "230px", 
         margin: "0 auto",
         padding: 2,
         borderRadius: "14px",
@@ -77,6 +83,9 @@ const S_Card1 = ({ complaint }) => {
         border: "1px solid #D9D4D4",
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
         fontFamily: "Tahoma",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <CardContent>
@@ -85,39 +94,45 @@ const S_Card1 = ({ complaint }) => {
           sx={{
             fontFamily: "sans-serif",
             fontSize: "1.1rem",
-            color: "red",
+            color: "#E65100",
             fontWeight: 600,
             marginBottom: "10px",
           }}
         >
           ENQUIRY MEETING
         </Typography>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <Box component="img" src={MeetingIcon} alt="Meeting Icon" sx={{ width: 60, height: 60 }} />
-          </Grid>
-          <Grid item xs>
+        
             <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Register No:</span> {complaint.sId}
+              <PersonIcon sx={{mr: 1, color: 'black'}} />: {complaint.sId}
+            </Typography>
+            <Typography variant="body1" sx={{...textStyle,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+              }}>
+              <MyLocationOutlinedIcon  sx={{mr: 1, color: 'black'}}/>: {complaint.venue}
             </Typography>
             <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Venue:</span> {complaint.venue}
+              <EventNoteOutlinedIcon sx={{mr: 1, color: 'black'}} />: {complaint.date}
             </Typography>
             <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Date:</span> {complaint.date}
+              <UpdateOutlinedIcon sx={{mr: 1, color: 'black'}} />: {complaint.time}
+            </Typography>
+            <Typography variant="body1" sx={{...textStyle,
+                       display: "-webkit-box",
+                       WebkitLineClamp: 2,
+                       WebkitBoxOrient: "vertical",
+                       overflow: "hidden",
+                       textOverflow: "ellipsis",}}>
+              <BorderColorIcon sx={{mr: 1, color: 'black'}}/>: {complaint.info}
             </Typography>
             <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Time:</span> {complaint.time}
+              <HowToRegIcon sx={{mr: 1, color: 'black'}} />:
+              <span style={{ color: getAttendanceColor(), marginLeft: "5px" }}> {attendance}</span>
             </Typography>
-            <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Reason:</span> {complaint.info}
-            </Typography>
-            <Typography variant="body1" sx={textStyle}>
-              <span style={labelStyle}>Attendance:</span>
-              <span style={{ color: getAttendanceColor() }}> {attendance}</span>
-            </Typography>
-          </Grid>
-        </Grid>
+          
       </CardContent>
       <Grid container justifyContent="flex-end" spacing={1}>
         <Grid item>

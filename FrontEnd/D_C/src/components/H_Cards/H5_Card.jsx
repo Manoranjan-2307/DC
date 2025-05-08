@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
 import axios from "axios";
 
 const HCard5 = ({ complaint }) => {
@@ -19,7 +19,7 @@ const HCard5 = ({ complaint }) => {
 
     fetchLatestData();
 
-    // Optional: refresh every 10 seconds to stay updated
+   
     const interval = setInterval(fetchLatestData, 10000);
 
     return () => clearInterval(interval);
@@ -59,11 +59,17 @@ const HCard5 = ({ complaint }) => {
 
   if (!complaintData) return <Typography variant="body1" component="p" sx={textStyle}>Loading...</Typography>;
 
+  // For button 
+  console.log(complaintData.status);
+  const buttonText = complaintData.status === "Pending" ? "Active" : "Expired";
+  const buttonColor = complaintData.status === "Pending" ? "green" : "#FF5E5E";
+
 
   return (
     <Card
       sx={{
         width: '25vw',
+        height: '200px', 
         margin: '0 auto',
         padding: 2,
         borderRadius: '14px',
@@ -71,25 +77,64 @@ const HCard5 = ({ complaint }) => {
         border: '1px solid #D9D4D4',
         boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
         fontFamily: 'Tahoma',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        overflow: 'hidden'
       }}
     >
-      <Grid container justifyContent="flex-end" alignItems="center">
-         <Typography
-              variant="body2"
-              color="textSecondary"
-              sx={{
-                fontFamily: 'sans-serif',
-                fontSize: '1.1rem',
-                color: 'textSecondary',
-              }}
+      <Grid container justifyContent="space-between" alignItems="center">
+        {/* Button for "Expired" */}
+        <Grid item>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: buttonColor,
+              color: '#FFFFFF',
+              fontSize: '0.7rem',
+              // fontFamily: 'sans-serif',
+              fontWeight: 600,
+              textTransform: 'none',
+              borderRadius: '15px',
+              padding: '0',
+              minWidth: '80px',
+              height: '23px',
+              '&:hover': {
+                backgroundColor: buttonColor,
+              },
+            }}
+            
           >
-          {formatDateTime(complaintData.time_date)}
-        </Typography>
+            {buttonText}
+          </Button>
+        </Grid>
+
+        {/* Date */}
+        <Grid item>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{
+              fontFamily: 'sans-serif',
+              fontSize: '1.1rem',
+              color: 'textSecondary',
+            }}
+          >
+             {formatDateTime(complaintData.time_date)}
+          </Typography>
+        </Grid>
       </Grid>
+
       <CardContent>
-        <Typography variant="body1" component="p" sx={textStyle}>
-        <span style={labelStyle}>Issue:</span> {complaintData.comment}
+      <Typography variant="body1" sx={{...textStyle,
+                 display: "-webkit-box",
+                 WebkitLineClamp: 2,
+                 WebkitBoxOrient: "vertical",
+                 overflow: "hidden",
+                 textOverflow: "ellipsis",}}>
+                 <span style={labelStyle}>Complaint Details:</span> {complaintData.comment}
         </Typography>
+
         <Typography variant="body1" component="p" sx={textStyle}>
         <span style={labelStyle}>Venue:</span> {complaintData.venue}
         </Typography>

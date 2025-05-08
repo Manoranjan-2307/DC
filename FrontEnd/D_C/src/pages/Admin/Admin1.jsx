@@ -15,18 +15,18 @@ export default function Admin1() {
           marginTop: '60px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', marginLeft: '570px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginLeft: '550px' }}>
           <p
             style={{
               fontFamily: 'Segoe UI',
               fontSize: '2.2rem',
               margin: 0,
               fontWeight: 600,
-              color: '#555555',
+              color: '#444B5D',
               marginRight: '10px',
             }}
           >
-            WELCOME ADMIN
+            Welcome Admin
           </p>
           <Sparkles size={32} color="#fbbf24" />
         </div>

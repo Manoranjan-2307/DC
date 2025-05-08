@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
 
 const HCard2 = () => {
   const textStyle = {
@@ -23,6 +23,7 @@ const HCard2 = () => {
       sx={{
         
         width: '25vw',
+        height: '200px', 
         margin: '0 auto',
         padding: 2,
         borderRadius: '14px',
@@ -30,20 +31,49 @@ const HCard2 = () => {
         border: '1px solid #D9D4D4',
         boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
         fontFamily: 'Tahoma',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        overflow: 'hidden'
       }}
     >
-      <Grid container justifyContent="flex-end" alignItems="center">
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          sx={{
-            fontFamily: 'sans-serif',
-            fontSize: '1.1rem',
-            color: 'textSecondary',
-          }}
-        >
-          30 MAR 2025 - 11:00 AM
-        </Typography>
+      <Grid container justifyContent="space-between" alignItems="center">
+      <Grid item>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#FF5E5E',
+              color: '#FFFFFF',
+              fontSize: '0.7rem',
+              fontFamily: 'sans-serif',
+              fontWeight: 600,
+              textTransform: 'none',
+              borderRadius: '15px',
+              padding: '0',
+              minWidth: '80px',
+              height: '23px',
+              
+            }}
+            
+          >
+            Expired
+          </Button>
+        </Grid>
+
+        {/* Date */}
+        <Grid item>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{
+              fontFamily: 'sans-serif',
+              fontSize: '1.1rem',
+              color: 'textSecondary',
+            }}
+          >
+             30 MAR 2025 - 11:00 AM
+          </Typography>
+        </Grid>
       </Grid>
       <CardContent>
         <Typography variant="body1" component="p" sx={textStyle}>

@@ -24,14 +24,14 @@ export default function Admin2() {
 
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '170px' }}>
-        <p style={{ fontFamily: 'sans-serif', fontSize: '30px', color: '#875D7B' }}>{heading}</p>
+      <div style={{ padding: '5px', marginTop: '105px', marginBottom: '20px', marginLeft: '165px' }}>
+        <p style={{ fontFamily: 'tahoma', fontSize: '30px', color: '#5A6387', fontWeight: 500 }}>{heading}</p>
       </div>
 
       <div
         className="scroll-content"
         style={{
-          marginLeft: '170px', 
+          marginLeft: '168px', 
           marginTop: '10px',
           display: 'flex',
           flexWrap: 'wrap',

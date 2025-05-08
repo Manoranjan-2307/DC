@@ -51,21 +51,23 @@ export default function Student5_1() {
 
   return (
     <div>
+      <div style={{ marginTop: "130px", marginLeft: "150px", marginBottom: "30px"}}>
+      <p style={{fontFamily: 'sans-serif', fontSize: '30px', color: '#5A6387', fontWeight: 500}}>Hello Henry ✨</p>
+      </div>
     <div
       className="scroll-content"
       style={{
-        marginLeft: '220px', 
-        marginTop: '150px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '45px',
-        maxWidth: '800px', 
-        width: '100%', 
-        boxSizing: 'border-box', 
-        marginBottom: '30px'
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)', 
+        gap: '30px',                          
+        padding: '20px',
+        marginLeft: '127px',
+        width: 'calc(100% - 170px)',
+        boxSizing: 'border-box',
+        marginBottom: "30px"
       }}
     >
-      <p style={{fontFamily: 'tahoma', fontSize: '30px', color: '#875D7B'}}>HELLO HENRY 👋</p>
+      
       <Card1 />
       <Card2 />
       <Card3 />

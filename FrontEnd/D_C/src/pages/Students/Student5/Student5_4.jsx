@@ -13,12 +13,12 @@ export default function Student5_4() {
   const location = useLocation();
   const [studentPdf, setStudentPdf] = useState([]);
   const [heading, setHeading] = useState("");
-  const fullHeading = "  Your apologies:";
+  const fullHeading = "  My apologies:";
   const headingLength = fullHeading.length;
   const studentId = "7376242AL165";
 
 
-  // Fetch PDFs from the backend
+  // Fetching PDFs from the backend
   useEffect(() => {
     fetch(`http://localhost:5000/api/student-pdfs/${studentId}`)
       .then((response) => response.json())
@@ -72,7 +72,7 @@ export default function Student5_4() {
           style={{
             fontFamily: "tahoma",
             fontWeight: "500",
-            color: "#875D7B",
+            color: "#5A6387",
             marginTop: "70px",
             fontSize: "1.7rem",
           }}

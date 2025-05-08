@@ -61,8 +61,8 @@ const AdminCard3 = () => {
         <Grid item key={complaint.ID || index} xs={12} sm={6} md={4}>
           <Card
             sx={{
-              height: "100%", // ensures equal height
-              minHeight: "280px", // optional baseline height
+              height: "100%", 
+              minHeight: "210px", 
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -72,6 +72,7 @@ const AdminCard3 = () => {
               border: "1px solid #D9D4D4",
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
               fontFamily: "Tahoma",
+              width: "24vw",
             }}
           >
             <Grid container justifyContent="flex-end">

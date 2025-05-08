@@ -48,13 +48,13 @@ export default function Student1_2() {
   
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '170px' }}>
-       <p style={{fontFamily: 'sans-serif', fontSize: '30px', color: '#875D7B'}}>Your History:</p>
+      <div style={{ padding: '5px', marginTop: '100px', marginBottom: '10px', marginLeft: '175px' }}>
+       <p style={{fontFamily: 'tahoma', fontSize: '30px', color: '#5A6387', fontWeight: 500}}>My History:</p>
     </div>
     <div
       className="scroll-content"
       style={{
-        marginLeft: '180px',
+        marginLeft: '175px',
         marginTop: '25px',
         display: 'flex',
         flexWrap: 'wrap',
@@ -68,8 +68,7 @@ export default function Student1_2() {
       <HCard2 />
       <HCard1 />
       <HCard4 />
-      <HCard3 />
-      <HCard1 />
+    
       {complaints
         .filter((complaint) => complaint.S_ID === studentId)
         .map((complaint) => (

@@ -47,26 +47,27 @@ export default function Student2_2() {
       <div
         style={{
           padding: '5px',
-          marginTop: '125px',
-          marginBottom: '15px',
-          marginLeft: '172px',
+          marginTop: '100px',
+          marginBottom: '10px',
+          marginLeft: '175px',
         }}
       >
         <p
           style={{
-            fontFamily: 'sans-serif',
+            fontFamily: 'tahoma',
             fontSize: '30px',
-            color: '#875D7B',
+            color: '#5A6387',
+            fontWeight: 500
           }}
         >
-         Your History: 
+         My History: 
         </p>
       </div>
 
       <div
         className="scroll-content"
         style={{
-          marginLeft: '180px',
+          marginLeft: '175px',
           marginTop: '25px',
           display: 'flex',
           flexWrap: 'wrap',
@@ -76,27 +77,22 @@ export default function Student2_2() {
           width: '80%',
         }}
       >
-        {/* Filter complaints only for the student with matching studentId */}
-        {complaints
-  .filter((complaint) => complaint.S_ID === studentId)
-  .map((complaint) => (
-    <HCard5
-      key={complaint.complaint_id} 
-      complaint={complaint}
-    />
-  ))}
 
-       
-        {complaints.length === 0 && (
-          <>
             <HCard2 />
             <HCard4 />
             <HCard1 />
             <HCard3 />
-            <HCard2 />
-            <HCard1 />
-          </>
-        )}
+      
+        {complaints
+          .filter((complaint) => complaint.S_ID === studentId)
+          .map((complaint) => (
+         <HCard5
+             key={complaint.complaint_id} 
+            complaint={complaint}
+          />
+  ))}
+
+         
       </div>
     </div>
   );

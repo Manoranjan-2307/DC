@@ -25,6 +25,7 @@ const ComplaintCard1 = () => {
         sx={{
           
           width: "28vw",
+          minHeight: "270px", 
           margin: "0 auto",
           padding: 2,
           borderRadius: "14px",
@@ -32,6 +33,9 @@ const ComplaintCard1 = () => {
           border: "1px solid #D9D4D4",
           boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
           fontFamily: "Tahoma",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
         <Grid container justifyContent="flex-end" alignItems="center">
@@ -58,9 +62,9 @@ const ComplaintCard1 = () => {
           <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Complaint Details:</span> Dress code not followed
           </Typography>
-          <Typography variant="body1" component="p" sx={textStyle}>
+          {/* <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Faculty:</span> Nikitha M
-          </Typography>
+          </Typography> */}
           <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Timer:</span>
             <span style={{ color: "red" }}>04:22:18</span>

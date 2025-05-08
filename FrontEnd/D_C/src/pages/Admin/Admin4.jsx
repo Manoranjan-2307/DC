@@ -17,7 +17,7 @@ export const pdfs = [
 
 export default function Admin4() {
   const [heading, setHeading] = useState("");
-  const fullHeading = "  Your uploads:";
+  const fullHeading = "  My uploads:";
   const headingLength = fullHeading.length;
   const [studentId, setStudentId] = useState("");
   const [studentPdf, setStudentPdf] = useState({});
@@ -107,7 +107,6 @@ export default function Admin4() {
 
   return (
     <div className="container mt-5" style={{ marginLeft: "150px", marginBottom: "320px" }}>
-      {/* Heading and Button */}
       <div
         style={{
           display: "flex",
@@ -121,7 +120,7 @@ export default function Admin4() {
           style={{
             fontFamily: "tahoma",
             fontWeight: "500",
-            color: "#875D7B",
+            color: "#5A6387",
             marginTop: "50px",
             fontSize: "1.7rem",
           }}

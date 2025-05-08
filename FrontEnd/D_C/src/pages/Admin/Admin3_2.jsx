@@ -6,7 +6,7 @@ import S_Card3 from '../../components/Admin_Cards/S_Card3';
 
 export default function Admin3_2() {
   const [heading, setHeading] = useState('');
-  const fullHeading = '  Scheduled Meetings:';
+  const fullHeading = '  My Meetings:';
   const headingLength = fullHeading.length;
   const [complaints, setComplaints] = useState([]);
 
@@ -49,22 +49,20 @@ export default function Admin3_2() {
 
   return (
     <div>
-    <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '192px' }}>
-       <p style={{fontFamily: 'tahoma', fontSize: '30px', color: '#875D7B'}}>{heading}</p>
+    <div style={{ padding: '5px', marginTop: '100px', marginBottom: '10px', marginLeft: '145px' }}>
+       <p style={{fontFamily: 'tahoma', fontSize: '30px', color: '#5A6387'}}>{heading}</p>
     </div>
     <div
       className="scroll-content"
       style={{
-        marginLeft: '170px', 
-        marginTop: '15px',
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        gap: '40px',
-       
-        width: '80%', 
-        boxSizing: 'border-box', 
-        marginBottom: '35px'
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)', 
+        gap: '50px',                          
+        padding: '20px',
+        marginLeft: '130px',
+        width: 'calc(100% - 170px)',
+        boxSizing: 'border-box',
+        marginBottom: "35px"
     }}
   >
     

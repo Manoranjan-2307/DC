@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useState, useEffect}from "react";
 import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Welcome_Card = () => {
   const navigate = useNavigate();
+  const [totalCount, setTotalCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [resolvedCount, setResolvedCount] = useState(0);
+
+  useEffect(() => {
+    const fetchComplaintCounts = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/meeting-details");
+        const meetingDetails = response.data;
+        const total = meetingDetails.length;
+
+        
+        const resolved = meetingDetails.filter(
+          (meeting) => meeting.status === "present" || meeting.status === "absent"
+        ).length;
+
+        
+        const pending = total - resolved;
+
+       
+        setTotalCount(total);
+        setResolvedCount(resolved);
+        setPendingCount(pending);
+      } catch (error) {
+        console.error("Error fetching complaint counts:", error);
+      }
+    };
+
+    fetchComplaintCounts();
+  }, []);
+
 
   const boxCommonStyle = {
     padding: "10px 14px",
@@ -54,21 +86,21 @@ const Welcome_Card = () => {
           sx={{ ...boxCommonStyle, backgroundColor: "#FFE5B4" }}
           onClick={() => navigate("/admin2")}
         >
-          Total Complaints: 8
+          Total Complaints: {totalCount}
         </Box>
 
         <Box
           sx={{ ...boxCommonStyle, backgroundColor: "#FFD6D6" }}
           onClick={() => navigate("/admin3_2")}
         >
-          Pending: 3
+          Pending: {pendingCount}
         </Box>
 
         <Box
           sx={{ ...boxCommonStyle, backgroundColor: "#D6FFD6" }}
           onClick={() => navigate("/admin3_2")}
         >
-          Resolved: 5
+          Resolved: {resolvedCount}
         </Box>
       </CardContent>
     </Card>

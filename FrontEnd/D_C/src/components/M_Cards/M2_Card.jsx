@@ -1,6 +1,10 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
-import MeetingIcon from "../../assets/Meeting icon.png"; 
+import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
+import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 const M2_Card = () => {
   const textStyle = {
@@ -16,15 +20,16 @@ const M2_Card = () => {
     color: "#000000",
     fontWeight: 500,
     display: "inline",
-    marginRight: "6px",
-    marginLeft: "15px",
+    marginRight: "5px",
+   
   };
 
   return (
     <Card
       sx={{
        
-        width: "38vw",
+        width: "25vw",
+        minHeight: "210px", 
         margin: "0 auto",
         padding: 2,
         borderRadius: "14px",
@@ -32,6 +37,9 @@ const M2_Card = () => {
         border: "1px solid #D9D4D4",
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
         fontFamily: "Tahoma",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <CardContent>
@@ -40,41 +48,36 @@ const M2_Card = () => {
           sx={{
             fontFamily: "sans-serif",
             fontSize: "1.1rem",
-            color: "red",
+            color: "#E65100",
             fontWeight: 600,
             marginBottom: "10px",
           }}
         >
           ENQUIRY MEETING
         </Typography>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <Box
-              component="img"
-              src={MeetingIcon}
-              alt="Meeting Icon"
-              sx={{ width: 60, height: 60 }}
-            />
-          </Grid>
-          <Grid item xs>
-            <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Venue:</span> Faculty Hall - 3 (New Mechanical Block)
+        
+            <Typography variant="body1" component="p" sx={{...textStyle,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",}}>
+               <MyLocationOutlinedIcon sx={{mr: 1, color: 'black'}} />: Faculty Hall - 3 (New Mechanical Block)
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Date:</span> 10-04-2025
+              <EventNoteOutlinedIcon sx={{mr: 1, color: 'black'}}/>: 10-04-2025
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Time:</span> 2:00 PM
+              <UpdateOutlinedIcon sx={{mr: 1, color: 'black'}}/>: 2:00 PM
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Reason:</span> Enquiry for the complaint filed on 02.04.2025 at 02:00 PM
+              <BorderColorIcon sx={{mr:1, color: 'black'}}/>: Enquiry for the complaint filed on 02.04.2025 at 02:00 PM
             </Typography>
             <Typography variant="body1" component="p" sx={textStyle}>
-              <span style={labelStyle}>Attendance:</span> 
-              <span style={{color: 'red'}}>pending</span>
+              <HowToRegIcon  sx={{mr: 1, color: 'black'}}/>: 
+              <span style={{color: 'red', marginLeft: "10px"}}>N/A</span>
             </Typography>
-          </Grid>
-        </Grid>
+         
       </CardContent>
     </Card>
   );

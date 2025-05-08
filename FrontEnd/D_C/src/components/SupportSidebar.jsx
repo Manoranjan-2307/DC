@@ -9,7 +9,7 @@ const SupportSidebar = () => {
     <div
       className="d-flex flex-column text-white vh-100 p-3"
       style={{
-        backgroundColor: "black", 
+        backgroundColor: "#2F2F2F", 
         width: collapsed ? "100px" : "290px",
         height: "100vh",
         position: "fixed",
@@ -25,7 +25,7 @@ const SupportSidebar = () => {
 
       </button>
 
-      <div style={{ marginTop: "120px" }}>
+      <div style={{ marginTop: "70px" }}>
         <ul className="nav flex-column fs-5 mt-5">
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
             <NavItem to="/supportdesk" icon="bi bi-collection-play" label="Forward" collapsed={collapsed} location={location} />

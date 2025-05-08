@@ -45,22 +45,21 @@ export default function Student1_3() {
 
   return (
     <div>
-      <div style={{ padding: '5px', marginTop: '125px', marginBottom: '15px', marginLeft: '177px' }}>
-        <p style={{fontFamily: 'sans-serif', fontSize: '28px', color: '#875D7B'}}>{heading}</p>
+      <div style={{ padding: '5px', marginTop: '100px', marginLeft: '173px' }}>
+        <p style={{fontFamily: 'tahoma', fontSize: '28px', color: '#5A6387'}}>{heading}</p>
       </div>
       <div
         className="scroll-content"
         style={{
-          marginLeft: '180px', 
-          marginTop: '10px',
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          gap: '35px',
-         
-          width: '80%', 
-          boxSizing: 'border-box', 
-          marginBottom: '35px'
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)', 
+          gap: '45px',                          
+          padding: '20px',
+          marginLeft: '150px',
+          width: 'calc(100% - 170px)',
+          boxSizing: 'border-box',
+          marginBottom: "30px",
+          marginTop: "0px"
         }}
       >
         <M1_Card />

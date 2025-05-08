@@ -21,10 +21,10 @@ const ComplaintCard2 = () => {
 
   return (
     <>
-      <Card
+     <Card
         sx={{
-          
           width: "28vw",
+          minHeight: "270px", 
           margin: "0 auto",
           padding: 2,
           borderRadius: "14px",
@@ -32,8 +32,11 @@ const ComplaintCard2 = () => {
           border: "1px solid #D9D4D4",
           boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
           fontFamily: "Tahoma",
-        }}
-      >
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between", 
+      }}
+>
         <Grid container justifyContent="flex-end" alignItems="center">
           <Typography
             variant="body2"
@@ -58,9 +61,9 @@ const ComplaintCard2 = () => {
           <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Complaint Details:</span> Not wearing ID card during PS assessment
           </Typography>
-          <Typography variant="body1" component="p" sx={textStyle}>
+          {/* <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Faculty:</span> Sathiya S
-          </Typography>
+          </Typography> */}
           <Typography variant="body1" component="p" sx={textStyle}>
             <span style={labelStyle}>Timer:</span>
             <span style={{ color: "red" }}>00:00:00</span>

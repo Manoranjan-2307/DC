@@ -35,6 +35,8 @@ import Student5_2 from "./pages/Students/Student5/Student5_2";
 import Student5_3 from "./pages/Students/Student5/Student5_3";
 import Student5_4 from "./pages/Students/Student5/Student5_4";
 
+
+
 // Admin Pages
 import Admin1 from "./pages/Admin/Admin1";
 import Admin2 from "./pages/Admin/Admin2";
@@ -186,6 +188,8 @@ const AppContent = () => {
           <Route path="/student5_2" element={<Student5_2 />} />
           <Route path="/student5_3" element={<Student5_3 />} />
           <Route path="/student5_4" element={<Student5_4 />} />
+
+          
 
          
           <Route path="/logger1" element={<Logger1 />} />

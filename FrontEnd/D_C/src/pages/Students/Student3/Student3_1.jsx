@@ -51,21 +51,25 @@ export default function Student3_1() {
 
   return (
     <div>
-    <div
-      className="scroll-content"
-      style={{
-        marginLeft: '220px', 
-        marginTop: '150px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '45px',
-        maxWidth: '800px', 
-        width: '100%', 
-        boxSizing: 'border-box', 
-        marginBottom: '30px'
-      }}
-    >
-      <p style={{fontFamily: 'tahoma', fontSize: '30px', color: '#875D7B'}}>HELLO SANGEETH 👋</p>
+      <div style={{ marginTop: "120px", marginLeft: "152px", marginBottom: "20px"}}>
+      <p style={{fontFamily: 'sans-serif', fontSize: '30px', color: '#5A6387', fontWeight: 500}}>Hello Sangeeth ✨</p>
+      </div>
+      <div
+        className="scroll-content"
+        style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)', 
+            gap: '30px',                          
+            padding: '20px',
+            marginLeft: '127px',
+            width: 'calc(100% - 170px)',
+            boxSizing: 'border-box',
+            marginBottom: "30px"
+  }}
+>
+
+
+      
       <Card2 />
       <Card4 />
       <Card1 />

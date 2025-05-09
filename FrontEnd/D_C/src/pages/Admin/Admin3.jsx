@@ -31,7 +31,7 @@ export default function Admin3() {
       flexWrap: "wrap",
     }}
   >
-    <Button
+    {/* <Button
       onClick={() => navigate("/admin3_1")}
       variant="contained"
       disableElevation
@@ -71,7 +71,7 @@ export default function Admin3() {
       color: "black", 
     }}
   />
-</Button>
+</Button> */}
 
 
     <Button
@@ -91,6 +91,7 @@ export default function Admin3() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        marginLeft: "0px",
         boxShadow: "none",
         "&:hover": {
           backgroundColor: "#E7E5E2",

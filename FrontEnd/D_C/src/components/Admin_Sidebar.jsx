@@ -25,7 +25,7 @@ const Admin_Sidebar = () => {
 
       </button>
 
-      <div style={{ marginTop: "40px" }}>
+      <div style={{ marginTop: "60px" }}>
         <ul className="nav flex-column fs-5 mt-5">
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
             <NavItem to="/admin1" icon="bi-house-lock" label="Home" collapsed={collapsed} location={location} />
@@ -36,9 +36,9 @@ const Admin_Sidebar = () => {
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
             <NavItem to="/admin3" icon="bi-calendar2" label="Activities" collapsed={collapsed} location={location} />
           </div>
-          <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
+          {/* <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
             <NavItem to="/admin4" icon="bi-file-arrow-up" label="Documents" collapsed={collapsed} location={location} />
-          </div>
+          </div> */}
           <div className="my-3 mx-1" style={{ fontFamily: "Tahoma" }}>
             <NavItem to="/" icon="bi-box-arrow-right" label="Log-out" collapsed={collapsed} location={location} />
           </div>

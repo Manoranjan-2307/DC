@@ -38,7 +38,22 @@ const HCard4 = () => {
       }}
     >
       <Grid container justifyContent="space-between" alignItems="center">
-      <Grid item>
+     <Grid item>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{
+              fontFamily: 'sans-serif',
+              fontSize: '1.1rem',
+              color: 'textSecondary',
+            }}
+          >
+             07 APR 2025 - 03:00 PM
+          </Typography>
+        </Grid>
+
+        {/* Date */}
+        <Grid item>
           <Button
             variant="contained"
             sx={{
@@ -58,21 +73,6 @@ const HCard4 = () => {
           >
             Active
           </Button>
-        </Grid>
-
-        {/* Date */}
-        <Grid item>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={{
-              fontFamily: 'sans-serif',
-              fontSize: '1.1rem',
-              color: 'textSecondary',
-            }}
-          >
-             07 APR 2025 - 03:00 PM
-          </Typography>
         </Grid>
       </Grid>
       <CardContent>

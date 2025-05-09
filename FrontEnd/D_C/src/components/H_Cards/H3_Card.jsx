@@ -39,6 +39,22 @@ const HCard3 = () => {
     >
       <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{
+              fontFamily: 'sans-serif',
+              fontSize: '1.1rem',
+              color: 'textSecondary',
+              fontWeight: 500
+            }}
+          >
+             02 APR 2025 - 02:00 PM
+          </Typography>
+        </Grid>
+
+        {/* Date */}
+        <Grid item>
           <Button
             variant="contained"
             sx={{
@@ -58,21 +74,6 @@ const HCard3 = () => {
           >
             Expired
           </Button>
-        </Grid>
-
-        {/* Date */}
-        <Grid item>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={{
-              fontFamily: 'sans-serif',
-              fontSize: '1.1rem',
-              color: 'textSecondary',
-            }}
-          >
-             02 APR 2025 - 02:00 PM
-          </Typography>
         </Grid>
       </Grid>
       <CardContent>

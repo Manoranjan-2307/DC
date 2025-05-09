@@ -59,7 +59,7 @@ const HCard5 = ({ complaint }) => {
 
   if (!complaintData) return <Typography variant="body1" component="p" sx={textStyle}>Loading...</Typography>;
 
-  // For button 
+  
   console.log(complaintData.status);
   const buttonText = complaintData.status === "Pending" ? "Active" : "Expired";
   const buttonColor = complaintData.status === "Pending" ? "green" : "#FF5E5E";
@@ -86,6 +86,22 @@ const HCard5 = ({ complaint }) => {
       <Grid container justifyContent="space-between" alignItems="center">
         {/* Button for "Expired" */}
         <Grid item>
+         <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{
+              fontFamily: 'sans-serif',
+              fontWeight: 500,
+              fontSize: '1.1rem',
+              color: 'textSecondary',
+            }}
+          >
+             {formatDateTime(complaintData.time_date)}
+          </Typography>
+        </Grid>
+
+        {/* Date */}
+        <Grid item>
           <Button
             variant="contained"
             sx={{
@@ -107,21 +123,6 @@ const HCard5 = ({ complaint }) => {
           >
             {buttonText}
           </Button>
-        </Grid>
-
-        {/* Date */}
-        <Grid item>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={{
-              fontFamily: 'sans-serif',
-              fontSize: '1.1rem',
-              color: 'textSecondary',
-            }}
-          >
-             {formatDateTime(complaintData.time_date)}
-          </Typography>
         </Grid>
       </Grid>
 

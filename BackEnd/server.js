@@ -86,31 +86,29 @@ app.get("/api/student-pdfs/:studentId", (req, res) => {
 });
 
 // Adding a new PDF
-app.post("/api/student-pdfs", (req, res) => {
-  const { student_id, pdf_name, pdf_src, upload_date } = req.body;
+// app.post("/api/student-pdfs", (req, res) => {
+//   const { student_id, pdf_name, pdf_src, upload_date } = req.body;
 
-  if (!student_id || !pdf_name || !pdf_src) {
-    return res
-      .status(400)
-      .json({ message: "Student ID, PDF name, and PDF source are required" });
-  }
+//   if (!student_id || !pdf_name || !pdf_src) {
+//     return res
+//       .status(400)
+//       .json({ message: "Student ID, PDF name, and PDF source are required" });
+//   }
 
-  const sql =
-    "INSERT INTO student_pdfs (student_id, pdf_name, pdf_src, upload_date) VALUES (?, ?, ?, DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d'))";
-  db.query(sql, [student_id, pdf_name, pdf_src], (err, result) => {
-    if (err) {
-      console.error("Error inserting PDF:", err);
-      return res.status(500).json({ message: "Database error" });
-    }
-    res.json({ message: "PDF added successfully", id: result.insertId });
-  });
-});
+//   const sql =
+//     "INSERT INTO student_pdfs (student_id, pdf_name, pdf_src, upload_date) VALUES (?, ?, ?, DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d'))";
+//   db.query(sql, [student_id, pdf_name, pdf_src], (err, result) => {
+//     if (err) {
+//       console.error("Error inserting PDF:", err);
+//       return res.status(500).json({ message: "Database error" });
+//     }
+//     res.json({ message: "PDF added successfully", id: result.insertId });
+//   });
+// });
 
 //  static files
-app.use(
-  "/assets",
-  express.static(path.join(__dirname, "../FrontEnd/D.C/public/assets"))
-);
+// Serve the uploads_pdfs folder as static files
+app.use("/uploads_pdfs", express.static(path.join(__dirname, "uploads_pdfs")));
 
 // ✅ Create log entry (used by Logger.jsx)
 app.post("/api/log-entry", (req, res) => {
@@ -606,75 +604,49 @@ app.get("/api/admin-all", (req, res) => {
 });
 
 
-// status tracker
+//Adding pdf 
+const pdfStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "uploads_pdfs/"), // Save PDFs in the new folder
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + "_" + file.originalname;
+    cb(null, uniqueName);
+  },
+});
 
-// app.post("/status-tracker/init/:complaintId", async (req, res) => {
-//   const { complaintId } = req.params;
+const uploadPDF = multer({ storage: pdfStorage });
 
-//   try {
-//     await db.query(
-//       `INSERT IGNORE INTO complaint_status_tracker (complaint_id) VALUES (?)`,
-//       [complaintId]
-//     );
-//     res.sendStatus(200);
-//   } catch (err) {
-//     console.error("Insert error:", err);
-//     res.status(500).send("Server error");
-//   }
-// });
+// Adding a new PDF with Multer
+app.post("/api/student-pdfs", uploadPDF.single("pdf"), (req, res) => {
+  const { student_id } = req.body;
 
-// app.get("/status-tracker/:complaintId", async (req, res) => {
-//   const { complaintId } = req.params;
+  // Validate input
+  if (!student_id || !req.file) {
+    return res
+      .status(400)
+      .json({ message: "Student ID and PDF file are required" });
+  }
 
-//   try {
-//     const [result] = await db.query(
-//       `SELECT freeze, initial_time, start_time, stopped_time FROM complaint_status_tracker WHERE complaint_id = ?`,
-//       [complaintId]
-//     );
+  // Generate PDF details
+  const pdf_name = `Apology Letter ${student_id}`; // Fixed naming convention
+  const pdf_src = `/uploads_pdfs/${req.file.filename}`; // Path to the uploaded file
+  const upload_date = new Date(); // Current date for upload_date
 
-//     if (!result.length) return res.status(404).send("Not found");
+  // Insert into the database
+  const sql =
+    "INSERT INTO student_pdfs (student_id, pdf_name, pdf_src, upload_date) VALUES (?, ?, ?, DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d'))";
 
-//     const row = result[0];
-//     let remaining;
+  db.query(sql, [student_id, pdf_name, pdf_src], (err, result) => {
+    if (err) {
+      console.error("Error inserting PDF:", err);
+      return res.status(500).json({ message: "Database error" });
+    }
 
-//     if (row.freeze && row.stopped_time) {
-//       remaining = row.stopped_time;
-//     } else {
-//       const now = new Date();
-//       const startTime = new Date(row.start_time);
-//       const elapsedSeconds = Math.floor((now - startTime) / 1000);
-//       const [h, m, s] = row.initial_time.split(":").map(Number);
-//       const totalInitial = h * 3600 + m * 60 + s;
-//       const remainingSeconds = Math.max(totalInitial - elapsedSeconds, 0);
-//       remaining = new Date(remainingSeconds * 1000).toISOString().substr(11, 8);
-//     }
-
-//     res.json({
-//       freeze: row.freeze,
-//       remaining_time: remaining
-//     });
-//   } catch (err) {
-//     console.error("Fetch error:", err);
-//     res.status(500).send("Server error");
-//   }
-// });
-
-
-// app.put("/status-tracker/freeze/:complaintId", async (req, res) => {
-//   const { complaintId } = req.params;
-//   const { remaining_time } = req.body; // format: "HH:MM:SS"
-
-//   try {
-//     await db.query(
-//       `UPDATE complaint_status_tracker SET freeze = TRUE, stopped_time = ? WHERE complaint_id = ?`,
-//       [remaining_time, complaintId]
-//     );
-//     res.sendStatus(200);
-//   } catch (err) {
-//     console.error("Update error:", err);
-//     res.status(500).send("Server error");
-//   }
-// });
+    res.json({
+      message: "PDF uploaded and added successfully",
+      id: result.insertId,
+    });
+  });
+});
 
 
 const PORT = 5000;

@@ -35,7 +35,7 @@ export default function Student5_4() {
     ...studentPdf.map((pdf) => ({
       id: pdf.student_id,
       name: pdf.pdf_name,
-      src: pdf.pdf_src,
+      src: `http://localhost:5000${pdf.pdf_src}`,
       upload_date: pdf.upload_date,
     })),
   ];

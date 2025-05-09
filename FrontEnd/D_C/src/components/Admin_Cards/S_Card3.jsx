@@ -23,16 +23,16 @@ const S_Card3 = () => {
     const eventDateTime = new Date(year, month - 1, day, hour, minute);
     const oneHourAfterEvent = new Date(eventDateTime.getTime() + 60 * 60 * 1000);
 
-    console.log('Event Time:', eventDateTime.toString());
-    console.log('One Hour After:', oneHourAfterEvent.toString());
+    // console.log('Event Time:', eventDateTime.toString());
+    // console.log('One Hour After:', oneHourAfterEvent.toString());
 
     const updateButtonState = () => {
       const currentTime = new Date();
-      console.log('Current Time:', currentTime.toString());
+      // console.log('Current Time:', currentTime.toString());
       
       // Check if current time is within the one-hour window
       const isWithinWindow = currentTime >= eventDateTime && currentTime <= oneHourAfterEvent;
-      console.log('Is Within Window:', isWithinWindow);
+      // console.log('Is Within Window:', isWithinWindow);
       
       setButtonsDisabled(!isWithinWindow);
     };
@@ -94,19 +94,66 @@ const S_Card3 = () => {
       }}
     >
       <CardContent>
-        <Typography
-          variant="h6"
-          sx={{
-            fontFamily: "sans-serif",
-            fontSize: "1.1rem",
-            color: "#E65100",
-            fontWeight: 600,
-            marginBottom: "10px",
-           
-          }}
-        >
-          ENQUIRY  MEETING
-        </Typography>
+      <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom="10px" sx={{minHeight: "10px"}}>
+    <Typography
+      variant="h6"
+      sx={{
+        fontFamily: "sans-serif",
+        fontSize: "1.1rem",
+        color: "#E65100",
+        fontWeight: 600,
+      }}
+    >
+      ENQUIRY MEETING
+    </Typography>
+    <Button
+  variant="contained"
+  color="primary"
+  style={{
+    backgroundColor: "#1f80e0",
+    color: "white",
+    fontSize: "0.7rem",
+    width: "70px",
+    height: "25px",
+    fontFamily: "sans-serif",
+    borderRadius: "2px",
+  }}
+  component="label"
+>
+  PDF <i className="bi bi-cloud-upload" style={{ marginLeft: "5px", marginTop: "2px" }}></i>
+  <input
+    type="file"
+    hidden
+    accept="application/pdf"
+    onChange={async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const studentId = "7376242AD199"; // Replace with dynamic student ID if needed
+        const formData = new FormData();
+        formData.append("pdf", file);
+        formData.append("student_id", studentId);
+
+        try {
+          const response = await fetch("http://localhost:5000/api/student-pdfs", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            alert("PDF uploaded successfully!");
+          } else {
+            alert(`Error: ${data.message}`);
+          }
+        } catch (error) {
+          console.error("Error uploading PDF:", error);
+          alert("An error occurred while uploading the PDF.");
+        }
+      }
+    }}
+  />
+</Button>
+  </Box>
         
           <Typography variant="body1" component="p" sx={textStyle}>
           <PersonIcon sx={{mr: 1, color: 'black'}} />: 7376242AD199

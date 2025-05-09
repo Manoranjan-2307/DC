@@ -43,7 +43,7 @@ import Admin2 from "./pages/Admin/Admin2";
 import Admin3 from "./pages/Admin/Admin3";
 import Admin3_1 from "./pages/Admin/Admin3_1";
 import Admin3_2 from "./pages/Admin/Admin3_2";
-import Admin4 from "./pages/Admin/Admin4";
+// import Admin4 from "./pages/Admin/Admin4";
 
 // Faculty Pages
 import Logger1 from './pages/Faculty/Faculty1/Logger1';
@@ -121,7 +121,7 @@ const AppContent = () => {
     "/admin3": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin3_1": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin3_2": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
-    "/admin4": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
+    // "/admin4": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
 
     "/logger1": <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/mentor1": <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
@@ -165,7 +165,7 @@ const AppContent = () => {
           <Route path="/admin3" element={<Admin3 />} />
           <Route path="/admin3_1" element={<Admin3_1 />} />
           <Route path="/admin3_2" element={<Admin3_2 />} />
-          <Route path="/admin4" element={<Admin4 />} />
+          {/* <Route path="/admin4" element={<Admin4 />} /> */}
 
           {/* Student */}
           <Route path="/student1_1" element={<Student1_1 />} />

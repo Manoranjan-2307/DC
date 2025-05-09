@@ -16,12 +16,12 @@ const S_Card1 = ({ complaint }) => {
   useEffect(() => {
     // Parse the date (DD-MM-YYYY)
     const [day, month, year] = complaint.date.split("-").map(Number);
-    console.log('Date parts:', { day, month, year });
+    // console.log('Date parts:', { day, month, year });
     
     // Parse time (HH:MM AM/PM)
     const [timeStr, modifier] = complaint.time.split(" ");
     let [hours, minutes] = timeStr.split(":").map(Number);
-    console.log('Time parts:', { hours, minutes, modifier });
+    // console.log('Time parts:', { hours, minutes, modifier });
     
     // Convert 12-hour to 24-hour format
     if (modifier === "PM" && hours < 12) {
@@ -30,16 +30,16 @@ const S_Card1 = ({ complaint }) => {
     if (modifier === "AM" && hours === 12) {
       hours = 0;
     }
-    console.log('Converted hours:', hours);
+    // console.log('Converted hours:', hours);
 
     // Create event date time object
     const eventDateTime = new Date(year, month - 1, day, hours, minutes);
     const oneHourAfterEvent = new Date(eventDateTime.getTime() + 60 * 60 * 1000);
     
-    console.log('Original date string:', complaint.date);
-    console.log('Original time string:', complaint.time);
-    console.log('Event DateTime:', eventDateTime.toLocaleString());
-    console.log('One Hour After:', oneHourAfterEvent.toLocaleString());
+    // console.log('Original date string:', complaint.date);
+    // console.log('Original time string:', complaint.time);
+    // console.log('Event DateTime:', eventDateTime.toLocaleString());
+    // console.log('One Hour After:', oneHourAfterEvent.toLocaleString());
     
     const updateButtonState = () => {
       const currentTime = new Date();
@@ -48,9 +48,9 @@ const S_Card1 = ({ complaint }) => {
       // Enable buttons only if current time is within one hour of event time
       const isWithinWindow = timeDiffInMinutes >= 0 && timeDiffInMinutes <= 60;
       
-      console.log('Current Time:', currentTime.toLocaleString());
-      console.log('Time Difference (minutes):', Math.floor(timeDiffInMinutes));
-      console.log('Is Within Window:', isWithinWindow);
+      // console.log('Current Time:', currentTime.toLocaleString());
+      // console.log('Time Difference (minutes):', Math.floor(timeDiffInMinutes));
+      // console.log('Is Within Window:', isWithinWindow);
       
       setButtonsDisabled(!isWithinWindow);
     };
@@ -141,18 +141,66 @@ const S_Card1 = ({ complaint }) => {
       }}
     >
       <CardContent>
-        <Typography
-          variant="h6"
-          sx={{
-            fontFamily: "sans-serif",
-            fontSize: "1.1rem",
-            color: "#E65100",
-            fontWeight: 600,
-            marginBottom: "10px",
-          }}
-        >
-          ENQUIRY MEETING
-        </Typography>
+        <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom="10px" sx={{minHeight: "10px"}}>
+           <Typography
+             variant="h6"
+             sx={{
+               fontFamily: "sans-serif",
+               fontSize: "1.1rem",
+               color: "#E65100",
+               fontWeight: 600,
+             }}
+           >
+             ENQUIRY MEETING
+           </Typography>
+           <Button
+  variant="contained"
+  color="primary"
+  style={{
+    backgroundColor: "#1f80e0",
+    color: "white",
+    fontSize: "0.7rem",
+    width: "70px",
+    height: "25px",
+    fontFamily: "sans-serif",
+    borderRadius: "2px",
+  }}
+  component="label"
+>
+  PDF <i className="bi bi-cloud-upload" style={{ marginLeft: "5px", marginTop: "2px" }}></i>
+  <input
+    type="file"
+    hidden
+    accept="application/pdf"
+    onChange={async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const studentId = complaint.sId; // Dynamic student ID from the card
+        const formData = new FormData();
+        formData.append("pdf", file);
+        formData.append("student_id", studentId);
+
+        try {
+          const response = await fetch("http://localhost:5000/api/student-pdfs", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            alert("PDF uploaded successfully!");
+          } else {
+            alert(`Error: ${data.message}`);
+          }
+        } catch (error) {
+          console.error("Error uploading PDF:", error);
+          alert("An error occurred while uploading the PDF.");
+        }
+      }
+    }}
+  />
+</Button>
+         </Box>
         
             <Typography variant="body1" sx={textStyle}>
               <PersonIcon sx={{mr: 1, color: 'black'}} />: {complaint.sId}

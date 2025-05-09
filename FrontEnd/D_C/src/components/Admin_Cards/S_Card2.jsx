@@ -57,18 +57,36 @@ const S_Card2 = () => {
       }}
     >
       <CardContent>
-        <Typography
-            variant="h6"
-            sx={{
-                fontFamily: "sans-serif",
-                fontSize: "1.1rem",
-                color: "#E65100",
-                fontWeight: 600,
-                marginBottom: "10px",
-            }}
-                >
-                ENQUIRY MEETING
-          </Typography>
+        <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom="10px" sx={{minHeight: "10px"}}>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontFamily: "sans-serif",
+                      fontSize: "1.1rem",
+                      color: "#E65100",
+                      fontWeight: 600,
+                    }}
+                  >
+                    ENQUIRY MEETING
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      backgroundColor: "#1f80e0",
+                      color: "white",
+                      fontSize: "0.7rem",
+                      width: "70px",
+                      height: "25px",
+                      fontFamily: "sans-serif",
+                      borderRadius: "2px",
+                      // marginRight: "5px",
+                    }}
+                    
+                  >
+                    PDF <i className="bi bi-cloud-upload" style={{ marginLeft: "5px", marginTop: "2px" }}></i>
+                  </Button>
+                </Box>
         
             <Typography variant="body1" component="p" sx={textStyle}>
                 <PersonIcon sx={{mr: 1, color: 'black'}} />: 7376242AD267

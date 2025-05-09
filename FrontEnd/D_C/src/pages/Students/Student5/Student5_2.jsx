@@ -68,7 +68,7 @@ export default function Student5_2() {
       <HCard2 />
       <HCard3 />
       <HCard4 />
-      <HCard1 />
+      {/* <HCard1 /> */}
       <HCard3 />
 
        {complaints

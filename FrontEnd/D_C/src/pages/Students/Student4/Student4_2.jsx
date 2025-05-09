@@ -70,7 +70,7 @@ export default function Student4_2() {
       <HCard4 />
       <HCard2 />
       <HCard3 />
-      <HCard1 />
+      {/* <HCard1 /> */}
 
       {complaints
         .filter((complaint) => complaint.S_ID === studentId)

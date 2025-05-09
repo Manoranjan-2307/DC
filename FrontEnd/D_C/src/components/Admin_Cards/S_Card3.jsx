@@ -9,7 +9,44 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const S_Card3 = () => {
   const [attendance, setAttendance] = useState('pending');
-  const [buttonsDisabled, setButtonsDisabled] = useState(false);
+  const [buttonsDisabled, setButtonsDisabled] = useState(true);
+
+  const eventDate = "2025-05-08"; 
+  const eventTime = "14:00"; // 24-hour format
+
+  useEffect(() => {
+    // Parse date and time components
+    const [year, month, day] = eventDate.split("-").map(Number);
+    const [hour, minute] = eventTime.split(":").map(Number);
+    
+    // Create event date time object
+    const eventDateTime = new Date(year, month - 1, day, hour, minute);
+    const oneHourAfterEvent = new Date(eventDateTime.getTime() + 60 * 60 * 1000);
+
+    console.log('Event Time:', eventDateTime.toString());
+    console.log('One Hour After:', oneHourAfterEvent.toString());
+
+    const updateButtonState = () => {
+      const currentTime = new Date();
+      console.log('Current Time:', currentTime.toString());
+      
+      // Check if current time is within the one-hour window
+      const isWithinWindow = currentTime >= eventDateTime && currentTime <= oneHourAfterEvent;
+      console.log('Is Within Window:', isWithinWindow);
+      
+      setButtonsDisabled(!isWithinWindow);
+    };
+
+    // Initial check
+    updateButtonState();
+
+    // Check every second
+    const interval = setInterval(updateButtonState, 1000);
+
+    // Cleanup interval
+    return () => clearInterval(interval);
+  }, [eventDate, eventTime]);
+
   const textStyle = {
     fontFamily: "sans-serif",
     fontSize: "1.2rem",

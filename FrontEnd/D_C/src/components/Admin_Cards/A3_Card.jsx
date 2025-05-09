@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, Typography, Grid } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Button } from "@mui/material";
 import axios from "axios";
 
-const AdminCard3 = () => {
+const AdminCard3 = ({ onCreateClick }) => {
   const [adminComplaints, setAdminComplaints] = useState([]);
+  
 
   useEffect(() => {
     const fetchAllComplaints = async () => {
@@ -38,6 +39,8 @@ const AdminCard3 = () => {
   
     return formattedDate;
   };
+
+  
   
   const textStyle = {
     fontFamily: "sans-serif",
@@ -52,7 +55,7 @@ const AdminCard3 = () => {
     color: "#000000",
     fontWeight: 500,
     display: "inline",
-    marginRight: "6px",
+    marginRight: "5px",
   };
 
   return (
@@ -61,8 +64,8 @@ const AdminCard3 = () => {
         <Grid item key={complaint.ID || index} xs={12} sm={6} md={4}>
           <Card
             sx={{
-              height: "100%", 
-              minHeight: "210px", 
+              height: "250px", 
+             
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -75,20 +78,47 @@ const AdminCard3 = () => {
               width: "24vw",
             }}
           >
-            <Grid container justifyContent="flex-end">
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                sx={{
-                  fontFamily: "sans-serif",
-                  fontSize: "1.1rem",
-                  color: "textSecondary",
-                  fontWeight: "semi-bold",
-                }}
-              >
-                {formatDateOnly(complaint.Date_)}
-              </Typography>
-            </Grid>
+           <Grid container justifyContent="space-between" alignItems="center">
+         
+          <Grid item>
+            <Button
+              variant="contained"
+              onClick={onCreateClick}
+              color="primary"
+              sx={{
+                backgroundColor: "#1f80e0",
+                color: "#FFFFFF",
+                fontSize: "0.7rem",
+                fontFamily: "sans-serif",
+                fontWeight: 500,
+                textTransform: "none",
+                borderRadius: "3px",
+                padding: "2px 10px",
+                "&:hover": {
+                  backgroundColor: "#1f80e0",
+                },
+              }}
+              
+            >
+              Create +
+            </Button>
+          </Grid>
+
+          {/* Date */}
+          <Grid item>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={{
+                fontFamily: "sans-serif",
+                fontSize: "1.1rem",
+                color: "textSecondary",
+              }}
+            >
+              {formatDateOnly(complaint.Date_)}
+            </Typography>
+          </Grid>
+        </Grid>
             <CardContent>
               <Typography variant="body1" sx={textStyle}>
                 <span style={labelStyle}>Name:</span>{" "}

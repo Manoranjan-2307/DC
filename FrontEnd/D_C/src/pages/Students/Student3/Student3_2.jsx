@@ -68,7 +68,7 @@ export default function Student3_2() {
       <HCard1 />
       <HCard3 />
       <HCard2 />
-      <HCard4 />
+      {/* <HCard4 /> */}
 
       {complaints
               .filter((complaint) => complaint.S_ID === studentId)

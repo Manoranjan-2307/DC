@@ -9,9 +9,61 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const S_Card1 = ({ complaint }) => {
   const [attendance, setAttendance] = useState(complaint.status || "pending");
-  const [buttonsDisabled, setButtonsDisabled] = useState(false); 
+  const [buttonsDisabled, setButtonsDisabled] = useState(true); 
   // Internal state to force re-render if needed
   const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    // Parse the date (DD-MM-YYYY)
+    const [day, month, year] = complaint.date.split("-").map(Number);
+    console.log('Date parts:', { day, month, year });
+    
+    // Parse time (HH:MM AM/PM)
+    const [timeStr, modifier] = complaint.time.split(" ");
+    let [hours, minutes] = timeStr.split(":").map(Number);
+    console.log('Time parts:', { hours, minutes, modifier });
+    
+    // Convert 12-hour to 24-hour format
+    if (modifier === "PM" && hours < 12) {
+      hours = hours + 12;
+    }
+    if (modifier === "AM" && hours === 12) {
+      hours = 0;
+    }
+    console.log('Converted hours:', hours);
+
+    // Create event date time object
+    const eventDateTime = new Date(year, month - 1, day, hours, minutes);
+    const oneHourAfterEvent = new Date(eventDateTime.getTime() + 60 * 60 * 1000);
+    
+    console.log('Original date string:', complaint.date);
+    console.log('Original time string:', complaint.time);
+    console.log('Event DateTime:', eventDateTime.toLocaleString());
+    console.log('One Hour After:', oneHourAfterEvent.toLocaleString());
+    
+    const updateButtonState = () => {
+      const currentTime = new Date();
+      const timeDiffInMinutes = (currentTime - eventDateTime) / (1000 * 60);
+      
+      // Enable buttons only if current time is within one hour of event time
+      const isWithinWindow = timeDiffInMinutes >= 0 && timeDiffInMinutes <= 60;
+      
+      console.log('Current Time:', currentTime.toLocaleString());
+      console.log('Time Difference (minutes):', Math.floor(timeDiffInMinutes));
+      console.log('Is Within Window:', isWithinWindow);
+      
+      setButtonsDisabled(!isWithinWindow);
+    };
+
+    // Initial check
+    updateButtonState();
+
+    // Update every second
+    const interval = setInterval(updateButtonState, 1000);
+
+    // Cleanup
+    return () => clearInterval(interval);
+  }, [complaint.date, complaint.time]);
 
   const handleAttendance = (status) => {
   console.log("Updating attendance to:", status);
@@ -141,6 +193,7 @@ const S_Card1 = ({ complaint }) => {
             color="success"
             sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
             onClick={() => handleAttendance("present")}
+            disabled={buttonsDisabled}
           >
             Present
           </Button>
@@ -151,6 +204,7 @@ const S_Card1 = ({ complaint }) => {
             color="error"
             sx={{ fontFamily: "sans-serif", fontSize: "0.95rem" }}
             onClick={() => handleAttendance("absent")}
+            disabled={buttonsDisabled}
           >
             Absent
           </Button>

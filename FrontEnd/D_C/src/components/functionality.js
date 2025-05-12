@@ -1,32 +1,30 @@
-
+import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../pages/firebase";
 
+export const handleLogin = async (username, password, navigate) => {
+  try {
+    // Send login credentials to the backend
+    const response = await axios.post("http://localhost:5000/api/login", {
+      username,
+      password,
+    });
 
-export const handleLogin = (username, password, navigate) => {
-  if (username === "Rahul K" && password === "#1") {
-    navigate("/student1_1");
-  } else if (username === "Kishore K" && password === "#2") {
-    navigate("/student2_1");
-  } else if (username === "Sangeeth M" && password === "#3") {
-    navigate("/student3_1");
-  } else if (username === "Karthikeyan JV" && password === "#4") {
-    navigate("/student4_1");
-  } else if (username === "Henry M" && password === "#5") {
-    navigate("/student5_1");
-  } else if (username === "admin" && password === "@min") {
-    navigate("/admin1");
-  } else if (username === "faculty" && password === "pass") {
-    navigate("/logger1");
-  } else if (username === "supportdesk" && password === "@sd"){
-    navigate("/supportdesk");
-  }
-  else {
-    alert("Invalid Credantials!");
+    const { route, S_ID, username: studentName } = response.data;
+
+    // alert("Login successful!");
+
+    // Navigate to the appropriate route and pass student details as state
+    navigate(route, { state: { studentId: S_ID, studentName } });
+  } catch (error) {
+    console.error("Login error:", error);
+    if (error.response && error.response.data) {
+      alert(error.response.data.message);
+    } else {
+      alert("An error occurred during login. Please try again.");
+    }
   }
 };
-
-
 
 // Google Sign-In logic
 export const handleGoogleLogin = async (navigate) => {
@@ -49,5 +47,27 @@ export const handleGoogleLogin = async (navigate) => {
   } catch (error) {
     console.error("Google Sign-In Error:", error);
     alert("Google Sign-In failed. Please try again.");
+  }
+};
+
+
+export const handleStaticLogin = (username, password, navigate) => {
+  // Static credentials for faculty and admin
+  const staticUsers = {
+    admin: { username: "admin", password: "@min", route: "/admin1" },
+    faculty: { username: "faculty", password: "pass", route: "/logger1" },
+    supportdesk: { username: "Supportdesk", password: "#sd", route: "/supportdesk" },
+  };
+
+  const user = Object.values(staticUsers).find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (user) {
+    // alert("Login successful!");
+    navigate(user.route); // Navigate to the respective route
+    return true; // Indicate successful login
+  } else {
+    return false; // Indicate failed login
   }
 };

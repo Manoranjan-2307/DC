@@ -18,10 +18,10 @@ export default function Admin1() {
         <div style={{ display: 'flex', alignItems: 'center', marginLeft: '550px' }}>
           <p
             style={{
-              fontFamily: 'Segoe UI',
+              fontFamily: 'Tahoma',
               fontSize: '2.2rem',
               margin: 0,
-              fontWeight: 600,
+              fontWeight: 500,
               color: '#444B5D',
               marginRight: '10px',
             }}

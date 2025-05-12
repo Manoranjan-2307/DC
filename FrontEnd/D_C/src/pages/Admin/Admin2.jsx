@@ -10,6 +10,7 @@ export default function Admin2() {
   const fullHeading = '  Received Complaints:';
   const headingLength = fullHeading.length;
   
+  
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -51,7 +52,7 @@ export default function Admin2() {
          
           width: '80%', 
           boxSizing: 'border-box', 
-          marginBottom: '35px'
+          marginBottom: '40px'
         }}
       >
         {/* {/* <AdminCard1 /> */}

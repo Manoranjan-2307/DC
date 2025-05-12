@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import { TextField, Button, Box, Typography, IconButton } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { TextField, Button, Box, Typography, IconButton, Autocomplete } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import useAdminStore from "../../store/useAdminStore"; 
 
-
-export default function AdminForm( { onClose }) {
-  const navigate = useNavigate();
-
+export default function AdminForm({ onClose }) {
   const [formData, setFormData] = useState({
     studentId: "",
     venue: "",
@@ -16,6 +12,19 @@ export default function AdminForm( { onClose }) {
     time: "",
     reason: "",
   });
+
+  const { students, fetchStudentIds } = useAdminStore(); 
+
+  useEffect(() => {
+    fetchStudentIds(); 
+  }, [fetchStudentIds]); 
+
+  const handleStudentIdChange = (event, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      studentId: value || "", 
+    }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,16 +34,16 @@ export default function AdminForm( { onClose }) {
     }));
   };
 
-  const handleCancel = () =>{
-      setFormData({
-        studentId: "",
-        venue: "",
-        date: "",
-        time: "",
-        reason: "",
-      })
-      alert("Form Cleared!");
-  }
+  const handleCancel = () => {
+    setFormData({
+      studentId: "",
+      venue: "",
+      date: "",
+      time: "",
+      reason: "",
+    });
+    alert("Form Cleared!");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +51,25 @@ export default function AdminForm( { onClose }) {
       const response = await axios.post("http://localhost:5000/api/meeting-details", formData);
       alert(response.data.message);
       setFormData({ studentId: "", venue: "", date: "", time: "", reason: "" });
+      onClose(); 
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Failed to submit meeting details. Please try again.");
+    }
+  };
+
+  const handleAddAnother = async (e) => {
+    e.preventDefault();
+    try {
+      
+      const response = await axios.post("http://localhost:5000/api/meeting-details", formData);
+      alert(response.data.message);
+
+      
+      setFormData((prev) => ({
+        ...prev,
+        studentId: "",
+      }));
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Failed to submit meeting details. Please try again.");
@@ -49,19 +77,21 @@ export default function AdminForm( { onClose }) {
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      animation: 'fadeIn 0.3s ease-in-out'
-    }}>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1000,
+        animation: "fadeIn 0.3s ease-in-out",
+      }}
+    >
       <Box
         sx={{
           position: "relative",
@@ -76,13 +106,13 @@ export default function AdminForm( { onClose }) {
           boxShadow: 5,
           borderRadius: 2,
           backgroundColor: "#ffffff",
-          '&::-webkit-scrollbar': {
-            width: '8px'
+          "&::-webkit-scrollbar": {
+            width: "8px",
           },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#888',
-            borderRadius: '4px'
-          }
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#888",
+            borderRadius: "4px",
+          },
         }}
         component="form"
         onSubmit={handleSubmit}
@@ -92,33 +122,39 @@ export default function AdminForm( { onClose }) {
             position: "absolute",
             top: 8,
             right: 8,
-            '&:hover': {
-              backgroundColor: '#f0f0f0'
-            }
+            "&:hover": {
+              backgroundColor: "#f0f0f0",
+            },
           }}
           onClick={onClose}
         >
           <CloseIcon />
         </IconButton>
 
-        <Typography 
-          variant="h6" 
-          textAlign="center" 
-          gutterBottom 
-          sx={{ mb: 2, fontWeight: 500, fontFamily: "Tahoma", color: "#5A6387" }}
+        <Typography
+          variant="h6"
+          textAlign="center"
+          gutterBottom
+          sx={{ mb: 2, fontWeight: 500, fontFamily: "Tahoma", color: "#5E3181" }}
         >
           Create Meeting
         </Typography>
 
-        <TextField
-          size="small"
-          label="Student ID"
-          name="studentId"
-          value={formData.studentId}
-          onChange={handleChange}
-          required
-          fullWidth
-          sx={{ mb: 1 }}
+        {/* Searchable Student ID Field */}
+        <Autocomplete
+          options={students} 
+          getOptionLabel={(option) => option} 
+          value={formData.studentId} 
+          onChange={handleStudentIdChange} 
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search Student ID"
+              size="small"
+              fullWidth
+              sx={{ mb: 1 }}
+            />
+          )}
         />
 
         <TextField
@@ -171,22 +207,24 @@ export default function AdminForm( { onClose }) {
           sx={{ mb: 2 }}
         />
 
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "10px"
-        }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: "10px",
+          }}
+        >
           <Button
             type="button"
             variant="contained"
             color="error"
             sx={{
-              width: "100px",
+              width: "120px",
+              height: "36px",
               borderRadius: "3px",
-              textTransform: 'none',
-              fontFamily: "tahoma",
-              backgroundColor: "#FF5E5E"
-              
+              textTransform: "none",
+              fontFamily: "sans-serif",
+              backgroundColor: "#FF5E5E",
             }}
             onClick={handleCancel}
           >
@@ -194,17 +232,36 @@ export default function AdminForm( { onClose }) {
           </Button>
 
           <Button
+            type="button"
+            variant="contained"
+            color="primary"
+            sx={{
+              width: "120px",
+              height: "36px",
+              borderRadius: "3px",
+              textTransform: "none",
+              fontFamily: "sans-serif",
+              fontSize: "0.8rem",
+              backgroundColor: "#FFA500"
+            }}
+            onClick={handleAddAnother}
+          >
+            Add Another
+          </Button>
+
+          <Button
             type="submit"
             variant="contained"
             color="primary"
             sx={{
-              width: "100px",
+              width: "120px",
+              height: "36px",
               borderRadius: "3px",
-              textTransform: 'none',
-              fontFamily: "tahoma"
+              textTransform: "none",
+              fontFamily: "sans-serif",
             }}
           >
-            Create <i className="bi bi-plus-lg" style={{marginLeft: "8px"}}></i>
+            Create <i className="bi bi-plus-lg" style={{ marginLeft: "8px" }}></i>
           </Button>
         </div>
       </Box>

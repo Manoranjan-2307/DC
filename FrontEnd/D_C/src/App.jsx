@@ -8,6 +8,8 @@ import S_Sidebar2 from "./components/Sidebar/S_Sidebar2";
 import S_Sidebar3 from "./components/Sidebar/S_Sidebar3";
 import S_Sidebar4 from "./components/Sidebar/S_Sidebar4";
 import S_Sidebar5 from "./components/Sidebar/S_Sidebar5";
+//generalized student sidebar
+import S_Sidebar6 from "./components/Sidebar/S_Sidebar6";
 
 // Admin Sidebar
 import Admin_Sidebar from './components/Admin_Sidebar';
@@ -22,7 +24,7 @@ import Student2_1 from "./pages/Students/Student2/Student2_1";
 import Student2_2 from "./pages/Students/Student2/Student2_2";
 import Student2_3 from "./pages/Students/Student2/Student2_3";
 import Student2_4 from "./pages/Students/Student2/Student2_4";
-import Student3_1 from "./pages/Students/Student3/Student3_1";
+// import Student3_1 from "./pages/Students/Student3/Student3_1";
 import Student3_2 from "./pages/Students/Student3/Student3_2";
 import Student3_3 from "./pages/Students/Student3/Student3_3";
 import Student3_4 from "./pages/Students/Student3/Student3_4";
@@ -35,6 +37,11 @@ import Student5_2 from "./pages/Students/Student5/Student5_2";
 import Student5_3 from "./pages/Students/Student5/Student5_3";
 import Student5_4 from "./pages/Students/Student5/Student5_4";
 
+//Generalized Student Pages
+import Recent_complaints from "./pages/Students/Student6/Recent_complaints";
+import Apologies from "./pages/Students/Student6/Apologies";
+import Meetings from "./pages/Students/Student6/Meetings";
+import Complaint_History from "./pages/Students/Student6/Complaint_History";
 
 
 // Admin Pages
@@ -116,10 +123,16 @@ const AppContent = () => {
     "/student5_3": <S_Sidebar5 collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/student5_4": <S_Sidebar5 collapsed={collapsed} setCollapsed={setCollapsed} />,
 
+    // Generalized Student Sidebar
+    "/recent_complaints": <S_Sidebar6 collapsed={collapsed} setCollapsed={setCollapsed} />,
+    "/complaint_history": <S_Sidebar6 collapsed={collapsed} setCollapsed={setCollapsed} />,
+    "/apologies": <S_Sidebar6 collapsed={collapsed} setCollapsed={setCollapsed} />,
+    "/meetings": <S_Sidebar6 collapsed={collapsed} setCollapsed={setCollapsed} />,
+
     "/admin1": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin2": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin3": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
-    "/admin3_1": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
+    // "/admin3_1": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     "/admin3_2": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
     // "/admin4": <Admin_Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />,
 
@@ -176,7 +189,7 @@ const AppContent = () => {
           <Route path="/student2_2" element={<Student2_2 />} />
           <Route path="/student2_3" element={<Student2_3 />} />
           <Route path="/student2_4" element={<Student2_4 />} />
-          <Route path="/student3_1" element={<Student3_1 />} />
+          {/* <Route path="/student3_1" element={<Student3_1 />} /> */}
           <Route path="/student3_2" element={<Student3_2 />} />
           <Route path="/student3_3" element={<Student3_3 />} />
           <Route path="/student3_4" element={<Student3_4 />} />
@@ -188,6 +201,11 @@ const AppContent = () => {
           <Route path="/student5_2" element={<Student5_2 />} />
           <Route path="/student5_3" element={<Student5_3 />} />
           <Route path="/student5_4" element={<Student5_4 />} />
+
+          <Route path="/recent_complaints" element={<Recent_complaints />} />
+          <Route path="/apologies" element={<Apologies />} />
+          <Route path="/meetings" element={<Meetings />} />
+          <Route path="/complaint_history" element={<Complaint_History />} />
 
           
 

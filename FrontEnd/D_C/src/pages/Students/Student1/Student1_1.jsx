@@ -10,25 +10,7 @@ import { ReasonModal} from '../../../components/R_Cards/R1_Card';
 export default function Student1_1() {
   const studentId = '7376242AD267';
   const [complaints, setComplaints] = useState([]);
-  // const [text, setText] = useState('');
-  // const fullText = '  HELLO RAHUL 👋';
-  // const letters = fullText.split(''); 
-  // const textLength = letters.length;
-  
-  // Typing effect logic
-  // useEffect(() => {
-  //   let index = 0;
-  //   const interval = setInterval(() => {
-  //     if (index < textLength) {
-  //       setText((prev) => prev + letters[index]);
-  //       index++;
-  //     } else {
-  //       clearInterval(interval);
-  //     }
-  //   }, 100);
-  
-  //   return () => clearInterval(interval);
-  // }, []);
+ 
 
   useEffect(() => {
     const fetchComplaints = async () => {

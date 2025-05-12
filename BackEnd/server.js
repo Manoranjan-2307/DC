@@ -26,6 +26,48 @@ db.connect((err) => {
   console.log("Connected to MySQL database");
 });
 
+
+
+// Login authentication endpoint
+app.post("/api/login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username and password are required" });
+  }
+
+  const sql = "SELECT PASS_WORD, S_ID, USERNAME FROM login WHERE USERNAME = ?";
+  db.query(sql, [username], (err, results) => {
+    if (err) {
+      console.error("Error during login query:", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    const user = results[0];
+    if (user.PASS_WORD !== password) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    // Determine the navigation route based on the S_ID
+    const predefinedRoutes = {
+      "7376242AD267": "/student1_1",
+      "7376242CS111": "/student2_1",
+      "7376242IT201": "/student3_1",
+      "7376242AD199": "/student4_1",
+      "7376242AL165": "/student5_1",
+    };
+
+    const route = predefinedRoutes[user.S_ID] || "recent_complaints"; // Default to student6_1 for new students
+
+    res.status(200).json({ message: "Login successful", route, S_ID: user.S_ID, username: user.USERNAME });
+  });
+});
+
+
 app.get("/students", (req, res) => {
   const query = "SELECT S_ID, name FROM student_details";
   db.query(query, (err, results) => {
@@ -284,6 +326,7 @@ app.put("/api/revoked/:id", (req, res) => {
   });
 });
 
+
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
@@ -296,6 +339,7 @@ const storage = multer.diskStorage({
     cb(null, uniqueName);
   },
 });
+
 
 // ✅ GET logs with missing S_ID and student_name (for Support Desk)
 app.get("/api/support-logs", (req, res) => {
@@ -314,6 +358,7 @@ app.get("/api/support-logs", (req, res) => {
     res.json(results);
   });
 });
+
 
 const upload = multer({ storage });
 app.post("/api/support/send", upload.single("video"), (req, res) => {
@@ -336,6 +381,7 @@ app.post("/api/support/send", upload.single("video"), (req, res) => {
     res.status(200).json({ message: "Sent to mentor" });
   });
 });
+
 
 // ✅ GET mentor queue (videos forwarded from support desk)
 app.get("/api/mentor-queue", (req, res) => {
@@ -378,7 +424,7 @@ app.post("/api/mentor/submit", (req, res) => {
 
 // Fetch from Faculty Logger
 app.get("/faculty-logger", (req, res) => {
-  const query = "SELECT * FROM faculty_logger";
+  const query = "SELECT * FROM faculty_logger ORDER BY complaint_id DESC";
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching faculty logger data:", err);
@@ -387,6 +433,8 @@ app.get("/faculty-logger", (req, res) => {
     res.json(results);
   });
 });
+
+
 
 // INSERTING meeting details
 app.post("/api/meeting-details", (req, res) => {
@@ -411,13 +459,47 @@ app.post("/api/meeting-details", (req, res) => {
   });
 });
 
+
+
+// Update the freeze column in the admin_ table
+// app.put("/api/admin/freeze", (req, res) => {
+//   console.log("Request Body:", req.body); // Debugging log
+//   const { id } = req.body;
+
+//   if (!id) {
+//     return res.status(400).json({ message: "ID is required" });
+//   }
+
+//   const updateFreezeSql = `
+//     UPDATE admin_ 
+//     SET freeze = 1 
+//     WHERE ID = ?
+//   `;
+
+//   db.query(updateFreezeSql, [id], (err, result) => {
+//     if (err) {
+//       console.error("Error updating freeze column:", err);
+//       return res.status(500).json({ message: "Failed to update freeze column" });
+//     }
+
+//     console.log("Freeze column update result:", result);
+//     if (result.affectedRows === 0) {
+//       return res.status(404).json({ message: "No matching row found to update" });
+//     }
+
+//     res.status(200).json({ message: "Freeze column updated successfully" });
+//   });
+// });
+
+
+
 // FOR FETCHING meeting details in card
 app.get("/api/meeting-details", (req, res) => {
   const sql = `
     SELECT No_ AS id, S_ID AS sId, VENUE AS venue, DATE_FORMAT(DATE_, '%d-%m-%Y') AS date, 
            TIME_FORMAT(TIME_, '%h:%i %p') AS time, INFO AS info, STATUS_ AS status
     FROM meeting_details
-    ORDER BY No_ DESC
+    ORDER BY DATE_ DESC
   `;
 
   db.query(sql, (err, results) => {
@@ -428,6 +510,8 @@ app.get("/api/meeting-details", (req, res) => {
     res.json(results);
   });
 });
+
+
 
 //FOR UPDATING ATTENDANCE IN MEETING
 app.post("/api/update-attendance", (req, res) => {
@@ -448,13 +532,13 @@ app.post("/api/update-attendance", (req, res) => {
 
   db.query(sql, [status, sId, venue, date], (err, result) => {
     if (err) {
-      console.error("Error updating attendance:", err); // Debug log
+      console.error("Error updating attendance:", err); 
       return res
         .status(500)
         .json({ message: "Database error", error: err.message });
     }
 
-    console.log("SQL Result:", result); // Debug log
+    console.log("SQL Result:", result); 
 
     if (result.affectedRows > 0) {
       res.json({ message: "Attendance updated successfully" });
@@ -593,7 +677,7 @@ app.post("/send-to-admin", (req, res) => {
 
 // fetching complaints from admin table
 app.get("/api/admin-all", (req, res) => {
-  const query = `SELECT student_name, S_ID, Date_, Time_, Venue, Comment, faculty FROM admin_ ORDER BY ID DESC`;
+  const query = `SELECT ID, student_name, S_ID, Date_, Time_, Venue, Comment, faculty FROM admin_ ORDER BY ID DESC`;
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching admin complaints:", err);

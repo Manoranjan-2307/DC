@@ -175,7 +175,7 @@ const S_Card1 = ({ complaint }) => {
     onChange={async (e) => {
       const file = e.target.files[0];
       if (file) {
-        const studentId = complaint.sId; // Dynamic student ID from the card
+        const studentId = complaint.sId; 
         const formData = new FormData();
         formData.append("pdf", file);
         formData.append("student_id", studentId);

@@ -10,20 +10,20 @@ import PersonIcon from '@mui/icons-material/Person';
 const S_Card1 = ({ complaint }) => {
   const [attendance, setAttendance] = useState(complaint.status || "pending");
   const [buttonsDisabled, setButtonsDisabled] = useState(true); 
-  // Internal state to force re-render if needed
+  
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
-    // Parse the date (DD-MM-YYYY)
+    
     const [day, month, year] = complaint.date.split("-").map(Number);
     // console.log('Date parts:', { day, month, year });
     
-    // Parse time (HH:MM AM/PM)
+   
     const [timeStr, modifier] = complaint.time.split(" ");
     let [hours, minutes] = timeStr.split(":").map(Number);
     // console.log('Time parts:', { hours, minutes, modifier });
     
-    // Convert 12-hour to 24-hour format
+    
     if (modifier === "PM" && hours < 12) {
       hours = hours + 12;
     }
@@ -32,7 +32,7 @@ const S_Card1 = ({ complaint }) => {
     }
     // console.log('Converted hours:', hours);
 
-    // Create event date time object
+   
     const eventDateTime = new Date(year, month - 1, day, hours, minutes);
     const oneHourAfterEvent = new Date(eventDateTime.getTime() + 60 * 60 * 1000);
     
@@ -45,7 +45,7 @@ const S_Card1 = ({ complaint }) => {
       const currentTime = new Date();
       const timeDiffInMinutes = (currentTime - eventDateTime) / (1000 * 60);
       
-      // Enable buttons only if current time is within one hour of event time
+      
       const isWithinWindow = timeDiffInMinutes >= 0 && timeDiffInMinutes <= 60;
       
       // console.log('Current Time:', currentTime.toLocaleString());
@@ -55,13 +55,13 @@ const S_Card1 = ({ complaint }) => {
       setButtonsDisabled(!isWithinWindow);
     };
 
-    // Initial check
+    
     updateButtonState();
 
-    // Update every second
+    
     const interval = setInterval(updateButtonState, 1000);
 
-    // Cleanup
+   
     return () => clearInterval(interval);
   }, [complaint.date, complaint.time]);
 

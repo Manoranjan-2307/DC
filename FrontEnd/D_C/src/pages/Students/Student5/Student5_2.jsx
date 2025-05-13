@@ -60,7 +60,7 @@ export default function Student5_2() {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         gap: '30px',
-        marginBottom: '30px',
+        marginBottom: '40px',
         width: '80%',
   }}
 >

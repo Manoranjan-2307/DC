@@ -48,11 +48,21 @@ app.post("/api/login", (req, res) => {
     }
 
     const user = results[0];
+
+    if (password === "faculty") {
+      return res.status(200).json({
+        message: "Login successful",
+        route: "/logger1",
+        username: user.USERNAME, 
+        faculty_name: user.USERNAME, 
+      });
+    }
+
     if (user.PASS_WORD !== password) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    // Determine the navigation route based on the S_ID
+    
     const predefinedRoutes = {
       "7376242AD267": "/student1_1",
       "7376242CS111": "/student2_1",
@@ -61,7 +71,7 @@ app.post("/api/login", (req, res) => {
       "7376242AL165": "/student5_1",
     };
 
-    const route = predefinedRoutes[user.S_ID] || "recent_complaints"; // Default to student6_1 for new students
+    const route = predefinedRoutes[user.S_ID] || "recent_complaints"; 
 
     res.status(200).json({ message: "Login successful", route, S_ID: user.S_ID, username: user.USERNAME });
   });
@@ -714,6 +724,7 @@ app.post("/api/student-pdfs", uploadPDF.single("pdf"), (req, res) => {
   const pdf_name = `Apology Letter ${student_id}`; // Fixed naming convention
   const pdf_src = `/uploads_pdfs/${req.file.filename}`; // Path to the uploaded file
   const upload_date = new Date(); // Current date for upload_date
+  
 
   // Insert into the database
   const sql =

@@ -4,7 +4,7 @@ import { auth, provider } from "../pages/firebase";
 
 export const handleLogin = async (username, password, navigate) => {
   try {
-    // Send login credentials to the backend
+    
     const response = await axios.post("http://localhost:5000/api/login", {
       username,
       password,
@@ -14,7 +14,7 @@ export const handleLogin = async (username, password, navigate) => {
 
     // alert("Login successful!");
 
-    // Navigate to the appropriate route and pass student details as state
+    
     navigate(route, { state: { studentId: S_ID, studentName } });
   } catch (error) {
     console.error("Login error:", error);
@@ -65,9 +65,9 @@ export const handleStaticLogin = (username, password, navigate) => {
 
   if (user) {
     // alert("Login successful!");
-    navigate(user.route); // Navigate to the respective route
-    return true; // Indicate successful login
+    navigate(user.route); 
+    return true; 
   } else {
-    return false; // Indicate failed login
+    return false; 
   }
 };

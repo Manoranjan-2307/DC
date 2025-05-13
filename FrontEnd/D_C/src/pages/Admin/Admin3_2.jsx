@@ -9,7 +9,7 @@ export default function Admin3_2() {
   const fullHeading = '  My Meetings:';
   const headingLength = fullHeading.length;
   const [complaints, setComplaints] = useState([]);
-  const [todaysMeetings, setTodaysMeetings] = useState([]); // State for today's meetings
+  const [todaysMeetings, setTodaysMeetings] = useState([]); 
 
   
   useEffect(() => {
@@ -80,12 +80,12 @@ export default function Admin3_2() {
 
   return (
     <div>
-      {/* Heading */}
+     
       <div style={{ padding: '5px', marginTop: '100px', marginBottom: '0px', marginLeft: '145px' }}>
         <p style={{ fontFamily: 'tahoma', fontSize: '30px', color: '#5A6387' }}>{heading}</p>
       </div>
 
-            {/* Today's Meetings */}
+           
       <div
         style={{
           padding: '20px',
@@ -108,7 +108,7 @@ export default function Admin3_2() {
         >
           {todaysMeetings.length > 0 ? (
             todaysMeetings.map((meeting) => (
-              <S_Card1 key={meeting.id} complaint={meeting} /> // today's meetings
+              <S_Card1 key={meeting.id} complaint={meeting} /> 
             ))
           ) : (
             <div style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
@@ -119,14 +119,14 @@ export default function Admin3_2() {
         </div>
       </div>
 
-      {/* Divider Line */}
+     
       <hr
         style={{
           border: 'none',
           borderTop: '5px solid #000000', 
           margin: '20px 130px', 
           width: 'calc(100% - 170px)', 
-          marginBottom: "30PX"
+          marginBottom: "30px"
         }}
       />
 
@@ -148,10 +148,13 @@ export default function Admin3_2() {
         <S_Card2 />
         <S_Card3 />
 
-        {/* All Complaints */}
-        {complaints.map((complaint) => (
-          <S_Card1 key={complaint.id} complaint={complaint} /> 
-        ))}
+       
+       {/* All Complaints */}
+      {complaints
+        .filter((complaint) => !todaysMeetings.some((meeting) => meeting.id === complaint.id))
+        .map((complaint) => (
+      <S_Card1 key={complaint.id} complaint={complaint} />
+  ))}
       </div>
     </div>
   );

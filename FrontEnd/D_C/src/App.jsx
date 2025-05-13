@@ -24,7 +24,7 @@ import Student2_1 from "./pages/Students/Student2/Student2_1";
 import Student2_2 from "./pages/Students/Student2/Student2_2";
 import Student2_3 from "./pages/Students/Student2/Student2_3";
 import Student2_4 from "./pages/Students/Student2/Student2_4";
-// import Student3_1 from "./pages/Students/Student3/Student3_1";
+import Student3_1 from "./pages/Students/Student3/Student3_1";
 import Student3_2 from "./pages/Students/Student3/Student3_2";
 import Student3_3 from "./pages/Students/Student3/Student3_3";
 import Student3_4 from "./pages/Students/Student3/Student3_4";
@@ -189,7 +189,7 @@ const AppContent = () => {
           <Route path="/student2_2" element={<Student2_2 />} />
           <Route path="/student2_3" element={<Student2_3 />} />
           <Route path="/student2_4" element={<Student2_4 />} />
-          {/* <Route path="/student3_1" element={<Student3_1 />} /> */}
+          <Route path="/student3_1" element={<Student3_1 />} />
           <Route path="/student3_2" element={<Student3_2 />} />
           <Route path="/student3_3" element={<Student3_3 />} />
           <Route path="/student3_4" element={<Student3_4 />} />

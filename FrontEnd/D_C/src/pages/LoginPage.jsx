@@ -11,10 +11,10 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-  // First, try static login for admin, faculty, and supportdesk
+ 
   const isStaticLoginSuccessful = handleStaticLogin(username, password, navigate);
 
-  // If static login fails, try student login
+  
   if (!isStaticLoginSuccessful) {
     await handleLogin(username, password, navigate);
   }

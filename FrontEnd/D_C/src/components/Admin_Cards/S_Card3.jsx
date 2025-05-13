@@ -156,7 +156,7 @@ const S_Card3 = () => {
   </Box>
         
           <Typography variant="body1" component="p" sx={textStyle}>
-          <PersonIcon sx={{mr: 1, color: 'black'}} />: 7376242AD199
+          <PersonIcon sx={{mr: 1, color: 'black'}} />: N/A
             </Typography>
 
             <Typography variant="body1" component="p" sx={{...textStyle,
